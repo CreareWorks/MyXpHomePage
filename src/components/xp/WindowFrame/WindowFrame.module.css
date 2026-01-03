@@ -1,0 +1,92 @@
+.window {
+    position: absolute;
+    top: 100px;
+    left: 100px;
+
+    width: 800px;
+    height: 800px;
+    max-width: 90vw;
+    max-height: 80vh;
+
+    display: flex;
+    flex-direction: column;
+
+    z-index: 100;
+}
+
+.titleBar {
+    height: 30px;
+
+    background: linear-gradient(180deg,
+        #0058EE 0%, 
+        #3593FF 4%, 
+        #288EFB 18%, 
+        #2461DF 80%, 
+        #0054E3 100%
+    );
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 5px;
+    border-radius: 5px 5px 0 0;
+    user-select: none; 
+}
+
+.titleGroup {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.titleText {
+    color: white;
+    font-family: "Tahoma", sans-serif;
+    font-weight: bold;
+    font-size: 13px;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+}
+
+.icon {
+    pointer-events: none;
+}
+
+.closeButton {
+    width: 21px;
+    height: 21px;
+
+    background: linear-gradient(180deg, 
+        #E98E82 0%, 
+        #DC6155 10%, 
+        #C53B2F 100%
+    );
+
+    border: 1px solid #FFFFFF;
+    border-radius: 3px;
+    color: white;
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    cursor: pointer;
+    box-shadow: inset 1px 1px 0 rgba(255,255,255,0.3);
+}
+
+.closeButton:active {
+    filter: brightness(0.8);
+}
+
+.content {
+    flex: 1;
+    background-color: white;
+    margin: 3px;
+    border: 1px solid #999;
+    overflow: auto;
+    position: relative;
+}
