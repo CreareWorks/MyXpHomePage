@@ -1,5 +1,6 @@
 import Image, { StaticImageData } from "next/image";
 import styles from '@/components/xp/WindowFrame/WindowFrame.module.css';
+import { useWindowFrame } from '@/components/xp/WindowFrame/hooks/useWindowFrame';
 
 interface WindowFrameProps {
     title: string;
@@ -14,9 +15,28 @@ export function WindowFrame({
     onClose,
     children
 }: WindowFrameProps) {
+    const { 
+        position,
+        size,
+        handleMouseDownDrag,
+        handleMouseDownResize
+    } = useWindowFrame();
+
     return (
-        <div className={styles.window}>
-            <div className={styles.titleBar}>
+        <div 
+            className={styles.window}
+            style={{
+                top: position.y,
+                left: position.x,
+                width: size.width,
+                height: size.height,
+            }}
+        >
+            <div 
+                className={styles.titleBar}
+                onMouseDown={handleMouseDownDrag}
+                style={{ cursor: 'default' }}
+            >
                 <div className={styles.titleGroup}>
                     <Image 
                         src={icon} 
@@ -43,6 +63,11 @@ export function WindowFrame({
             <div className={styles.content}>
                 {children}
             </div>
+
+            <div 
+                className={styles.resizer} 
+                onMouseDown={handleMouseDownResize}
+            />
         </div>
     );
 }

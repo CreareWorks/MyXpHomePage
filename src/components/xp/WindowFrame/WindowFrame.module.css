@@ -1,12 +1,8 @@
 .window {
     position: absolute;
-    top: 100px;
-    left: 100px;
 
-    width: 800px;
-    height: 800px;
-    max-width: 90vw;
-    max-height: 80vh;
+    max-width: 100vw;
+    max-height: 100vh;
 
     display: flex;
     flex-direction: column;
@@ -89,4 +85,19 @@
     border: 1px solid #999;
     overflow: auto;
     position: relative;
+}
+
+.resizer {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 16px;
+    height: 16px;
+
+    cursor: nwse-resize; 
+    z-index: 101;
+
+    background: radial-gradient(circle at center, #999 2px, transparent 2px);
+    background-size: 4px 4px;
+    opacity: 0.5;
 }
