@@ -96,8 +96,8 @@
     position: absolute;
     bottom: 0;
     right: 0;
-    width: 16px;
-    height: 16px;
+    width: 24px;
+    height: 24px;
 
     cursor: nwse-resize; 
     z-index: 101;
@@ -105,4 +105,6 @@
     background: radial-gradient(circle at center, #999 2px, transparent 2px);
     background-size: 4px 4px;
     opacity: 0.5;
+
+    touch-action: none;
 }

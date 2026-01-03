@@ -1,5 +1,6 @@
+import { useRef } from 'react';
 import Image, { StaticImageData } from 'next/image';
-import styles from '@/components/xp/DesktopIcon/DesktopIcon.module.css';
+import styles from './DesktopIcon.module.css';
 
 interface DesktopIconProps {
     label: string;
@@ -16,17 +17,37 @@ export function DesktopIcon({
     onClick,
     onDoubleClick
 }: DesktopIconProps) {
+    const lastTapTimeRef = useRef<number>(0);
+
+    const handleTouchEnd = (e: React.TouchEvent) => {
+        e.stopPropagation();
+
+        const now = Date.now();
+        // スマホのダブルタップに対応させる
+        if (now - lastTapTimeRef.current < 300) {
+            onDoubleClick();
+            lastTapTimeRef.current = 0;
+        } else {
+            onClick();
+            lastTapTimeRef.current = now;
+        }
+    };
+
     return (
         <div
             className={`${styles.container} ${isSelected ? styles.selected : ''}`}
+            // PC用: クリック
             onClick={(e) => {
                 e.stopPropagation();
                 onClick();
             }}
+            // PC用: ダブルクリック
             onDoubleClick={(e) => {
                 e.stopPropagation();
                 onDoubleClick();
             }}
+
+            onTouchEnd={handleTouchEnd}
         >
             <div className={styles.iconImage}>
                 <Image
@@ -37,5 +58,5 @@ export function DesktopIcon({
             </div>
             <span className={styles.label}>{label}</span>
         </div>
-    )
+    );
 }

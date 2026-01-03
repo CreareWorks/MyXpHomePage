@@ -1,11 +1,11 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, RefObject } from 'react';
 
 // 座標とサイズの型定義
 type Position = { x: number; y: number };
 type Size = { width: number; height: number };
 
 export const useWindowFrame = (
-    defaultSize: Size = { width: 600, height: 400 }
+    defaultSize: Size = { width: 800, height: 600 }
 ) => {
     // ウィンドウの状態管理
     const [position, setPosition] = useState<Position>({ x: 0, y: 0 });
@@ -17,25 +17,25 @@ export const useWindowFrame = (
     const [isResizing, setIsResizing] = useState(false);
 
     // マウス位置のズレを計算するためのRef
-    const dragOffset = useRef<Position>({ x: 0, y: 0 });
-    const startSize = useRef<Size>({ width: 0, height: 0 });
-    const startMousePos = useRef<Position>({ x: 0, y: 0 });
+    const dragOffset:RefObject<Position> = useRef<Position>({ x: 0, y: 0 });
+    const startSize:RefObject<Size> = useRef<Size>({ width: 0, height: 0 });
+    const startMousePos:RefObject<Position> = useRef<Position>({ x: 0, y: 0 });
 
     useEffect(() => {
-        const frameId = requestAnimationFrame(() => {
+        const frameId: number = requestAnimationFrame(() => {
             if (typeof window === 'undefined') return;
 
             // ブラウザの画面サイズを取得
-            const winW = window.innerWidth;
-            const winH = window.innerHeight;
+            const winW: number = window.innerWidth;
+            const winH: number = window.innerHeight;
 
             // スマホ対応: 画面幅がデフォルト幅より小さい場合、画面幅の90%にする
-            const initialWidth = winW < defaultSize.width ? winW * 0.9 : defaultSize.width;
-            const initialHeight = winH < defaultSize.height ? winH * 0.8 : defaultSize.height;
+            const initialWidth: number = Math.min(winW * 0.9, defaultSize.width);
+            const initialHeight: number = winH * 0.9;
 
             // 中央座標を計算: (画面幅 - ウィンドウ幅) / 2
-            const centerX = (winW - initialWidth) / 2;
-            const centerY = (winH - initialHeight) / 2;
+            const centerX: number = (winW - initialWidth) / 2;
+            const centerY: number = (winH - initialHeight) / 2;
 
             setSize({ width: initialWidth, height: initialHeight });
             setPosition({ x: centerX, y: centerY });
@@ -44,6 +44,7 @@ export const useWindowFrame = (
         return () => cancelAnimationFrame(frameId);
     }, [defaultSize.width, defaultSize.height]);
 
+    // PC用
     // ドラッグ開始処理
     const handleMouseDownDrag = (e: React.MouseEvent) => {
         // 左クリック(button 0)以外は無視
@@ -57,7 +58,6 @@ export const useWindowFrame = (
         };
         e.preventDefault();
     };
-
     // リサイズ開始処理
     const handleMouseDownResize = (e: React.MouseEvent) => {
         if (e.button !== 0) return;
@@ -71,9 +71,30 @@ export const useWindowFrame = (
         e.stopPropagation();
     };
 
+    // スマホ用
+    const handleTouchStartDrag = (e: React.TouchEvent) => {
+    setIsDragging(true);
+        const touch = e.touches[0];
+        if (!touch) return;
+
+        dragOffset.current = {
+            x: touch.clientX - position.x,
+            y: touch.clientY - position.y,
+        };
+    };
+    const handleTouchStartResize = (e: React.TouchEvent) => {
+        setIsResizing(true);
+        const touch = e.touches[0];
+        if (!touch) return;
+
+        startSize.current = size;
+        startMousePos.current = { x: touch.clientX, y: touch.clientY };
+        e.stopPropagation();
+    };
+
     // グローバルなマウス操作（ドラッグ中の追従）
     useEffect(() => {
-        // マウスが動いた時の処理
+        // PC
         const handleMouseMove = (e: MouseEvent) => {
             if (isDragging) {
                 setPosition({
@@ -92,23 +113,49 @@ export const useWindowFrame = (
                 });
             }
         };
+        // スマホ
+        const handleTouchMove = (e: TouchEvent) => {
+            if (isDragging || isResizing) {
+                // ドラッグ中に画面がスクロールしないようにする
+                e.preventDefault();
+            }
 
-        // マウスを離した時の処理
-        const handleMouseUp = () => {
+            const touch = e.touches[0];
+            if (!touch) return;
+
+            if (isDragging) {
+                setPosition({
+                    x: touch.clientX - dragOffset.current.x,
+                    y: touch.clientY - dragOffset.current.y,
+                });
+            }
+            if (isResizing) {
+                const deltaX = touch.clientX - startMousePos.current.x;
+                const deltaY = touch.clientY - startMousePos.current.y;
+                setSize({
+                    width: Math.max(200, startSize.current.width + deltaX),
+                    height: Math.max(150, startSize.current.height + deltaY),
+                });
+            }
+        };
+
+        const handleEnd = () => {
             setIsDragging(false);
             setIsResizing(false);
         };
-
-        // 操作中のみイベントリスナーを登録
+        
         if (isDragging || isResizing) {
             window.addEventListener('mousemove', handleMouseMove);
-            window.addEventListener('mouseup', handleMouseUp);
+            window.addEventListener('mouseup', handleEnd);
+            window.addEventListener('touchmove', handleTouchMove, { passive: false });
+            window.addEventListener('touchend', handleEnd);
         }
 
-        // クリーンアップ
         return () => {
             window.removeEventListener('mousemove', handleMouseMove);
-            window.removeEventListener('mouseup', handleMouseUp);
+            window.removeEventListener('mouseup', handleEnd);
+            window.removeEventListener('touchmove', handleTouchMove);
+            window.removeEventListener('touchend', handleEnd);
         };
     }, [isDragging, isResizing]);
 
@@ -118,5 +165,7 @@ export const useWindowFrame = (
         isMounted,
         handleMouseDownDrag,
         handleMouseDownResize,
+        handleTouchStartDrag,
+        handleTouchStartResize,
     };
 };

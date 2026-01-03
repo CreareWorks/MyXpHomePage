@@ -20,7 +20,9 @@ export function WindowFrame({
         size,
         isMounted,
         handleMouseDownDrag,
-        handleMouseDownResize
+        handleMouseDownResize,
+        handleTouchStartDrag,
+        handleTouchStartResize,
     } = useWindowFrame();
 
     if (!isMounted) return null;
@@ -38,6 +40,7 @@ export function WindowFrame({
             <div 
                 className={styles.titleBar}
                 onMouseDown={handleMouseDownDrag}
+                onTouchStart={handleTouchStartDrag}
                 style={{ cursor: 'default' }}
             >
                 <div className={styles.titleGroup}>
@@ -70,6 +73,7 @@ export function WindowFrame({
             <div 
                 className={styles.resizer} 
                 onMouseDown={handleMouseDownResize}
+                onTouchStart={handleTouchStartResize}
             />
         </div>
     );
