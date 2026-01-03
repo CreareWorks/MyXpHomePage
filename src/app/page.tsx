@@ -4,40 +4,53 @@ import { useState } from 'react';
 import { DesktopIcon } from '@/components/xp/DesktopIcon/DesktopIcon';
 import { WindowFrame } from '@/components/xp/WindowFrame/WindowFrame';
 import styles from '@/app/page.module.css';
-import { DESKTOP_ICON_IDS, type DesktopIconId } from '@/constants/desktop';
-
-import aboutIcon from '@/assets/icon/about.png';
+import { DESKTOP_APPS } from '@/config/desktopApps';
+import { type DesktopIconId } from '@/constants/desktopIcon';
 
 export default function Desktop() {
-  const [selectedId, setSelectedId] = useState<DesktopIconId | null>(null);
-  const [isWindowOpen, setIsWindowOpen] = useState<boolean>(false);
+  const [selectedIconId, setSelectedIconId] = useState<DesktopIconId | null>(null);
+  const [openWindowIds, setOpenWindowIds] = useState<DesktopIconId[]>([]);
+
+  const handleOpenWindow = (id: DesktopIconId) => {
+    if (!openWindowIds.includes(id)) {
+      setOpenWindowIds((prev) => [...prev, id]);
+    }
+  };
+  const handleCloseWindow = (id: DesktopIconId) => {
+    setOpenWindowIds((prev) => prev.filter((openId) => openId !== id));
+  };
 
   return (
     <main
       className={styles.mainContainer}
-      onClick={() => setSelectedId(null)}
+      onClick={() => setSelectedIconId(null)}
     >
-      <DesktopIcon
-        label='私について'
-        icon={aboutIcon}
-        isSelected={selectedId === DESKTOP_ICON_IDS.ABOUT}
-        onClick={() => setSelectedId(DESKTOP_ICON_IDS.ABOUT)}
-        onDoubleClick={() => setIsWindowOpen(true)}
-      />
+      {DESKTOP_APPS.map((app) => (
+        <DesktopIcon
+          key={app.id}
+          label={app.title}
+          icon={app.icon}
+          isSelected={selectedIconId === app.id}
+          onClick={() => setSelectedIconId(app.id)}
+          onDoubleClick={() => handleOpenWindow(app.id)}
+        />
+        
+      ))}
 
-      {
-        isWindowOpen && (
+      {DESKTOP_APPS.map((app) => {
+        if (!openWindowIds.includes(app.id)) return null;
+
+        return (
           <WindowFrame
-            title='私について'
-            icon={aboutIcon}
-            onClose={ () => setIsWindowOpen(false) }
+            key={app.id}
+            title={app.title}
+            icon={app.icon}
+            onClose={() => handleCloseWindow(app.id)}
           >
-            <h2>私について</h2>
-            <p>はじめまして</p>
-            <p>testtesttesttest hogehogehoge</p>
+            {app.component}
           </WindowFrame>
-        )
-      }
+        );
+      })}
     </main>
   )
 }
