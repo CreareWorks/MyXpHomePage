@@ -18,9 +18,12 @@ export function WindowFrame({
     const { 
         position,
         size,
+        isMounted,
         handleMouseDownDrag,
         handleMouseDownResize
     } = useWindowFrame();
+
+    if (!isMounted) return null;
 
     return (
         <div 

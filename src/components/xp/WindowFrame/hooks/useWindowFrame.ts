@@ -5,14 +5,14 @@ type Position = { x: number; y: number };
 type Size = { width: number; height: number };
 
 export const useWindowFrame = (
-    initialPos: Position = { x: 100, y: 100 },
-    initialSize: Size = { width: 600, height: 400 }
+    defaultSize: Size = { width: 600, height: 400 }
 ) => {
     // ウィンドウの状態管理
-    const [position, setPosition] = useState<Position>(initialPos);
-    const [size, setSize] = useState<Size>(initialSize);
+    const [position, setPosition] = useState<Position>({ x: 0, y: 0 });
+    const [size, setSize] = useState<Size>(defaultSize);
 
     // 操作中のフラグ
+    const [isMounted, setIsMounted] = useState(false);
     const [isDragging, setIsDragging] = useState(false);
     const [isResizing, setIsResizing] = useState(false);
 
@@ -20,6 +20,29 @@ export const useWindowFrame = (
     const dragOffset = useRef<Position>({ x: 0, y: 0 });
     const startSize = useRef<Size>({ width: 0, height: 0 });
     const startMousePos = useRef<Position>({ x: 0, y: 0 });
+
+    useEffect(() => {
+        const frameId = requestAnimationFrame(() => {
+            if (typeof window === 'undefined') return;
+
+            // ブラウザの画面サイズを取得
+            const winW = window.innerWidth;
+            const winH = window.innerHeight;
+
+            // スマホ対応: 画面幅がデフォルト幅より小さい場合、画面幅の90%にする
+            const initialWidth = winW < defaultSize.width ? winW * 0.9 : defaultSize.width;
+            const initialHeight = winH < defaultSize.height ? winH * 0.8 : defaultSize.height;
+
+            // 中央座標を計算: (画面幅 - ウィンドウ幅) / 2
+            const centerX = (winW - initialWidth) / 2;
+            const centerY = (winH - initialHeight) / 2;
+
+            setSize({ width: initialWidth, height: initialHeight });
+            setPosition({ x: centerX, y: centerY });
+            setIsMounted(true); // 計算完了を表示
+        });
+        return () => cancelAnimationFrame(frameId);
+    }, [defaultSize.width, defaultSize.height]);
 
     // ドラッグ開始処理
     const handleMouseDownDrag = (e: React.MouseEvent) => {
@@ -76,7 +99,7 @@ export const useWindowFrame = (
             setIsResizing(false);
         };
 
-        // 操作中のみイベントリスナーを登録（パフォーマンス対策）
+        // 操作中のみイベントリスナーを登録
         if (isDragging || isResizing) {
             window.addEventListener('mousemove', handleMouseMove);
             window.addEventListener('mouseup', handleMouseUp);
@@ -92,6 +115,7 @@ export const useWindowFrame = (
     return {
         position,
         size,
+        isMounted,
         handleMouseDownDrag,
         handleMouseDownResize,
     };
