@@ -5,16 +5,20 @@ import { useWindowFrame } from '@/components/xp/WindowFrame/hooks/useWindowFrame
 interface WindowFrameProps {
     title: string;
     icon: StaticImageData;
+    isMaximized?: boolean;
     onClose: () => void;
     onMinimize: () => void;
+    onMaximize: () => void;
     children: React.ReactNode;
 }
 
 export function WindowFrame({
     title,
     icon,
+    isMaximized,
     onClose,
     onMinimize,
+    onMaximize,
     children
 }: WindowFrameProps) {
     const { 
@@ -31,8 +35,8 @@ export function WindowFrame({
 
     return (
         <div 
-            className={styles.window}
-            style={{
+            className={`${styles.window} ${isMaximized ? styles.maximizedWindow : ''}`}
+            style={isMaximized ? undefined : {
                 top: position.y,
                 left: position.x,
                 width: size.width,
@@ -67,6 +71,15 @@ export function WindowFrame({
                         aria-label='Minimize'
                         >
                         _
+                    </button>
+                    <button 
+                        className={styles.maximizeButton}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            onMaximize();
+                        }}
+                    >
+                        {isMaximized ? '❐' : '□'} 
                     </button>
                     <button
                         className={styles.closeButton}

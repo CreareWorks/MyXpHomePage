@@ -10,6 +10,7 @@ export const useDesktop = () => {
     const [selectedIconId, setSelectedIconId] = useState<DesktopIconId | null>(null);
     const [openWindowIds, setOpenWindowIds] = useState<DesktopIconId[]>([activeWindowId]);
     const [minimizedWindowIds, setMinimizedWindowIds] = useState<DesktopIconId[]>([]);
+    const [maximizedWindowIds, setMaximizedWindowsIds] = useState<DesktopIconId[]>([]);
 
     // URLパラメータがない場合、'about' を表示させる
     useEffect(() => {
@@ -59,11 +60,24 @@ export const useDesktop = () => {
     const closeWindow = useCallback((id: DesktopIconId) => {
         setOpenWindowIds((prev) => prev.filter((openId) => openId !== id));
         setMinimizedWindowIds((prev) => prev.filter((minId) => minId !== id));
+        setMaximizedWindowsIds((prev) => prev.filter((maxId) => maxId !== id));
 
         if (activeWindowId === id) {
             setAppId(null);
         }
     }, [activeWindowId, setAppId]);
+
+    const toggleMaximizeWindow = useCallback((id: DesktopIconId) => {
+        setMaximizedWindowsIds((prev) => {
+            const isMaximized = prev.includes(id);
+            if (isMaximized) {
+                return prev.filter((maxId) => maxId !== id);
+            } else {
+                return [...prev, id]
+            }
+        });
+        setAppId(id);
+    }, [setAppId])
 
     const minimizeWindow = useCallback((id: DesktopIconId) => {
         setMinimizedWindowIds((prev) => [...prev, id]);
@@ -103,11 +117,13 @@ export const useDesktop = () => {
         openWindowIds,
         activeWindowId,
         minimizedWindowIds,
+        maximizedWindowIds,
         selectIcon,
         openWindow,
         closeWindow,
         minimizeWindow,
         focusWindow,
         handleTaskClick,
+        toggleMaximizeWindow,
     };
 };

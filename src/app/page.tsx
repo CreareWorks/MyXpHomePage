@@ -16,12 +16,14 @@ function DesktopContent() {
     openWindowIds,
     activeWindowId,
     minimizedWindowIds,
+    maximizedWindowIds,
     selectIcon,
     openWindow,
     closeWindow,
     minimizeWindow,
     focusWindow,
     handleTaskClick,
+    toggleMaximizeWindow,
   } = useDesktop();
 
   return (
@@ -46,10 +48,10 @@ function DesktopContent() {
         if (!openWindowIds.includes(app.id)) return null;
 
         const isMinimized = minimizedWindowIds.includes(app.id);
+        const isMaximized = maximizedWindowIds.includes(app.id);
         const isActive = activeWindowId === app.id;
 
         return (
-          // 最小化中は非表示(display: none)
           <div
             key={app.id}
             className={`
@@ -65,8 +67,10 @@ function DesktopContent() {
               <WindowFrame
                 title={app.title}
                 icon={app.icon}
+                isMaximized={isMaximized}
                 onClose={() => closeWindow(app.id)}
                 onMinimize={() => minimizeWindow(app.id)}
+                onMaximize={() => toggleMaximizeWindow(app.id)}
               >
                 {app.component}
               </WindowFrame>
