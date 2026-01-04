@@ -116,7 +116,6 @@
     flex: 1;
     background-color: white;
     margin: 3px;
-    border: 1px solid #999;
     overflow: auto;
     position: relative;
 }

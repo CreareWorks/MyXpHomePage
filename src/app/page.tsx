@@ -8,8 +8,9 @@ import { TaskBar } from '@/components/xp/TaskBar/TaskBar';
 import { DESKTOP_APPS } from '@/config/desktopApps';
 
 import { useDesktop } from '@/hooks/useDesktop';
+import { Suspense } from 'react';
 
-export default function Desktop() {
+function DesktopContent() {
   const {
     selectedIconId,
     openWindowIds,
@@ -82,5 +83,13 @@ export default function Desktop() {
         onTaskClick={handleTaskClick}
       />
     </main>
+  );
+}
+
+export default function DesktopPage() {
+  return (
+    <Suspense fallback={<div>Loading XP...</div>}>
+      <DesktopContent />
+    </Suspense>
   );
 }

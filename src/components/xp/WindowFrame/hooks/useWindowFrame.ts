@@ -5,7 +5,7 @@ type Position = { x: number; y: number };
 type Size = { width: number; height: number };
 
 export const useWindowFrame = (
-    defaultSize: Size = { width: 800, height: 600 }
+    defaultSize: Size = { width: 1300, height: 720 }
 ) => {
     // ウィンドウの状態管理
     const [position, setPosition] = useState<Position>({ x: 0, y: 0 });
@@ -29,9 +29,9 @@ export const useWindowFrame = (
             const winW: number = window.innerWidth;
             const winH: number = window.innerHeight;
 
-            // スマホ対応: 画面幅がデフォルト幅より小さい場合、画面幅の90%にする
+            // スマホ対応
             const initialWidth: number = Math.min(winW * 0.9, defaultSize.width);
-            const initialHeight: number = winH * 0.9;
+            const initialHeight: number = winH * 0.93;
 
             // 中央座標を計算: (画面幅 - ウィンドウ幅) / 2
             const centerX: number = (winW - initialWidth) / 2;
