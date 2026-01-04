@@ -1,0 +1,33 @@
+.container {
+    height: 100%;
+    padding: 0 10px;
+    margin-left: 10px;
+    background: linear-gradient(180deg, #1290E8 0%, #0d8dea 10%, #0b76e0 100%);
+    border-left: 1px solid #1042AF;
+    box-shadow: inset 1px 1px 0 rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: white;
+    font-size: 12px;
+}
+
+.snsIcons { 
+    display: flex;
+    height: 100%;
+    gap: 8px; 
+}
+.snsLink { 
+    color: white;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    line-height: 0;
+}
+.snsLink:hover { 
+    opacity: 0.8;
+}
+
+.clock {
+    cursor: default; 
+}

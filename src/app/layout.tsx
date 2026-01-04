@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import '@/app/globals.css';
-import { TaskBar } from '@/components/xp/TaskBar/TaskBar';
 
 export const metadata: Metadata = {
   title: 'Youta Xp Portfolio',
@@ -16,7 +15,6 @@ export default function RootLayout({
     <html lang='ja'>
       <body>
         {children}
-        <TaskBar/>
       </body>
     </html>
   )

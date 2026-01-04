@@ -1,4 +1,4 @@
-import styles from '@/components/xp/StartButton/StartButton.module.css';
+import styles from '@/components/xp/TaskBar/StartButton/StartButton.module.css';
 import startButtonLogo from '@/assets/startButtonXpLogo.png';
 import Image from 'next/image';
 
@@ -19,4 +19,3 @@ export function StartButton() {
         </button>
     )
 }
-

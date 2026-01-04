@@ -4,3 +4,30 @@
   position: relative;
   overflow: hidden;
 }
+
+.windowWrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ウィンドウを選択したとき */
+.active {
+  z-index: 100;
+}
+
+/* 最小化 */
+.hidden {
+  display: none;
+}
+
+/* ウィンドウ本体 */
+.windowContent {
+  pointer-events: auto;
+  width: fit-content;
+  height: fit-content;
+}

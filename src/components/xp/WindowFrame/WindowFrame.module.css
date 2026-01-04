@@ -43,7 +43,6 @@
 
 .titleText {
     color: white;
-    font-family: "Tahoma", sans-serif;
     font-weight: bold;
     font-size: 13px;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
@@ -51,6 +50,40 @@
 
 .icon {
     pointer-events: none;
+}
+
+.buttonGroup {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.minimizeButton {
+    width: 21px;
+    height: 21px;
+
+    background: linear-gradient(135deg, 
+        #d5e9ff 0%, 
+        #2461DF 40%, 
+        #0054E3 100%
+    );
+
+    border: 1px solid #FFFFFF;
+    border-radius: 3px;
+    color: white;
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 1;
+    text-align: left;
+    padding-left: 3px;
+
+    cursor: pointer;
+    box-shadow: inset 1px 1px 0 rgba(255,255,255,0.3);
+}
+
+.minimizeButton:active {
+    filter: brightness(0.8);
 }
 
 .closeButton {
@@ -71,10 +104,6 @@
     font-size: 14px;
     line-height: 1;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    
     cursor: pointer;
     box-shadow: inset 1px 1px 0 rgba(255,255,255,0.3);
 }

@@ -6,6 +6,7 @@ interface WindowFrameProps {
     title: string;
     icon: StaticImageData;
     onClose: () => void;
+    onMinimize: () => void;
     children: React.ReactNode;
 }
 
@@ -13,6 +14,7 @@ export function WindowFrame({
     title,
     icon,
     onClose,
+    onMinimize,
     children
 }: WindowFrameProps) {
     const { 
@@ -55,16 +57,28 @@ export function WindowFrame({
                     <span className={styles.titleText}>{title}</span>
                 </div>
 
-                <button
-                    className={styles.closeButton}
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        onClose();
-                    }}
-                    aria-label='Close'
-                >
-                    ×
-                </button>
+                <div className={styles.buttonGroup}>
+                    <button
+                        className={styles.minimizeButton}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            onMinimize();
+                        }}
+                        aria-label='Minimize'
+                        >
+                        _
+                    </button>
+                    <button
+                        className={styles.closeButton}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            onClose();
+                        }}
+                        aria-label='Close'
+                        >
+                        ×
+                    </button>
+                </div>
             </div>
             <div className={styles.content}>
                 {children}
