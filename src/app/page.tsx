@@ -17,6 +17,7 @@ function DesktopContent() {
     activeWindowId,
     minimizedWindowIds,
     maximizedWindowIds,
+    isStartMenuOpen,
     selectIcon,
     openWindow,
     closeWindow,
@@ -24,6 +25,9 @@ function DesktopContent() {
     focusWindow,
     handleTaskClick,
     toggleMaximizeWindow,
+    toggleStartMenu,
+    closeStartMenu,
+    closeAllWindows,
   } = useDesktop();
 
   return (
@@ -84,7 +88,12 @@ function DesktopContent() {
         openWindowIds={openWindowIds}
         activeWindowId={activeWindowId}
         minimizedWindowIds={minimizedWindowIds}
+        isStartMenuOpen={isStartMenuOpen}
         onTaskClick={handleTaskClick}
+        onToggleStartMenu={toggleStartMenu}
+        onCloseStartMenu={closeStartMenu}
+        onAppClick={openWindow}
+        onLogOff={closeAllWindows}
       />
     </main>
   );

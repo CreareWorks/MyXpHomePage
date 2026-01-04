@@ -1,0 +1,230 @@
+/* メニュー全体 */
+.menuContainer {
+    position: absolute;
+    bottom: 30px;
+    left: 0;
+    width: 380px;
+    height: 480px;
+    
+    background-color: #FFFFFF;
+    
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    box-shadow: 2px -2px 10px rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+    border: 1px solid #0054E3;
+    border-bottom: none;
+}
+
+/* --- ヘッダー (ユーザー情報) --- */
+.header {
+    height: 64px;
+    background: linear-gradient(180deg, #2461DF 0%, #0054E3 100%);
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    border-bottom: 1px solid #00309A;
+}
+
+.userIconFrame {
+    width: 48px;
+    height: 48px;
+    background: #fff;
+    border-radius: 3px;
+    border: 2px solid #DCE4F5;
+    margin-right: 10px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+}
+
+.profileImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.userName {
+    color: #fff;
+    font-weight: bold;
+    font-size: 16px;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+}
+
+/* --- ボディ (2カラム) --- */
+.body {
+    flex: 1;
+    display: flex;
+    border-top: 1px solid #E59700;
+}
+
+/* 左カラム (アプリ一覧) - 白背景 */
+.leftColumn {
+    flex: 1;
+    background-color: #fff;
+    padding: 10px 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+/* 右カラム (リンク一覧) - 薄青背景 */
+.rightColumn {
+    flex: 1;
+    background-color: #D3E5FA;
+    border-left: 1px solid #95BDEE;
+    padding: 10px 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+/* --- リストアイテム共通 --- */
+.menuItem {
+    display: flex;
+    align-items: center;
+    padding: 6px 8px;
+    cursor: pointer;
+    color: #333;
+    text-decoration: none;
+    font-size: 12px;
+    border-radius: 3px;
+    transition: background-color 0.1s;
+}
+
+/* ホバー時の濃い青ハイライト */
+.menuItem:hover {
+    background-color: #2F71CD;
+    color: #fff;
+}
+
+/* ホバー時のテキストカラー変更のための指定 */
+.menuItem:hover .itemTitle,
+.menuItem:hover .itemDesc {
+    color: #fff;
+}
+
+/* 左カラム用アイコン (32px) */
+.appIcon {
+    width: 32px;
+    height: 32px;
+    margin-right: 8px;
+    object-fit: contain;
+}
+/* 右カラム用アイコン (24px) */
+.socialIcon {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+    object-fit: contain;
+}
+
+.itemText {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.itemTitle {
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 1.2;
+}
+
+.itemDesc {
+    font-size: 10px;
+    color: #666;
+    line-height: 1.1;
+}
+
+/* --- フッター (ログオフ・シャットダウン) --- */
+.footer {
+    height: 40px;
+    background: linear-gradient(180deg, #2461DF 0%, #0054E3 100%);
+    border-top: 1px solid #00309A;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 10px;
+    gap: 10px;
+}
+
+/* ログオフボタン (黄色) */
+.logOffButton {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 8px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: #fff;
+    font-size: 11px;
+    border-radius: 3px;
+}
+.logOffButton:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.logOffIcon {
+    width: 22px;
+    height: 22px;
+    background: #E8A22B;
+    border: 1px solid #fff;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    box-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+/* シャットダウンボタン (赤色) */
+.shutDownButton {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 8px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: #fff;
+    font-size: 11px;
+    border-radius: 3px;
+}
+.shutDownButton:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.shutDownIcon {
+    width: 22px;
+    height: 22px;
+    background: #D5362F;
+    border: 1px solid #fff;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    box-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+/* クリックして閉じる用の背景 */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9990;
+    cursor: default;
+}

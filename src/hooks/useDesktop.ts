@@ -12,6 +12,8 @@ export const useDesktop = () => {
     const [minimizedWindowIds, setMinimizedWindowIds] = useState<DesktopIconId[]>([]);
     const [maximizedWindowIds, setMaximizedWindowsIds] = useState<DesktopIconId[]>([]);
 
+    const [isStartMenuOpen, setIsStartMenuOpen] = useState(false);
+
     // URLパラメータがない場合、'about' を表示させる
     useEffect(() => {
         if (!appId) {
@@ -55,6 +57,9 @@ export const useDesktop = () => {
         });
         setMinimizedWindowIds((prev) => prev.filter((minId) => minId !== id));
         setAppId(id);
+
+        // アプリを開いた時に、スタートボタンを閉じさせる
+        setIsStartMenuOpen(false);
     }, [setAppId]);
 
     const closeWindow = useCallback((id: DesktopIconId) => {
@@ -112,12 +117,31 @@ export const useDesktop = () => {
         });
     }, [activeWindowId, setAppId]);
 
+    // スタートメニュー関連
+    // スタートボタン開く
+    const toggleStartMenu = useCallback(() => {
+        setIsStartMenuOpen((prev) => !prev);
+    }, []);
+    const closeStartMenu = useCallback(() => {
+        setIsStartMenuOpen(false);
+    }, []);
+
+    // ログオフボタンの挙動 全てのウィンドウを閉じる
+    const closeAllWindows = useCallback(() => {
+        setOpenWindowIds([]);
+        setMinimizedWindowIds([]);
+        setMaximizedWindowsIds([]);
+        setAppId(null);
+        setIsStartMenuOpen(false);
+    }, [setAppId]);
+
     return {
         selectedIconId,
         openWindowIds,
         activeWindowId,
         minimizedWindowIds,
         maximizedWindowIds,
+        isStartMenuOpen,
         selectIcon,
         openWindow,
         closeWindow,
@@ -125,5 +149,8 @@ export const useDesktop = () => {
         focusWindow,
         handleTaskClick,
         toggleMaximizeWindow,
+        toggleStartMenu,
+        closeStartMenu,
+        closeAllWindows,
     };
 };
