@@ -1,25 +1,39 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef, RefObject } from 'react';
 import { useQueryState, parseAsString } from 'nuqs';
 import { DESKTOP_ICON_IDS, type DesktopIconId } from '@/constants/desktopIcon';
 
 export const useDesktop = () => {
     const [appId, setAppId] = useQueryState('app', parseAsString.withOptions({ history: 'push' }));
 
-    const activeWindowId = (appId as DesktopIconId) || DESKTOP_ICON_IDS.ABOUT;
+    const activeWindowId: DesktopIconId = (appId as DesktopIconId) || null;
 
     const [selectedIconId, setSelectedIconId] = useState<DesktopIconId | null>(null);
-    const [openWindowIds, setOpenWindowIds] = useState<DesktopIconId[]>([activeWindowId]);
+    const [openWindowIds, setOpenWindowIds] = useState<DesktopIconId[]>([]);
     const [minimizedWindowIds, setMinimizedWindowIds] = useState<DesktopIconId[]>([]);
     const [maximizedWindowIds, setMaximizedWindowsIds] = useState<DesktopIconId[]>([]);
 
     const [isStartMenuOpen, setIsStartMenuOpen] = useState(false);
 
+    const isInitialized: RefObject<boolean> = useRef(false);
+
     // URLパラメータがない場合、'about' を表示させる
     useEffect(() => {
-        if (!appId) {
-            setAppId(DESKTOP_ICON_IDS.ABOUT);
-        }
-    }, [appId, setAppId]);
+        if (isInitialized.current) return;
+        const timer = setTimeout(() => {
+            isInitialized.current = true; // 実行済みにマーク
+
+            if (activeWindowId) {
+                // URL指定がある場合
+                setOpenWindowIds([activeWindowId]);
+            } else {
+                // URL指定がない場合: デフォルトで About を開く
+                setAppId(DESKTOP_ICON_IDS.ABOUT);
+                setOpenWindowIds([DESKTOP_ICON_IDS.ABOUT]);
+            }
+        }, 0);
+
+        return () => clearTimeout(timer);
+    }, [activeWindowId, setAppId]);
 
     // ブラウザの「戻る・進む」でURLが変わった時にウィンドウリストを同期
     useEffect(() => {

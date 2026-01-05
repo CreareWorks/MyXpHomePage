@@ -23,17 +23,7 @@ export const StartMenu = ({
 
     // シャットダウン処理：ブラウザのタブを閉じる
     const handleShutDown = () => {
-        try {
-            window.close();
-            // セキュリティで閉じられない場合のメッセージ
-            setTimeout(() => {
-                if (!window.closed) {
-                    alert("ブラウザのセキュリティ設定により、タブを自動で閉じることができませんでした。\n手動で閉じてください。");
-                }
-            }, 100);
-        } catch (e) {
-            console.error(e);
-        }
+        alert('当サイトを見つけて、触ってくれてありがとうございます、シャットダウンの概念がweb上で存在しない分、感謝をお伝えします。');
     };
 
     return (
