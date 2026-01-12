@@ -10,11 +10,11 @@ import rssIcon from '@/assets/icon/rss.png';
 import skillsheetIcon from '@/assets/icon/skillsheet.png';
 
 // 各コンテンツ
-import { Content as AboutContent } from '@/components/contents/about/Content';
-import { Content as BlogContent } from '@/components/contents/blog/Content';
-import { Content as PortfolioContent } from '@/components/contents/portfolio/Content';
-import { Content as RssContent } from '@/components/contents/rss/Content';
-import { Content as SkillsheetContent } from '@/components/contents/skillsheet/Content';
+import { Content as AboutContent } from '@/features/about/Content';
+import { Content as BlogContent } from '@/features/blog/Content';
+import { Content as PortfolioContent } from '@/features/portfolio/Content';
+import { Content as RssContent } from '@/features/rss/Content';
+import { Content as SkillsheetContent } from '@/features/skillsheet/Content';
 
 export interface DesktopAppConfig {
     id: DesktopIconId;
