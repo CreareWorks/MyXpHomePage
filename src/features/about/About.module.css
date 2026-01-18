@@ -1,0 +1,163 @@
+.container {
+    padding: 32px;
+    background-color: #fff;
+    height: 100%;
+    overflow-y: auto;
+    font-family: "Tahoma", "Verdana", sans-serif;
+    color: #333;
+}
+
+/* プロフィールヘッダー */
+.profileHeader {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 40px;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 24px;
+}
+
+.avatar {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #245DDA, #0054E3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    color: white;
+    box-shadow: 0 4px 10px rgba(36, 93, 218, 0.3);
+    border: 3px solid #fff;
+}
+
+.nameGroup {
+    display: flex;
+    flex-direction: column;
+}
+
+.nameGroup h1 {
+    font-size: 28px;
+    margin: 0;
+    color: #245DDA;
+    letter-spacing: 0.5px;
+}
+
+.role {
+    font-size: 14px;
+    color: #666;
+    margin-top: 6px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.tag {
+    background-color: #e6f0ff;
+    color: #245DDA;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+/* セクション共通 */
+.section {
+    margin-bottom: 40px;
+}
+
+.sectionTitle {
+    font-size: 18px;
+    color: #245DDA;
+    border-left: 5px solid #245DDA;
+    padding-left: 12px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+.text {
+    line-height: 1.8;
+    color: #444;
+    font-size: 14px;
+}
+
+.text p {
+    margin-bottom: 1.2em;
+}
+
+/* SNSリンクグリッド */
+.linkGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+}
+
+.linkCard {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    background: #f8f9fa;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #333;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.linkCard:hover {
+    background: #fff;
+    border-color: #245DDA;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(36, 93, 218, 0.15);
+}
+
+.linkIconWrapper {
+    margin-right: 16px;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.linkIconWrapper img {
+    border-radius: 6px;
+}
+
+.linkInfo {
+    display: flex;
+    flex-direction: column;
+}
+
+.linkTitle {
+    font-weight: bold;
+    font-size: 15px;
+    color: #245DDA;
+    margin-bottom: 2px;
+}
+
+.linkDesc {
+    font-size: 11px;
+    color: #777;
+}
+
+/* レスポンシブ */
+@media (max-width: 600px) {
+    .container {
+        padding: 20px;
+    }
+
+    .profileHeader {
+        flex-direction: column;
+        text-align: center;
+        gap: 16px;
+    }
+
+    .role {
+        justify-content: center;
+    }
+
+    .linkGrid {
+        grid-template-columns: 1fr;
+    }
+}

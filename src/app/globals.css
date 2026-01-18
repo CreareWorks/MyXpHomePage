@@ -22,8 +22,7 @@ body {
   height: 100vh;
   font-family: var(--xp-font);
   background-image: url(../assets/background.jpg);
-  background-size:cover;
-  background-position:50%;
+  background-size: cover;
+  background-position: 50%;
   color: var(--xp-text-color);
-  -webkit-font-smoothing: none;
 }

@@ -12,9 +12,10 @@ import { BlogMainContent } from './BlogMainContent';
 interface BlogAppLayoutProps {
     allPosts: PostMetadata[];
     currentPost?: BlogPost | undefined;
+    postContent?: React.ReactNode;
 }
 
-export const BlogAppLayout = ({ allPosts, currentPost }: BlogAppLayoutProps) => {
+export const BlogAppLayout = ({ allPosts, currentPost, postContent }: BlogAppLayoutProps) => {
     // 状態管理
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [, startTransition] = useTransition();
@@ -177,6 +178,7 @@ export const BlogAppLayout = ({ allPosts, currentPost }: BlogAppLayoutProps) => 
 
                 <BlogMainContent
                     currentPost={currentPost}
+                    postContent={postContent}
                     filteredPosts={filteredPosts}
                     searchQuery={searchQuery}
                     selectedGenre={selectedGenre}

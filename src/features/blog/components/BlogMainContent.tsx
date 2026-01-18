@@ -4,6 +4,7 @@ import { BlogPost, PostMetadata } from '@/features/blog/types/index';
 
 interface BlogMainContentProps {
     currentPost?: BlogPost | undefined;
+    postContent?: React.ReactNode;
     filteredPosts: PostMetadata[];
     searchQuery: string;
     selectedGenre: string | null;
@@ -13,6 +14,7 @@ interface BlogMainContentProps {
 
 export const BlogMainContent = ({
     currentPost,
+    postContent,
     filteredPosts,
     searchQuery,
     selectedGenre,
@@ -29,7 +31,7 @@ export const BlogMainContent = ({
                         {currentPost.metadata.date}
                     </div>
                     <div className={`markdown-body ${styles.detailBody}`}>
-                        <pre>{currentPost.content}</pre>
+                        {postContent || <pre>{currentPost.content}</pre>}
                     </div>
                 </div>
             ) : (

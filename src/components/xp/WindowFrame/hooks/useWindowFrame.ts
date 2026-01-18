@@ -17,9 +17,9 @@ export const useWindowFrame = (
     const [isResizing, setIsResizing] = useState(false);
 
     // マウス位置のズレを計算するためのRef
-    const dragOffset:RefObject<Position> = useRef<Position>({ x: 0, y: 0 });
-    const startSize:RefObject<Size> = useRef<Size>({ width: 0, height: 0 });
-    const startMousePos:RefObject<Position> = useRef<Position>({ x: 0, y: 0 });
+    const dragOffset: RefObject<Position> = useRef<Position>({ x: 0, y: 0 });
+    const startSize: RefObject<Size> = useRef<Size>({ width: 0, height: 0 });
+    const startMousePos: RefObject<Position> = useRef<Position>({ x: 0, y: 0 });
 
     useEffect(() => {
         const frameId: number = requestAnimationFrame(() => {
@@ -49,7 +49,7 @@ export const useWindowFrame = (
     const handleMouseDownDrag = (e: React.MouseEvent) => {
         // 左クリック(button 0)以外は無視
         if (e.button !== 0) return;
-        
+
         setIsDragging(true);
         // 「クリックした場所」と「ウィンドウ左上」の差分を保存
         dragOffset.current = {
@@ -73,7 +73,7 @@ export const useWindowFrame = (
 
     // スマホ用
     const handleTouchStartDrag = (e: React.TouchEvent) => {
-    setIsDragging(true);
+        setIsDragging(true);
         const touch = e.touches[0];
         if (!touch) return;
 
@@ -105,7 +105,7 @@ export const useWindowFrame = (
             if (isResizing) {
                 const deltaX = e.clientX - startMousePos.current.x;
                 const deltaY = e.clientY - startMousePos.current.y;
-                
+
                 // 最小サイズ制限（幅200px, 高さ150px）
                 setSize({
                     width: Math.max(200, startSize.current.width + deltaX),
@@ -143,7 +143,7 @@ export const useWindowFrame = (
             setIsDragging(false);
             setIsResizing(false);
         };
-        
+
         if (isDragging || isResizing) {
             window.addEventListener('mousemove', handleMouseMove);
             window.addEventListener('mouseup', handleEnd);

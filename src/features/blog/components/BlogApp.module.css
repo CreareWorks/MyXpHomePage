@@ -446,6 +446,17 @@
     line-height: 1.6;
 }
 
+.detailBody ul,
+.detailBody ol {
+    padding-left: 24px;
+    margin-left: 4px;
+    margin-bottom: 1em;
+}
+
+.detailBody li {
+    margin-bottom: 0.5em;
+}
+
 .detailBody pre {
     white-space: pre-wrap;
     font-family: inherit;

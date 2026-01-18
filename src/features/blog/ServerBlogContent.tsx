@@ -1,6 +1,7 @@
 import { getAllPosts, getPostBySlug } from './utils/fetchPosts';
 import { BlogAppLayout } from './components/BlogAppLayout';
 import { BlogPost } from './types';
+import { MDXRemote } from 'next-mdx-remote/rsc';
 
 interface ServerBlogContentProps {
     slug?: string | undefined;
@@ -12,17 +13,22 @@ interface ServerBlogContentProps {
 export async function ServerBlogContent({ slug }: ServerBlogContentProps) {
     // slugがないときは一覧表示
     const allPosts = await getAllPosts();
-    
+
     let currentPost: BlogPost | null | undefined = undefined;
-    
+    let postContent: React.ReactNode = null;
+
     if (slug) {
-        // 同期版実装済みと仮定
-        currentPost = getPostBySlug(slug);
+        currentPost = await getPostBySlug(slug);
+        if (currentPost) {
+            postContent = <MDXRemote source={currentPost.content} />;
+        }
     }
+
     return (
         <BlogAppLayout
             allPosts={allPosts}
-            currentPost={currentPost ?? undefined} 
+            currentPost={currentPost ?? undefined}
+            postContent={postContent}
         />
     );
 }

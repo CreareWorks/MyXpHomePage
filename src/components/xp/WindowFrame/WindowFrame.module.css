@@ -9,9 +9,9 @@
     flex-direction: column;
     z-index: 100;
 
-    background-color: #ECE9D8; 
+    background-color: #ECE9D8;
     border: 3px solid #0054E3;
-    border-radius: 8px 8px 0 0; 
+    border-radius: 8px 8px 0 0;
     box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.5);
 }
 
@@ -21,27 +21,32 @@
     left: 0 !important;
     width: 100vw !important;
     height: calc(100vh - 30px) !important;
-    
+
     border-radius: 0 !important;
     margin: 0 !important;
     box-shadow: none !important;
     z-index: 1000 !important;
     transform: none !important;
-    
+
     max-width: none !important;
     max-height: none !important;
+
+    border: none !important;
+}
+
+.maximizedWindow .resizer {
+    display: none !important;
 }
 
 .titleBar {
     height: 30px;
 
     background: linear-gradient(180deg,
-        #0058EE 0%, 
-        #3593FF 4%, 
-        #288EFB 18%, 
-        #2461DF 80%, 
-        #0054E3 100%
-    );
+            #0058EE 0%,
+            #3593FF 4%,
+            #288EFB 18%,
+            #2461DF 80%,
+            #0054E3 100%);
 
     display: flex;
     align-items: center;
@@ -49,7 +54,7 @@
 
     padding: 0 5px;
     border-radius: 5px 5px 0 0;
-    user-select: none; 
+    user-select: none;
 }
 
 .titleGroup {
@@ -79,11 +84,10 @@
     width: 21px;
     height: 21px;
 
-    background: linear-gradient(135deg, 
-        #d5e9ff 0%, 
-        #2461DF 40%, 
-        #0054E3 100%
-    );
+    background: linear-gradient(135deg,
+            #d5e9ff 0%,
+            #2461DF 40%,
+            #0054E3 100%);
 
     border: 1px solid #FFFFFF;
     border-radius: 3px;
@@ -96,7 +100,7 @@
     padding-left: 3px;
 
     cursor: pointer;
-    box-shadow: inset 1px 1px 0 rgba(255,255,255,0.3);
+    box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 .maximizeButton:active {
@@ -107,11 +111,10 @@
     width: 21px;
     height: 21px;
 
-    background: linear-gradient(135deg, 
-        #d5e9ff 0%, 
-        #2461DF 40%, 
-        #0054E3 100%
-    );
+    background: linear-gradient(135deg,
+            #d5e9ff 0%,
+            #2461DF 40%,
+            #0054E3 100%);
 
     border: 1px solid #FFFFFF;
     border-radius: 3px;
@@ -124,7 +127,7 @@
     padding-left: 3px;
 
     cursor: pointer;
-    box-shadow: inset 1px 1px 0 rgba(255,255,255,0.3);
+    box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 .minimizeButton:active {
@@ -135,11 +138,10 @@
     width: 21px;
     height: 21px;
 
-    background: linear-gradient(180deg, 
-        #E98E82 0%, 
-        #DC6155 10%, 
-        #C53B2F 100%
-    );
+    background: linear-gradient(180deg,
+            #E98E82 0%,
+            #DC6155 10%,
+            #C53B2F 100%);
 
     border: 1px solid #FFFFFF;
     border-radius: 3px;
@@ -150,7 +152,7 @@
     line-height: 1;
 
     cursor: pointer;
-    box-shadow: inset 1px 1px 0 rgba(255,255,255,0.3);
+    box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 .closeButton:active {
@@ -172,7 +174,7 @@
     width: 24px;
     height: 24px;
 
-    cursor: nwse-resize; 
+    cursor: nwse-resize;
     z-index: 101;
 
     background: radial-gradient(circle at center, #999 2px, transparent 2px);
