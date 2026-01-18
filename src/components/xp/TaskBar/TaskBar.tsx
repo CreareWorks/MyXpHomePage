@@ -3,7 +3,7 @@ import { StartButton } from '@/components/xp/TaskBar/StartMenu/Button/StartButto
 import { StartMenu } from '@/components/xp/TaskBar/StartMenu/Menu/StartMenu';
 import { SystemTray } from './SystemTray/SystemTray';
 import { TaskbarItems } from './TaskbarItems/TaskbarItems';
-import { type DesktopIconId } from '@/constants/desktopIcon';
+import { type DesktopIconId } from '@/constants/desktopIconConstants';
 
 interface TaskBarProps {
     openWindowIds: DesktopIconId[];
@@ -17,9 +17,9 @@ interface TaskBarProps {
     onLogOff: () => void;
 }
 
-export function TaskBar({ 
-    openWindowIds, 
-    activeWindowId, 
+export function TaskBar({
+    openWindowIds,
+    activeWindowId,
     minimizedWindowIds,
     isStartMenuOpen,
     onTaskClick,
@@ -39,7 +39,7 @@ export function TaskBar({
             />
             {/* スタートボタン */}
             <StartButton
-                isOpen={isStartMenuOpen} 
+                isOpen={isStartMenuOpen}
                 onClick={onToggleStartMenu}
             />
 
@@ -52,7 +52,7 @@ export function TaskBar({
             />
 
             {/* システムトレイ */}
-            <SystemTray/>
+            <SystemTray />
         </footer>
     );
 }

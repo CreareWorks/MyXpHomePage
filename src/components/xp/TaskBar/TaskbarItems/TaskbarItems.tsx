@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { DESKTOP_APPS, DesktopAppConfig } from '@/config/desktopApps';
-import { type DesktopIconId } from '@/constants/desktopIcon';
+import { type DesktopIconId } from '@/constants/desktopIconConstants';
 import styles from './TaskbarItems.module.css';
 
 interface TaskbarItemsProps {
@@ -15,7 +15,7 @@ export function TaskbarItems({
     activeWindowId,
     minimizedWindowIds,
     onTaskClick
-}: TaskbarItemsProps){
+}: TaskbarItemsProps) {
     return (
         <div className={styles.container}>
             {openWindowIds.map((id) => {

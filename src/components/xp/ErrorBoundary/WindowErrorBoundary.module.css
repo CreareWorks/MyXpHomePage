@@ -1,0 +1,50 @@
+.container {
+    padding: 20px;
+    color: #333;
+    background-color: #f0f0f0;
+    height: 100%;
+    font-family: 'Tahoma', sans-serif;
+    overflow: auto;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.icon {
+    font-size: 24px;
+    margin-right: 10px;
+}
+
+.title {
+    margin: 0;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.message {
+    font-size: 12px;
+    margin: 0 0 10px 0;
+}
+
+.details {
+    margin-top: 10px;
+    color: #666;
+    font-size: 11px;
+    border: 1px solid #ccc;
+    padding: 5px;
+    background: #fff;
+}
+
+.summary {
+    cursor: pointer;
+    outline: none;
+}
+
+.errorContent {
+    margin: 5px 0 0 0;
+    white-space: pre-wrap;
+    font-family: monospace;
+}

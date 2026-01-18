@@ -1,108 +1,35 @@
-'use client'
-
-import styles from '@/app/page.module.css';
-import { DesktopIcon } from '@/components/xp/DesktopIcon/DesktopIcon';
-import { WindowFrame } from '@/components/xp/WindowFrame/WindowFrame';
-import { TaskBar } from '@/components/xp/TaskBar/TaskBar';
-
-import { DESKTOP_APPS } from '@/config/desktopApps';
-
-import { useDesktop } from '@/hooks/useDesktop';
 import { Suspense } from 'react';
+import { DesktopContent } from '@/components/DesktopContent';
+import { DESKTOP_APP_CONFIGS } from '@/config/desktopApps';
+import { Content as AboutContent } from '@/features/about/Content';
+import { ServerBlogContent } from '@/features/blog/ServerBlogContent';
+import { Content as PortfolioContent } from '@/features/portfolio/Content';
+import { Content as RssContent } from '@/features/rss/Content';
+import { Content as SkillsheetContent } from '@/features/skillsheet/Content';
 
-function DesktopContent() {
-  const {
-    selectedIconId,
-    openWindowIds,
-    activeWindowId,
-    minimizedWindowIds,
-    maximizedWindowIds,
-    isStartMenuOpen,
-    selectIcon,
-    openWindow,
-    closeWindow,
-    minimizeWindow,
-    focusWindow,
-    handleTaskClick,
-    toggleMaximizeWindow,
-    toggleStartMenu,
-    closeStartMenu,
-    closeAllWindows,
-  } = useDesktop();
-
-  return (
-    <main
-      className={styles.mainContainer}
-      onClick={() => selectIcon(null)}
-    >
-      {/* デスクトップアイコン */}
-      {DESKTOP_APPS.map((app) => (
-        <DesktopIcon
-          key={app.id}
-          label={app.title}
-          icon={app.icon}
-          isSelected={selectedIconId === app.id}
-          onClick={() => selectIcon(app.id)}
-          onDoubleClick={() => openWindow(app.id)}
-        />
-      ))}
-
-      {/* ウィンドウ描画 */}
-      {DESKTOP_APPS.map((app) => {
-        if (!openWindowIds.includes(app.id)) return null;
-
-        const isMinimized = minimizedWindowIds.includes(app.id);
-        const isMaximized = maximizedWindowIds.includes(app.id);
-        const isActive = activeWindowId === app.id;
-
-        return (
-          <div
-            key={app.id}
-            className={`
-              ${styles.windowWrapper} 
-              ${isActive ? styles.active : ''} 
-              ${isMinimized ? styles.hidden : ''}
-            `}
-            // ウィンドウ領域をクリック(MouseDown)した時点で最前面にする
-            onMouseDown={() => focusWindow(app.id)}
-          >
-            {/* アクティブなら手前(z:100)、それ以外は奥(z:1) */}
-            <div className={styles.windowContent}>
-              <WindowFrame
-                title={app.title}
-                icon={app.icon}
-                isMaximized={isMaximized}
-                onClose={() => closeWindow(app.id)}
-                onMinimize={() => minimizeWindow(app.id)}
-                onMaximize={() => toggleMaximizeWindow(app.id)}
-              >
-                {app.component}
-              </WindowFrame>
-            </div>
-          </div>
-        );
-      })}
-
-      {/* タスクバー */}
-      <TaskBar
-        openWindowIds={openWindowIds}
-        activeWindowId={activeWindowId}
-        minimizedWindowIds={minimizedWindowIds}
-        isStartMenuOpen={isStartMenuOpen}
-        onTaskClick={handleTaskClick}
-        onToggleStartMenu={toggleStartMenu}
-        onCloseStartMenu={closeStartMenu}
-        onAppClick={openWindow}
-        onLogOff={closeAllWindows}
-      />
-    </main>
-  );
+interface PageProps {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
-export default function DesktopPage() {
+/**
+ * メインデスクトップページ
+ */
+export default async function DesktopPage({ searchParams}: PageProps ) {
+
+  const params = await searchParams;
+  const slug = typeof params?.slug === 'string' ? params.slug : undefined;;
+
   return (
     <Suspense fallback={<div>Loading XP...</div>}>
-      <DesktopContent />
+      <DesktopContent configs={DESKTOP_APP_CONFIGS}>
+        {{
+          about: <AboutContent />,
+          blog: <ServerBlogContent slug={slug} />,
+          portfolio: <PortfolioContent />,
+          rss: <RssContent />,
+          skills: <SkillsheetContent />,
+        }}
+      </DesktopContent>
     </Suspense>
   );
 }

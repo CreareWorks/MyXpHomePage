@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect, useRef, RefObject } from 'react';
 import { useQueryState, parseAsString } from 'nuqs';
-import { DESKTOP_ICON_IDS, type DesktopIconId } from '@/constants/desktopIcon';
+import { DESKTOP_ICON_IDS, type DesktopIconId } from '@/constants/desktopIconConstants';
 
 export const useDesktop = () => {
     const [appId, setAppId] = useQueryState('app', parseAsString.withOptions({ history: 'push' }));

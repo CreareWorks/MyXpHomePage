@@ -3,7 +3,7 @@ import Image from 'next/image';
 import styles from './StartMenu.module.css';
 import { DESKTOP_APPS } from '@/config/desktopApps';
 import { SOCIAL_LINKS } from '@/config/socialLinks';
-import { type DesktopIconId } from '@/constants/desktopIcon';
+import { type DesktopIconId } from '@/constants/desktopIconConstants';
 import userCover from '@/assets/userCover.png';
 
 interface StartMenuProps {
@@ -13,11 +13,11 @@ interface StartMenuProps {
     onLogOff: () => void;
 }
 
-export const StartMenu = ({ 
+export const StartMenu = ({
     isOpen,
     onClose,
     onAppClick,
-    onLogOff 
+    onLogOff
 }: StartMenuProps) => {
     if (!isOpen) return null;
 
@@ -34,10 +34,10 @@ export const StartMenu = ({
                 {/* ヘッダー */}
                 <div className={styles.header}>
                     <div className={styles.userIconFrame}>
-                        <Image 
-                            src={userCover} 
+                        <Image
+                            src={userCover}
                             alt="プロフィール画像"
-                            className={styles.profileImage} 
+                            className={styles.profileImage}
                         />
                     </div>
                     <span className={styles.userName}>大島 遥汰 / Creare Works</span>
@@ -48,13 +48,13 @@ export const StartMenu = ({
                     {/* 左カラム：アプリ一覧 (About, Portfolio, etc.) */}
                     <div className={styles.leftColumn}>
                         {DESKTOP_APPS.map((app) => (
-                            <div 
-                                key={app.id} 
+                            <div
+                                key={app.id}
                                 className={styles.menuItem}
                                 onClick={() => onAppClick(app.id)}
                             >
-                                <Image 
-                                    src={app.icon} 
+                                <Image
+                                    src={app.icon}
                                     alt="アプリ画像"
                                     className={styles.appIcon}
                                 />
@@ -68,16 +68,16 @@ export const StartMenu = ({
                     {/* 右カラム：ソーシャルリンク一覧 (GitHub, Qiita, etc.) */}
                     <div className={styles.rightColumn}>
                         {SOCIAL_LINKS.map((link) => (
-                            <a 
-                                key={link.id} 
-                                href={link.url} 
-                                target="_blank" 
-                                rel="noopener noreferrer" 
+                            <a
+                                key={link.id}
+                                href={link.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 className={styles.menuItem}
                             >
-                                <Image 
-                                    src={link.icon} 
-                                    alt="ソーシャルアイコンがぞう" 
+                                <Image
+                                    src={link.icon}
+                                    alt="ソーシャルアイコンがぞう"
                                     className={styles.socialIcon}
                                 />
                                 <div className={styles.itemText}>
@@ -90,17 +90,17 @@ export const StartMenu = ({
 
                 {/* フッター */}
                 <div className={styles.footer}>
-                    <button 
-                        className={styles.logOffButton} 
+                    <button
+                        className={styles.logOffButton}
                         onClick={onLogOff}
                         title="開いているウィンドウをすべて閉じます"
                     >
                         <div className={styles.logOffIcon}>🔑</div>
                         <span>ログオフ</span>
                     </button>
-                    
-                    <button 
-                        className={styles.shutDownButton} 
+
+                    <button
+                        className={styles.shutDownButton}
                         onClick={handleShutDown}
                         title="このタブを閉じます"
                     >

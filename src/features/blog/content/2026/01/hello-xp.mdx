@@ -1,0 +1,16 @@
+---
+title: "XP風ポートフォリオの開発ログ"
+date: "2024-01-05"
+category: "Tech"
+tags: ["Next.js", "Architecture", "Server Components"]
+description: "server-onlyライブラリを導入して、セキュアな設計にしました。"
+---
+
+## server-only について
+
+このブログ機能は `server-only` パッケージを使用しており、
+ファイルシステムへのアクセスロジックがクライアントに漏洩することを防いでいます。
+
+### ディレクトリ構成
+
+Feature-Firstな構成を採用し、機能ごとの独立性を高めています。
