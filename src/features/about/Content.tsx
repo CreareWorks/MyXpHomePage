@@ -1,74 +1,38 @@
+'use client';
+
 import React from "react";
-import Image from "next/image";
+import { useQueryState, parseAsString } from 'nuqs';
 import styles from './About.module.css';
-import { SOCIAL_LINKS } from "@/config/socialLinks";
-import profileImage from '@/assets/userCover.png';
+import { Sidebar } from "./components/Sidebar";
+import { ProfileHeader } from "./components/ProfileHeader";
+import { AboutBody } from "./components/AboutBody";
 
 export function Content() {
+    const [, setApp] = useQueryState('app', parseAsString.withDefault('').withOptions({ history: 'push' }));
+    const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
+
+    const navigateTo = (id: string) => {
+        setApp(id);
+        setIsSidebarOpen(false);
+    };
+
     return (
-        <div className={styles.container}>
-            <div className={styles.profileHeader}>
-                <div className={styles.avatar}>
-                    <Image
-                        src={profileImage}
-                        alt="Profile"
-                        width={80}
-                        height={80}
-                        style={{ objectFit: 'cover' }}
-                    />
-                </div>
-                <div className={styles.nameGroup}>
-                    <h1>Youta Oshima</h1>
-                    <div className={styles.role}>
-                        <span>Web Developer</span>
-                        <span className={styles.tag}>Creare</span>
-                    </div>
-                </div>
-            </div>
+        <div className={`${styles.container} ${isSidebarOpen ? styles.sidebarOpen : ''}`}>
+            <button
+                className={styles.menuButton}
+                onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+            >
+                {isSidebarOpen ? '閉じる' : 'メニュー'}
+            </button>
 
-            <section className={styles.section}>
-                <h2 className={styles.sectionTitle}>Introduction</h2>
-                <div className={styles.text}>
-                    <p>
-                        はじめまして、大島（Creare）です。<br />
-                        都内でWebエンジニアとして働いています。
-                    </p>
-                    <p>
-                        開発自体だけでなく、人への関心(マネジメント)や組織設計等にも関心を高く持って日々の業務に当たるように心がけています。
-                    </p>
-                    <p>
-                        当サイトは"Windows XP" をテーマに、懐かしさと新しさが同居する体験を求めてこれからも更新していく予定です。
-                    </p>
-                </div>
-            </section>
+            <div className={styles.overlay} onClick={() => setIsSidebarOpen(false)} />
 
-            <section className={styles.section}>
-                <h2 className={styles.sectionTitle}>Connections & Skills</h2>
-                <div className={styles.linkGrid}>
-                    {SOCIAL_LINKS.map((link) => (
-                        <a
-                            key={link.id}
-                            href={link.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className={styles.linkCard}
-                        >
-                            <div className={styles.linkIconWrapper}>
-                                <Image
-                                    src={link.icon}
-                                    alt={link.title}
-                                    width={32}
-                                    height={32}
-                                />
-                            </div>
-                            <div className={styles.linkInfo}>
-                                <span className={styles.linkTitle}>{link.title}</span>
-                                <span className={styles.linkDesc}>{link.description}</span>
-                            </div>
-                        </a>
-                    ))}
-                </div>
-            </section>
+            <Sidebar onNavigate={navigateTo} />
+
+            <main className={styles.mainContent}>
+                <ProfileHeader />
+                <AboutBody />
+            </main>
         </div>
     );
 }

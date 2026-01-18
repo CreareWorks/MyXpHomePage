@@ -1,160 +1,273 @@
 .container {
-    padding: 32px;
-    background-color: #fff;
+    display: flex;
     height: 100%;
-    overflow-y: auto;
+    background-color: #fff;
     font-family: "Tahoma", "Verdana", sans-serif;
-    color: #333;
+    overflow: hidden;
+    position: relative;
 }
 
-/* プロフィールヘッダー */
-.profileHeader {
-    display: flex;
-    align-items: center;
-    gap: 24px;
-    margin-bottom: 40px;
-    border-bottom: 1px solid #e0e0e0;
-    padding-bottom: 24px;
-}
-
-.avatar {
-    width: 80px;
-    height: 80px;
-    background: linear-gradient(135deg, #245DDA, #0054E3);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 40px;
-    color: white;
-    box-shadow: 0 4px 10px rgba(36, 93, 218, 0.3);
-    border: 3px solid #fff;
-}
-
-.nameGroup {
+/* 左側のサイドバー (XPタスクペイン風) */
+.sidebar {
+    width: 240px;
+    background: linear-gradient(to bottom, #74a1f1 0%, #3b6bd3 100%);
+    padding: 12px;
     display: flex;
     flex-direction: column;
+    gap: 16px;
+    color: white;
+    transition: transform 0.3s ease;
+    z-index: 10;
 }
 
-.nameGroup h1 {
-    font-size: 28px;
+.sidebarSection {
+    background: #fff;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.sidebarHeader {
+    background: linear-gradient(to right, #ffffff 0%, #cbd9f9 100%);
+    padding: 5px 10px;
+    font-weight: bold;
+    font-size: 11px;
+    color: #215dc6;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sidebarContent {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.sidebarLink {
+    font-size: 11px;
+    color: #215dc6;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 2px 4px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.sidebarIcon {
+    display: flex;
+    align-items: center;
+    width: 16px;
+    height: 16px;
+}
+
+.sidebarLink:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+    color: #003399;
+}
+
+.sidebarDetail {
+    font-size: 11px;
+    color: #333;
+    line-height: 1.4;
+}
+
+/* 右側のメインコンテンツ */
+.mainContent {
+    flex: 1;
+    padding: 30px;
+    overflow-y: auto;
+    background-color: #fff;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.avatarWrapper {
+    position: relative;
+    width: 96px;
+    height: 96px;
+    padding: 6px;
+    background: #fff;
+    border: 1px solid #71adff;
+    border-radius: 4px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+.avatarImage {
+    border-radius: 2px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.titleInfo h1 {
+    font-size: 32px;
+    color: #003399;
     margin: 0;
-    color: #245DDA;
-    letter-spacing: 0.5px;
+    font-weight: 500;
+    letter-spacing: -0.5px;
 }
 
-.role {
+.subtitle {
     font-size: 14px;
     color: #666;
-    margin-top: 6px;
-    display: flex;
-    gap: 8px;
-    align-items: center;
+    margin-top: 4px;
 }
 
 .tag {
-    background-color: #e6f0ff;
-    color: #245DDA;
-    padding: 2px 8px;
-    border-radius: 12px;
+    display: inline-block;
+    background: #004ecc;
+    color: white;
+    padding: 1px 6px;
+    border-radius: 3px;
     font-size: 11px;
-    font-weight: bold;
+    margin-top: 4px;
 }
 
-/* セクション共通 */
+/* コンテンツセクション */
 .section {
-    margin-bottom: 40px;
+    margin-bottom: 32px;
 }
 
 .sectionTitle {
-    font-size: 18px;
-    color: #245DDA;
-    border-left: 5px solid #245DDA;
-    padding-left: 12px;
-    margin-bottom: 20px;
+    font-size: 13px;
     font-weight: bold;
-    display: flex;
-    align-items: center;
+    color: #003399;
+    border-bottom: 1px solid #b5c4df;
+    padding-bottom: 4px;
+    margin-bottom: 15px;
 }
 
-.text {
-    line-height: 1.8;
-    color: #444;
-    font-size: 14px;
+.paragraph {
+    font-size: 13px;
+    line-height: 1.6;
+    color: #333;
+    margin-bottom: 12px;
 }
 
-.text p {
-    margin-bottom: 1.2em;
-}
-
-/* SNSリンクグリッド */
+/* 接続リンク (コントロールパネル風) */
 .linkGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
 }
 
-.linkCard {
+.linkItem {
     display: flex;
     align-items: center;
-    padding: 16px;
-    background: #f8f9fa;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
+    gap: 12px;
     text-decoration: none;
-    color: #333;
-    transition: all 0.2s ease;
-    position: relative;
-    overflow: hidden;
+    color: #000;
+    padding: 8px;
+    border-radius: 4px;
+    transition: background 0.2s;
 }
 
-.linkCard:hover {
-    background: #fff;
-    border-color: #245DDA;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(36, 93, 218, 0.15);
+.linkItem:hover {
+    background-color: #e8f0ff;
+    text-decoration: underline;
 }
 
-.linkIconWrapper {
-    margin-right: 16px;
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+.linkIcon {
+    width: 32px;
+    height: 32px;
 }
 
-.linkIconWrapper img {
-    border-radius: 6px;
-}
-
-.linkInfo {
+.linkTexts {
     display: flex;
     flex-direction: column;
 }
 
-.linkTitle {
+.linkName {
+    font-size: 12px;
     font-weight: bold;
-    font-size: 15px;
-    color: #245DDA;
-    margin-bottom: 2px;
+    color: #0033bb;
 }
 
-.linkDesc {
+.linkDescription {
     font-size: 11px;
-    color: #777;
+    color: #666;
 }
 
-/* レスポンシブ */
-@media (max-width: 600px) {
-    .container {
-        padding: 20px;
+/* モバイル用のメニューボタン */
+.menuButton {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 100;
+    background: linear-gradient(180deg, #3c8140 0%, #195221 100%);
+    color: #FFFFFF;
+    border: 1px solid #fff;
+    border-radius: 4px;
+    padding: 4px 12px;
+    font-size: 14px;
+    font-weight: 600;
+    font-style: italic;
+    cursor: pointer;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+.menuButton:hover {
+    filter: brightness(1.1);
+}
+
+/* オーバーレイ（サイドバーが開いている時にメインコンテンツを暗くする） */
+.overlay {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 5;
+}
+
+@media (max-width: 768px) {
+    .menuButton {
+        display: block;
     }
 
-    .profileHeader {
+    .sidebar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        transform: translateX(-100%);
+        box-shadow: 4px 0 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .container.sidebarOpen .sidebar {
+        transform: translateX(0);
+    }
+
+    .container.sidebarOpen .overlay {
+        display: block;
+    }
+
+    .mainContent {
+        padding-top: 50px;
+        /* メニューボタン分の余白 */
+    }
+
+    .header {
         flex-direction: column;
         text-align: center;
-        gap: 16px;
+        gap: 15px;
     }
 
-    .role {
-        justify-content: center;
+    .titleInfo h1 {
+        font-size: 26px;
     }
 
     .linkGrid {

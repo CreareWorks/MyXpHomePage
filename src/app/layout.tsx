@@ -3,7 +3,7 @@ import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import '@/app/globals.css';
 
 export const metadata: Metadata = {
-  title: 'Youta Xp Portfolio',
+  title: 'youta.dev',
   description: 'Windows XPをモチーフにしたポートフォリオサイト',
 }
 
