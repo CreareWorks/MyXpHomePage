@@ -1,8 +1,9 @@
+import { BlogCategory } from '@/constants/blogConstants';
+
 export type PostMetadata = {
     title: string;
     date: string;
-    category: string;
-    tags: string[];
+    category: BlogCategory;
     description: string;
     slug: string;
 };

@@ -1,10 +1,10 @@
 'use client';
 
 import React, { useState, useMemo, useTransition, useEffect } from 'react';
-import styles from './BlogApp.module.css';
+import styles from '@/features/blog/components/BlogApp.module.css';
 import { PostMetadata, BlogPost } from '@/features/blog/types/index';
 import { useQueryState } from 'nuqs';
-import { BLOG_FILTER_TYPES, BlogFilterType } from '@/constants/blogConstants';
+import { BLOG_FILTER_TYPES, BlogFilterType, BLOG_CATEGORIES } from '@/constants/blogConstants';
 
 interface BlogAppLayoutProps {
     allPosts: PostMetadata[];
@@ -89,7 +89,7 @@ export const BlogAppLayout = ({ allPosts, currentPost }: BlogAppLayoutProps) => 
                 : true;
 
             // ジャンル (メタデータ or 仮)
-            const postCategory = (post as any).category || 'General';
+            const postCategory = post.category || BLOG_CATEGORIES.OTHER;
             const matchGenre = selectedGenre
                 ? postCategory === selectedGenre
                 : true;
@@ -106,7 +106,7 @@ export const BlogAppLayout = ({ allPosts, currentPost }: BlogAppLayoutProps) => 
 
     // リスト作成（ジャンル）
     const genres = useMemo(() => {
-        const cats = new Set(allPosts.map(p => (p as any).category || 'General'));
+        const cats = new Set(allPosts.map(p => p.category || BLOG_CATEGORIES.OTHER));
         return Array.from(cats).sort();
     }, [allPosts]);
 
@@ -286,7 +286,7 @@ export const BlogAppLayout = ({ allPosts, currentPost }: BlogAppLayoutProps) => 
                                 </div>
                             ) : (
                                 <div className={styles.noItemsMessage}>
-                                    No items match your search.
+                                    記事が見つかりませんでした。
                                 </div>
                             )}
                         </div>

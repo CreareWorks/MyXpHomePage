@@ -4,8 +4,23 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import { PostMetadata, BlogPost } from '../types';
+import { BLOG_CATEGORIES, BlogCategory } from '@/constants/blogConstants';
 
 const postsDirectory = path.join(process.cwd(), 'src/features/blog/content');
+
+/**
+ * カテゴリのバリデーションとフォールバック処理
+ */
+const validateCategory = (category: any): BlogCategory => {
+    // 定数の値リストを取得
+    const validCategories = Object.values(BLOG_CATEGORIES) as string[];
+
+    if (validCategories.includes(category)) {
+        return category as BlogCategory;
+    }
+
+    return BLOG_CATEGORIES.OTHER;
+};
 
 /**
  * 指定したディレクトリ以下の全てのファイルを再帰的に取得するヘルパー関数
@@ -49,7 +64,7 @@ export const getAllPosts = (): PostMetadata[] => {
             // gray-matterでメタデータ解析
             const { data } = matter(fileContents);
 
-            // ファイル名をスラッグとして使用 (拡張子除去)
+            // ファイル名をスラッグとして使用 (拡張子除去しておく)
             const fileName = path.basename(filePath);
             const slug = fileName.replace(/\.mdx$/, '');
 
@@ -57,8 +72,7 @@ export const getAllPosts = (): PostMetadata[] => {
                 slug,
                 title: data.title,
                 date: data.date,
-                category: data.category,
-                tags: data.tags || [],
+                category: validateCategory(data.category),
                 description: data.description || '',
             } as PostMetadata;
         });
@@ -90,8 +104,7 @@ export const getPostBySlug = (slug: string): BlogPost | null => {
             slug,
             title: data.title,
             date: data.date,
-            category: data.category,
-            tags: data.tags || [],
+            category: validateCategory(data.category),
             description: data.description || '',
         };
 

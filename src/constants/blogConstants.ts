@@ -9,3 +9,12 @@ export const BLOG_FILTER_TYPES = {
 } as const;
 
 export type BlogFilterType = typeof BLOG_FILTER_TYPES[keyof typeof BLOG_FILTER_TYPES];
+
+// ブログカテゴリ定義
+export const BLOG_CATEGORIES = {
+    TECH: 'Tech',
+    LIFE: 'Life',
+    OTHER: 'Other',
+} as const;
+
+export type BlogCategory = typeof BLOG_CATEGORIES[keyof typeof BLOG_CATEGORIES];
