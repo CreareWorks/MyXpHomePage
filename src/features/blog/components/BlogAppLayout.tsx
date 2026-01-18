@@ -1,10 +1,13 @@
 'use client';
 
-import React, { useState, useMemo, useTransition, useEffect } from 'react';
+import React, { useState, useMemo, useTransition } from 'react';
 import styles from '@/features/blog/components/BlogApp.module.css';
 import { PostMetadata, BlogPost } from '@/features/blog/types/index';
 import { useQueryState } from 'nuqs';
-import { BLOG_FILTER_TYPES, BlogFilterType, BLOG_CATEGORIES } from '@/constants/blogConstants';
+import { BLOG_CATEGORIES } from '@/constants/blogConstants';
+import { BlogToolbar } from './BlogToolbar';
+import { BlogSidebar } from './BlogSidebar';
+import { BlogMainContent } from './BlogMainContent';
 
 interface BlogAppLayoutProps {
     allPosts: PostMetadata[];
@@ -110,20 +113,29 @@ export const BlogAppLayout = ({ allPosts, currentPost }: BlogAppLayoutProps) => 
         return Array.from(cats).sort();
     }, [allPosts]);
 
-    // フィルタ操作ハンドラ
-    const handleFilter = (type: BlogFilterType, value: string) => {
-        if (currentPost) navigate(null); // 詳細から一覧に戻る履歴を追加
-
-        if (type === BLOG_FILTER_TYPES.DATE) {
-            setSelectedDate(prev => prev === value ? null : value);
-        } else if (type === BLOG_FILTER_TYPES.GENRE) {
-            setSelectedGenre(prev => prev === value ? null : value);
-        }
-    };
-
     const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchQuery(e.target.value);
         if (currentPost) navigate(null);
+    };
+
+    // フィルタ操作ハンドラ（ラッパー）
+    const onFilterGenre = (genre: string) => {
+        if (currentPost) navigate(null);
+        setSelectedGenre(prev => prev === genre ? null : genre);
+    };
+
+    const onFilterDate = (date: string) => {
+        if (currentPost) navigate(null);
+        setSelectedDate(prev => prev === date ? null : date);
+    };
+
+    const onUp = () => {
+        if (currentPost) {
+            navigate(null);
+        }
+        setSearchQuery('');
+        setSelectedDate(null);
+        setSelectedGenre(null);
     };
 
     // ツールバーのアドレス表示用テキスト生成
@@ -139,159 +151,38 @@ export const BlogAppLayout = ({ allPosts, currentPost }: BlogAppLayoutProps) => 
 
     return (
         <div className={styles.container}>
-            {/* ツールバー */}
-            <div className={styles.toolbar}>
-                <div className={styles.toolbarContainer}>
-                    <div className={styles.navRow}>
-                        <div
-                            className={`${styles.backButtonContainer} ${!canGoBack ? styles.disabled : ''}`}
-                            onClick={canGoBack ? goBack : undefined}
-                            title="Back"
-                        >
-                            <div className={styles.xpBackButton}>
-                                ←
-                            </div>
-                            <span className={styles.xpBackText}>戻る</span>
-                            <div className={styles.xpDropdown}>▼</div>
-                        </div>
-                        <button
-                            className={styles.xpForwardButton}
-                            onClick={goForward}
-                            disabled={!canGoForward}
-                            title="Forward"
-                        >
-                            →
-                        </button>
-
-                        <button
-                            className={styles.upButton}
-                            onClick={() => {
-                                if (currentPost) {
-                                    navigate(null);
-                                }
-                                setSearchQuery('');
-                                setSelectedDate(null);
-                                setSelectedGenre(null);
-                            }}
-                            title="Up"
-                        >
-                            📁
-                        </button>
-
-                        <button
-                            className={styles.hamburger}
-                            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                        >
-                            ☰
-                        </button>
-                    </div>
-
-                    <div className={styles.navRow}>
-                        <div className={styles.addressLabel}>Address</div>
-                        <div className={styles.addressInput}>
-                            <span className={styles.addressIcon}>📂</span>
-                            {getAddressText()}
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <BlogToolbar
+                canGoBack={canGoBack}
+                canGoForward={canGoForward}
+                goBack={goBack}
+                goForward={goForward}
+                onUp={onUp}
+                isSidebarOpen={isSidebarOpen}
+                toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
+                addressText={getAddressText()}
+            />
 
             <div className={styles.mainArea}>
-                {/* サイドバー: 検索 & フィルタ */}
-                <div className={`${styles.sidebar} ${isSidebarOpen ? styles.open : ''}`}>
-                    {/* 検索 */}
-                    <div className={styles.sidebarBox}>
-                        <div className={styles.sidebarHeader}>Search</div>
-                        <div className={styles.sidebarContent}>
-                            <input
-                                type="text"
-                                className={styles.searchInput}
-                                placeholder="Search titles..."
-                                value={searchQuery}
-                                onChange={handleSearch}
-                            />
-                        </div>
-                    </div>
+                <BlogSidebar
+                    isOpen={isSidebarOpen}
+                    searchQuery={searchQuery}
+                    onSearchChange={handleSearch}
+                    genres={genres}
+                    selectedGenre={selectedGenre}
+                    onFilterGenre={onFilterGenre}
+                    archiveDates={archiveDates}
+                    selectedDate={selectedDate}
+                    onFilterDate={onFilterDate}
+                />
 
-                    {/* ジャンル */}
-                    <div className={styles.sidebarBox}>
-                        <div className={styles.sidebarHeader}>Categories</div>
-                        <div className={styles.sidebarContent}>
-                            {genres.map(genre => (
-                                <div
-                                    key={genre}
-                                    className={`${styles.filterItem} ${selectedGenre === genre ? styles.active : ''}`}
-                                    onClick={() => handleFilter(BLOG_FILTER_TYPES.GENRE, genre)}
-                                >
-                                    📁 {genre}
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-
-                    {/* 日付アーカイブ */}
-                    <div className={styles.sidebarBox}>
-                        <div className={styles.sidebarHeader}>Archives</div>
-                        <div className={styles.sidebarContent}>
-                            {archiveDates.map(date => (
-                                <div
-                                    key={date}
-                                    className={`${styles.filterItem} ${selectedDate === date ? styles.active : ''}`}
-                                    onClick={() => handleFilter(BLOG_FILTER_TYPES.DATE, date)}
-                                >
-                                    📅 {date}
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-
-                {/* メイン表示エリア */}
-                <div className={styles.contentArea}>
-                    {currentPost ? (
-                        // 詳細表示
-                        <div className={styles.detailContainer}>
-                            <h1 className={styles.detailTitle}>{currentPost.metadata.title}</h1>
-                            <div className={styles.detailMeta}>
-                                {currentPost.metadata.date}
-                            </div>
-                            <div className={`markdown-body ${styles.detailBody}`}>
-                                <pre>{currentPost.content}</pre>
-                            </div>
-                        </div>
-                    ) : (
-                        // 一覧表示（フィルタ適用後）
-                        <div className={styles.listContainer}>
-                            {(searchQuery || selectedDate || selectedGenre) && (
-                                <div className={styles.filterInfo}>
-                                    Filter: {searchQuery} {selectedGenre} {selectedDate} ({filteredPosts.length} items)
-                                </div>
-                            )}
-
-                            {filteredPosts.length > 0 ? (
-                                <div className={styles.fileGrid}>
-                                    {filteredPosts.map((post) => (
-                                        <div
-                                            key={post.slug}
-                                            className={styles.fileItem}
-                                            // ダブルクリックで詳細へ履歴移動
-                                            onDoubleClick={() => navigate(post.slug)}
-                                            title={post.title}
-                                        >
-                                            <div className={styles.fileIcon}>📄</div>
-                                            <span className={styles.fileLabel}>{post.title}</span>
-                                            <span className={styles.fileDate}>{post.date}</span>
-                                        </div>
-                                    ))}
-                                </div>
-                            ) : (
-                                <div className={styles.noItemsMessage}>
-                                    記事が見つかりませんでした。
-                                </div>
-                            )}
-                        </div>
-                    )}
-                </div>
+                <BlogMainContent
+                    currentPost={currentPost}
+                    filteredPosts={filteredPosts}
+                    searchQuery={searchQuery}
+                    selectedGenre={selectedGenre}
+                    selectedDate={selectedDate}
+                    onNavigate={navigate}
+                />
             </div>
         </div>
     );

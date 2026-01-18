@@ -1,4 +1,5 @@
 import 'server-only';
+import { cache } from 'react';
 
 import fs from 'fs';
 import path from 'path';
@@ -51,7 +52,7 @@ const getFilesRecursively = (dir: string): string[] => {
 /**
  * 全ての記事のメタデータを取得する (一覧表示用)
  */
-export const getAllPosts = (): PostMetadata[] => {
+export const getAllPosts = cache((): PostMetadata[] => {
     // 再帰的に全MDXファイルのパスを取得
     const allFiles = getFilesRecursively(postsDirectory);
 
@@ -79,12 +80,12 @@ export const getAllPosts = (): PostMetadata[] => {
 
     // 日付の新しい順にソート (降順)
     return allPosts.sort((a, b) => (a.date < b.date ? 1 : -1));
-};
+});
 
 /**
  * 特定の記事を取得する (詳細表示用)
  */
-export const getPostBySlug = (slug: string): BlogPost | null => {
+export const getPostBySlug = cache((slug: string): BlogPost | null => {
     // ファイルパスを特定するために全探索 (年月フォルダ構造のため)
     const allFiles = getFilesRecursively(postsDirectory);
 
@@ -116,13 +117,13 @@ export const getPostBySlug = (slug: string): BlogPost | null => {
         console.error(`Error reading post ${slug}:`, error);
         return null;
     }
-};
+});
 
 /**
  * 全カテゴリ一覧を取得する (重複なし)
  */
-export const getAllCategories = (): string[] => {
+export const getAllCategories = cache((): string[] => {
     const posts = getAllPosts();
     const categories = new Set(posts.map((post) => post.category));
     return Array.from(categories).sort();
-};
+});
