@@ -211,13 +211,15 @@
     }
 
     .mainContent {
-        padding-top: 60px;
+        padding: 15px;
+        padding-top: 40px;
     }
 
     .header {
         flex-direction: column;
         text-align: center;
         gap: 15px;
+        margin-bottom: 20px;
     }
 
     .titleInfo h1 {

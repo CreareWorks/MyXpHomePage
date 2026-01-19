@@ -20,7 +20,7 @@ interface BlogAppLayoutProps {
 export const BlogAppLayout = ({ allPosts, currentPost, postContent }: BlogAppLayoutProps) => {
     // 状態管理
     const { isSidebarOpen, toggleSidebar, closeSidebar } = useMobileSidebar();
-    const [, startTransition] = useTransition();
+    const [isPending, startTransition] = useTransition();
 
     // フィルタ条件のState
     const [searchQuery, setSearchQuery] = useState('');
@@ -187,6 +187,7 @@ export const BlogAppLayout = ({ allPosts, currentPost, postContent }: BlogAppLay
                     searchQuery={searchQuery}
                     selectedGenre={selectedGenre}
                     selectedDate={selectedDate}
+                    isLoading={isPending}
                     onNavigate={navigate}
                 />
             </div>

@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import '@/app/globals.css';
 
@@ -7,12 +7,20 @@ export const metadata: Metadata = {
   description: 'Windows XPをモチーフにしたポートフォリオサイト',
 }
 
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  viewportFit: 'cover',
+}
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  return(
+  return (
     <html lang='ja'>
       <body>
         <NuqsAdapter>

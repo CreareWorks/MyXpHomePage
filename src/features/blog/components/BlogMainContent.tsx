@@ -9,6 +9,7 @@ interface BlogMainContentProps {
     searchQuery: string;
     selectedGenre: string | null;
     selectedDate: string | null;
+    isLoading?: boolean;
     onNavigate: (slug: string) => void;
 }
 
@@ -19,10 +20,17 @@ export const BlogMainContent = ({
     searchQuery,
     selectedGenre,
     selectedDate,
+    isLoading,
     onNavigate,
 }: BlogMainContentProps) => {
     return (
         <div className={styles.contentArea}>
+            {isLoading && (
+                <div className={styles.loadingOverlay}>
+                    <div className={styles.searchFlashlight}>🔦</div>
+                    <div className={styles.loadingText}>読込み中...</div>
+                </div>
+            )}
             {currentPost ? (
                 // 詳細表示
                 <div className={styles.detailContainer}>
@@ -49,8 +57,7 @@ export const BlogMainContent = ({
                                 <div
                                     key={post.slug}
                                     className={styles.fileItem}
-                                    // ダブルクリックで詳細へ履歴移動
-                                    onDoubleClick={() => onNavigate(post.slug)}
+                                    onClick={() => onNavigate(post.slug)}
                                     title={post.title}
                                 >
                                     <div className={styles.fileIcon}>📄</div>
