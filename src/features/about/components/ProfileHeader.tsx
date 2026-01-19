@@ -15,6 +15,7 @@ export function ProfileHeader() {
                     width={82}
                     height={82}
                     className={styles.avatarImage}
+                    priority
                 />
             </div>
             <div className={styles.titleInfo}>

@@ -9,6 +9,7 @@ import { PortfolioList } from './PortfolioList';
 import { PortfolioDetail } from './PortfolioDetail';
 import { MobileMenu } from '@/components/xp/WindowAppLayout/MobileMenu';
 import { useMobileSidebar } from '@/hooks/useMobileSidebar';
+import { AddressBar } from '@/components/xp/AddressBar/AddressBar';
 
 export function PortfolioApp() {
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -38,10 +39,10 @@ export function PortfolioApp() {
                 onClose={closeSidebar}
             />
             <div className={styles.toolbar}>
-                <div style={{ fontSize: '11px', color: '#666' }}>Portfolio Explorer</div>
-                <div className={styles.addressBar}>
-                    My Documents\My Portfolio{currentProject ? `\\${currentProject.metadata.title}` : selectedCategory ? `\\${selectedCategory}` : ''}
-                </div>
+                <div style={{ fontSize: '11px', color: '#666' }}>Address</div>
+                <AddressBar
+                    address={`My Documents\\My Portfolio${currentProject ? `\\${currentProject.metadata.title}` : selectedCategory ? `\\${selectedCategory}` : ''}`}
+                />
             </div>
 
             <div className={styles.mainArea}>

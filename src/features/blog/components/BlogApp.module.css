@@ -190,25 +190,6 @@
     margin-right: 4px;
 }
 
-.addressInput {
-    flex: 1;
-    border: 1px solid #7f9db9;
-    padding: 2px 4px;
-    font-size: 11px;
-    background-color: white;
-    display: flex;
-    align-items: center;
-    height: 20px;
-}
-
-.addressIcon {
-    width: 16px;
-    height: 16px;
-    margin-right: 4px;
-    background: #e1e1e1;
-    border-radius: 2px;
-}
-
 .mainArea {
     display: flex;
     flex: 1;

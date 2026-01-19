@@ -1,0 +1,33 @@
+.addressInput {
+    flex: 1;
+    min-width: 0;
+    border: 1px solid #7f9db9;
+    padding: 2px 4px;
+    font-size: 11px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    height: 20px;
+    overflow: hidden;
+}
+
+.addressBarText {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1;
+    color: #333;
+    line-height: normal;
+}
+
+.addressIcon {
+    width: 16px;
+    height: 16px;
+    margin-right: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e1e1e1;
+    border-radius: 2px;
+    font-size: 10px;
+}

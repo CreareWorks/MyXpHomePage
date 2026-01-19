@@ -8,6 +8,7 @@ interface DesktopIconProps {
     isSelected: boolean;
     onClick: () => void;
     onDoubleClick: () => void;
+    priority?: boolean;
 }
 
 export function DesktopIcon({
@@ -15,7 +16,8 @@ export function DesktopIcon({
     icon,
     isSelected,
     onClick,
-    onDoubleClick
+    onDoubleClick,
+    priority
 }: DesktopIconProps) {
     const lastTapTimeRef = useRef<number>(0);
 
@@ -54,6 +56,7 @@ export function DesktopIcon({
                     src={icon}
                     alt={label}
                     draggable={false}
+                    priority={!!priority}
                 />
             </div>
             <span className={styles.label}>{label}</span>

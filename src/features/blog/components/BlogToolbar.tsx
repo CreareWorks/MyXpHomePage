@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './BlogApp.module.css';
+import { AddressBar } from '@/components/xp/AddressBar/AddressBar';
 
 interface BlogToolbarProps {
     canGoBack: boolean;
@@ -54,10 +55,7 @@ export const BlogToolbar = ({
 
                 <div className={styles.navRow}>
                     <div className={styles.addressLabel}>Address</div>
-                    <div className={styles.addressInput}>
-                        <span className={styles.addressIcon}>📂</span>
-                        {addressText}
-                    </div>
+                    <AddressBar address={addressText} />
                 </div>
             </div>
         </div>
