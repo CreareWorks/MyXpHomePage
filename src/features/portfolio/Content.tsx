@@ -1,9 +1,8 @@
 import React from "react";
+import { PortfolioApp } from "./components/PortfolioApp";
 
 export function Content() {
     return (
-        <>
-        👷工事中👷
-        </>
+        <PortfolioApp />
     );
 }

@@ -69,7 +69,7 @@ export function DesktopContent({ configs, children }: DesktopContentProps) {
             `}
                         onMouseDown={() => focusWindow(config.id)}
                     >
-                        <div className={styles.windowContent}>
+                        <div className={`${styles.windowContent} ${isMaximized ? styles.maximized : ''}`}>
                             <WindowFrame
                                 title={config.title}
                                 icon={config.icon}

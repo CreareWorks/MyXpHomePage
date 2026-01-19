@@ -16,7 +16,7 @@ export const useDesktop = () => {
 
     const isInitialized: RefObject<boolean> = useRef(false);
 
-    // URLパラメータがない場合、'about' を表示させる
+    // URLパラメータがない場合、aboutを表示させる
     useEffect(() => {
         if (isInitialized.current) return;
         const timer = setTimeout(() => {
@@ -25,10 +25,12 @@ export const useDesktop = () => {
             if (activeWindowId) {
                 // URL指定がある場合
                 setOpenWindowIds([activeWindowId]);
+                setMaximizedWindowsIds([activeWindowId]);
             } else {
                 // URL指定がない場合: デフォルトで About を開く
                 setAppId(DESKTOP_ICON_IDS.ABOUT);
                 setOpenWindowIds([DESKTOP_ICON_IDS.ABOUT]);
+                setMaximizedWindowsIds([DESKTOP_ICON_IDS.ABOUT]);
             }
         }, 0);
 
@@ -51,14 +53,16 @@ export const useDesktop = () => {
                 if (!prev.includes(activeWindowId)) return prev;
                 return prev.filter((id) => id !== activeWindowId);
             });
+
+            // 最大化（URLからの遷移時はデフォルトで最大化）
+            setMaximizedWindowsIds((prev) => {
+                if (prev.includes(activeWindowId)) return prev;
+                return [...prev, activeWindowId];
+            });
         }, 0);
-
-        // クリーンアップ関数
         return () => clearTimeout(timer);
-
     }, [activeWindowId]);
 
-    // --- アクション定義 ---
     const selectIcon = useCallback((id: DesktopIconId | null) => {
         setSelectedIconId(id);
     }, []);
@@ -70,6 +74,11 @@ export const useDesktop = () => {
             return prev;
         });
         setMinimizedWindowIds((prev) => prev.filter((minId) => minId !== id));
+        // デフォルトで最大化させる
+        setMaximizedWindowsIds((prev) => {
+            if (!prev.includes(id)) return [...prev, id];
+            return prev;
+        });
         setAppId(id);
 
         // アプリを開いた時に、スタートボタンを閉じさせる

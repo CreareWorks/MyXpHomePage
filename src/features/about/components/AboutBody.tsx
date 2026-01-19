@@ -22,6 +22,21 @@ export function AboutBody() {
             </section>
 
             <section className={styles.section}>
+                <div className={styles.sectionTitle}>このサイトの楽しみ方</div>
+                <div className={styles.paragraph}>
+                    <p>このサイトはマルチウィンドウに対応しており、ウィンドウの最大化を解除（元に戻す）したり、最小化することでデスクトップのアイコンから複数のアプリを同時に立ち上げることができます。</p>
+                    <p>また、スタートボタンやタスクバーなどもXP風の操作感を表現しています、ぜひあの頃の懐かしさを思い出しつつ楽しんでいただけたらと思います！</p>
+                </div>
+                <div className={styles.introImageWrapper}>
+                    <Image
+                        src={require('@/assets/about/introduce.png')}
+                        alt="HPの楽しみ方"
+                        className={styles.introImage}
+                    />
+                </div>
+            </section>
+
+            <section className={styles.section}>
                 <div className={styles.sectionTitle}>外部リンク</div>
                 <div className={styles.linkGrid}>
                     {SOCIAL_LINKS.map((link) => (

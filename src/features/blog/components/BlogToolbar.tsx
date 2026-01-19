@@ -7,8 +7,6 @@ interface BlogToolbarProps {
     goBack: () => void;
     goForward: () => void;
     onUp: () => void;
-    isSidebarOpen: boolean;
-    toggleSidebar: () => void;
     addressText: string;
 }
 
@@ -18,8 +16,6 @@ export const BlogToolbar = ({
     goBack,
     goForward,
     onUp,
-    isSidebarOpen,
-    toggleSidebar,
     addressText,
 }: BlogToolbarProps) => {
     return (
@@ -54,12 +50,6 @@ export const BlogToolbar = ({
                         📁
                     </button>
 
-                    <button
-                        className={styles.hamburger}
-                        onClick={toggleSidebar}
-                    >
-                        ☰
-                    </button>
                 </div>
 
                 <div className={styles.navRow}>

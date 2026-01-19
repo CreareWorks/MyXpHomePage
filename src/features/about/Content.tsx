@@ -6,26 +6,25 @@ import styles from './About.module.css';
 import { Sidebar } from "./components/Sidebar";
 import { ProfileHeader } from "./components/ProfileHeader";
 import { AboutBody } from "./components/AboutBody";
+import { MobileMenu } from "@/components/xp/WindowAppLayout/MobileMenu";
+import { useMobileSidebar } from "@/hooks/useMobileSidebar";
 
 export function Content() {
     const [, setApp] = useQueryState('app', parseAsString.withDefault('').withOptions({ history: 'push' }));
-    const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
+    const { isSidebarOpen, toggleSidebar, closeSidebar } = useMobileSidebar();
 
     const navigateTo = (id: string) => {
         setApp(id);
-        setIsSidebarOpen(false);
+        closeSidebar();
     };
 
     return (
         <div className={`${styles.container} ${isSidebarOpen ? styles.sidebarOpen : ''}`}>
-            <button
-                className={styles.menuButton}
-                onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            >
-                {isSidebarOpen ? '閉じる' : 'メニュー'}
-            </button>
-
-            <div className={styles.overlay} onClick={() => setIsSidebarOpen(false)} />
+            <MobileMenu
+                isOpen={isSidebarOpen}
+                onToggle={toggleSidebar}
+                onClose={closeSidebar}
+            />
 
             <Sidebar onNavigate={navigateTo} />
 

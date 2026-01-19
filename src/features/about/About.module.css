@@ -7,7 +7,6 @@
     position: relative;
 }
 
-/* 左側のサイドバー (XPタスクペイン風) */
 .sidebar {
     width: 240px;
     background: linear-gradient(to bottom, #74a1f1 0%, #3b6bd3 100%);
@@ -197,47 +196,7 @@
     color: #666;
 }
 
-/* モバイル用のメニューボタン */
-.menuButton {
-    display: none;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    z-index: 100;
-    background: linear-gradient(180deg, #3c8140 0%, #195221 100%);
-    color: #FFFFFF;
-    border: 1px solid #fff;
-    border-radius: 4px;
-    padding: 4px 12px;
-    font-size: 14px;
-    font-weight: 600;
-    font-style: italic;
-    cursor: pointer;
-    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
-}
-
-.menuButton:hover {
-    filter: brightness(1.1);
-}
-
-/* オーバーレイ（サイドバーが開いている時にメインコンテンツを暗くする） */
-.overlay {
-    display: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.4);
-    z-index: 5;
-}
-
 @media (max-width: 768px) {
-    .menuButton {
-        display: block;
-    }
-
     .sidebar {
         position: absolute;
         top: 0;
@@ -251,13 +210,8 @@
         transform: translateX(0);
     }
 
-    .container.sidebarOpen .overlay {
-        display: block;
-    }
-
     .mainContent {
-        padding-top: 50px;
-        /* メニューボタン分の余白 */
+        padding-top: 60px;
     }
 
     .header {
@@ -273,4 +227,21 @@
     .linkGrid {
         grid-template-columns: 1fr;
     }
+}
+
+.introImageWrapper {
+    margin-top: 15px;
+    border: 1px solid #b5c4df;
+    padding: 6px;
+    background: #fff;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 2px;
+    max-width: 980px;
+}
+
+.introImage {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 1px;
 }

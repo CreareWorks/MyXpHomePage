@@ -8,6 +8,8 @@ import { BLOG_CATEGORIES } from '@/constants/blogConstants';
 import { BlogToolbar } from './BlogToolbar';
 import { BlogSidebar } from './BlogSidebar';
 import { BlogMainContent } from './BlogMainContent';
+import { MobileMenu } from '@/components/xp/WindowAppLayout/MobileMenu';
+import { useMobileSidebar } from '@/hooks/useMobileSidebar';
 
 interface BlogAppLayoutProps {
     allPosts: PostMetadata[];
@@ -17,7 +19,7 @@ interface BlogAppLayoutProps {
 
 export const BlogAppLayout = ({ allPosts, currentPost, postContent }: BlogAppLayoutProps) => {
     // 状態管理
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const { isSidebarOpen, toggleSidebar, closeSidebar } = useMobileSidebar();
     const [, startTransition] = useTransition();
 
     // フィルタ条件のState
@@ -37,13 +39,10 @@ export const BlogAppLayout = ({ allPosts, currentPost, postContent }: BlogAppLay
 
     // ナビゲーション処理（新規移動）
     const navigate = (newSlug: string | null) => {
-        // 同じ場所なら何もしない
         if (newSlug === historyStack[currentIndex]) return;
 
         startTransition(() => {
             setSlug(newSlug);
-
-            // 履歴の更新: 現在位置より先を削除し、新しい履歴を追加
             const newHistory = historyStack.slice(0, currentIndex + 1);
             newHistory.push(newSlug);
             setHistoryStack(newHistory);
@@ -79,7 +78,7 @@ export const BlogAppLayout = ({ allPosts, currentPost, postContent }: BlogAppLay
     const canGoForward = currentIndex < historyStack.length - 1;
 
 
-    // フィルタリングロジック
+    // フィルタリング
     const filteredPosts = useMemo(() => {
         return allPosts.filter(post => {
             // 検索 (タイトル)
@@ -92,7 +91,7 @@ export const BlogAppLayout = ({ allPosts, currentPost, postContent }: BlogAppLay
                 ? post.date.startsWith(selectedDate)
                 : true;
 
-            // ジャンル (メタデータ or 仮)
+            // ジャンル (メタデータ)
             const postCategory = post.category || BLOG_CATEGORIES.OTHER;
             const matchGenre = selectedGenre
                 ? postCategory === selectedGenre
@@ -123,11 +122,13 @@ export const BlogAppLayout = ({ allPosts, currentPost, postContent }: BlogAppLay
     const onFilterGenre = (genre: string) => {
         if (currentPost) navigate(null);
         setSelectedGenre(prev => prev === genre ? null : genre);
+        closeSidebar();
     };
 
     const onFilterDate = (date: string) => {
         if (currentPost) navigate(null);
         setSelectedDate(prev => prev === date ? null : date);
+        closeSidebar();
     };
 
     const onUp = () => {
@@ -151,15 +152,18 @@ export const BlogAppLayout = ({ allPosts, currentPost, postContent }: BlogAppLay
     };
 
     return (
-        <div className={styles.container}>
+        <div className={`${styles.container} ${isSidebarOpen ? styles.sidebarOpen : ''}`}>
+            <MobileMenu
+                isOpen={isSidebarOpen}
+                onToggle={toggleSidebar}
+                onClose={closeSidebar}
+            />
             <BlogToolbar
                 canGoBack={canGoBack}
                 canGoForward={canGoForward}
                 goBack={goBack}
                 goForward={goForward}
                 onUp={onUp}
-                isSidebarOpen={isSidebarOpen}
-                toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
                 addressText={getAddressText()}
             />
 
