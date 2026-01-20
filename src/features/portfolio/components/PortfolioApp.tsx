@@ -7,9 +7,10 @@ import { PROJECTS } from '../data/projects';
 import { PORTFOLIO_CATEGORIES } from '../constants/portfolioConstants';
 import { PortfolioList } from './PortfolioList';
 import { PortfolioDetail } from './PortfolioDetail';
-import { MobileMenu } from '@/components/xp/WindowAppLayout/MobileMenu';
 import { useMobileSidebar } from '@/hooks/useMobileSidebar';
 import { AddressBar } from '@/components/xp/AddressBar/AddressBar';
+import { ExplorerAppLayout } from '@/components/xp/WindowAppLayout/ExplorerAppLayout';
+import { ExplorerSidebar, SidebarSection, SidebarHeader, SidebarContent, SidebarLink } from '@/components/xp/ExplorerSidebar/ExplorerSidebar';
 
 export function PortfolioApp() {
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -32,67 +33,60 @@ export function PortfolioApp() {
     const categories = Object.values(PORTFOLIO_CATEGORIES);
 
     return (
-        <div className={`${styles.container} ${isSidebarOpen ? styles.sidebarOpen : ''}`}>
-            <MobileMenu
-                isOpen={isSidebarOpen}
-                onToggle={toggleSidebar}
-                onClose={closeSidebar}
-            />
-            <div className={styles.toolbar}>
-                <div style={{ fontSize: '11px', color: '#666' }}>Address</div>
-                <AddressBar
-                    address={`My Documents\\My Portfolio${currentProject ? `\\${currentProject.metadata.title}` : selectedCategory ? `\\${selectedCategory}` : ''}`}
-                />
-            </div>
-
-            <div className={styles.mainArea}>
-                <aside className={styles.sidebar}>
-                    <div className={styles.sidebarSection}>
-                        <div className={styles.sidebarHeader}>
-                            Categories
-                        </div>
-                        <div className={styles.sidebarContent}>
-                            <div
-                                className={`${styles.categoryLink} ${!selectedCategory ? styles.active : ''}`}
+        <ExplorerAppLayout
+            isSidebarOpen={isSidebarOpen}
+            onToggleSidebar={toggleSidebar}
+            onCloseSidebar={closeSidebar}
+            toolbar={
+                <div className={styles.toolbar}>
+                    <div style={{ fontSize: '11px', color: '#666' }}>Address</div>
+                    <AddressBar
+                        address={`My Documents\\My Portfolio${currentProject ? `\\${currentProject.metadata.title}` : selectedCategory ? `\\${selectedCategory}` : ''}`}
+                    />
+                </div>
+            }
+            sidebar={
+                <ExplorerSidebar isOpen={isSidebarOpen}>
+                    <SidebarSection>
+                        <SidebarHeader title="Categories" />
+                        <SidebarContent>
+                            <SidebarLink
+                                label="全てのプロジェクト"
+                                isActive={!selectedCategory}
                                 onClick={() => {
                                     setSelectedCategory(null);
                                     setProjectId(null);
                                     closeSidebar();
                                 }}
-                            >
-                                全てのプロジェクト
-                            </div>
+                            />
                             {categories.map(cat => (
-                                <div
+                                <SidebarLink
                                     key={cat}
-                                    className={`${styles.categoryLink} ${selectedCategory === cat ? styles.active : ''}`}
+                                    label={cat}
+                                    isActive={selectedCategory === cat}
                                     onClick={() => {
                                         setSelectedCategory(cat);
                                         setProjectId(null);
                                         closeSidebar();
                                     }}
-                                >
-                                    {cat}
-                                </div>
+                                />
                             ))}
-                        </div>
-                    </div>
-                </aside>
-
-                <main className={styles.contentArea}>
-                    {currentProject ? (
-                        <PortfolioDetail
-                            project={currentProject}
-                            onBack={() => setProjectId(null)}
-                        />
-                    ) : (
-                        <PortfolioList
-                            projects={filteredProjects.map(p => p.metadata)}
-                            onSelect={(id) => setProjectId(id)}
-                        />
-                    )}
-                </main>
-            </div>
-        </div>
+                        </SidebarContent>
+                    </SidebarSection>
+                </ExplorerSidebar>
+            }
+        >
+            {currentProject ? (
+                <PortfolioDetail
+                    project={currentProject}
+                    onBack={() => setProjectId(null)}
+                />
+            ) : (
+                <PortfolioList
+                    projects={filteredProjects.map(p => p.metadata)}
+                    onSelect={(id) => setProjectId(id)}
+                />
+            )}
+        </ExplorerAppLayout>
     );
 }

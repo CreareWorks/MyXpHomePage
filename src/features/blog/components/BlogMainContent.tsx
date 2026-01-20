@@ -59,9 +59,12 @@ export const BlogMainContent = ({
                                     className={styles.fileItem}
                                     onClick={() => onNavigate(post.slug)}
                                     title={post.title}
+                                    style={{ cursor: 'pointer', userSelect: 'none' }}
                                 >
                                     <div className={styles.fileIcon}>📄</div>
-                                    <span className={styles.fileLabel}>{post.title}</span>
+                                    <span className={styles.fileLabel}>
+                                        {post.title}
+                                    </span>
                                     <span className={styles.fileDate}>{post.date}</span>
                                 </div>
                             ))}

@@ -32,7 +32,6 @@ export const BlogToolbar = ({
                             ←
                         </div>
                         <span className={styles.xpBackText}>戻る</span>
-                        <div className={styles.xpDropdown}>▼</div>
                     </div>
                     <button
                         className={styles.xpForwardButton}

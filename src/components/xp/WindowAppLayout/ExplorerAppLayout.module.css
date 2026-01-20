@@ -1,0 +1,34 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    background-color: #ECE9D8;
+    color: #000;
+    font-family: "Tahoma", "Verdana", sans-serif;
+    position: relative;
+    overflow: hidden;
+}
+
+.mainArea {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+    background-color: #fff;
+    margin: 2px 4px 4px 4px;
+    border: 1px solid #71adff;
+}
+
+.contentArea {
+    flex: 1;
+    overflow-y: auto;
+    position: relative;
+    background-color: #fff;
+}
+
+@media (max-width: 768px) {
+    .contentArea {
+        padding-top: 40px;
+        /* メニューボタン分を確保 */
+    }
+}

@@ -8,8 +8,9 @@ import { BLOG_CATEGORIES } from '@/constants/blogConstants';
 import { BlogToolbar } from './BlogToolbar';
 import { BlogSidebar } from './BlogSidebar';
 import { BlogMainContent } from './BlogMainContent';
-import { MobileMenu } from '@/components/xp/WindowAppLayout/MobileMenu';
 import { useMobileSidebar } from '@/hooks/useMobileSidebar';
+import { ExplorerAppLayout } from '@/components/xp/WindowAppLayout/ExplorerAppLayout';
+import { ExplorerSidebar } from '@/components/xp/ExplorerSidebar/ExplorerSidebar';
 
 interface BlogAppLayoutProps {
     allPosts: PostMetadata[];
@@ -104,13 +105,13 @@ export const BlogAppLayout = ({ allPosts, currentPost, postContent }: BlogAppLay
     // リスト作成（アーカイブ用: YYYY-MM）
     const archiveDates = useMemo(() => {
         const dates = new Set(allPosts.map(p => p.date.substring(0, 7)));
-        return Array.from(dates).sort().reverse();
+        return Array.from(dates).sort().reverse() as string[];
     }, [allPosts]);
 
     // リスト作成（ジャンル）
     const genres = useMemo(() => {
         const cats = new Set(allPosts.map(p => p.category || BLOG_CATEGORIES.OTHER));
-        return Array.from(cats).sort();
+        return Array.from(cats).sort() as string[];
     }, [allPosts]);
 
     const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -152,45 +153,45 @@ export const BlogAppLayout = ({ allPosts, currentPost, postContent }: BlogAppLay
     };
 
     return (
-        <div className={`${styles.container} ${isSidebarOpen ? styles.sidebarOpen : ''}`}>
-            <MobileMenu
-                isOpen={isSidebarOpen}
-                onToggle={toggleSidebar}
-                onClose={closeSidebar}
-            />
-            <BlogToolbar
-                canGoBack={canGoBack}
-                canGoForward={canGoForward}
-                goBack={goBack}
-                goForward={goForward}
-                onUp={onUp}
-                addressText={getAddressText()}
-            />
-
-            <div className={styles.mainArea}>
-                <BlogSidebar
-                    isOpen={isSidebarOpen}
-                    searchQuery={searchQuery}
-                    onSearchChange={handleSearch}
-                    genres={genres}
-                    selectedGenre={selectedGenre}
-                    onFilterGenre={onFilterGenre}
-                    archiveDates={archiveDates}
-                    selectedDate={selectedDate}
-                    onFilterDate={onFilterDate}
+        <ExplorerAppLayout
+            isSidebarOpen={isSidebarOpen}
+            onToggleSidebar={toggleSidebar}
+            onCloseSidebar={closeSidebar}
+            toolbar={
+                <BlogToolbar
+                    canGoBack={canGoBack}
+                    canGoForward={canGoForward}
+                    goBack={goBack}
+                    goForward={goForward}
+                    onUp={onUp}
+                    addressText={getAddressText()}
                 />
-
-                <BlogMainContent
-                    currentPost={currentPost}
-                    postContent={postContent}
-                    filteredPosts={filteredPosts}
-                    searchQuery={searchQuery}
-                    selectedGenre={selectedGenre}
-                    selectedDate={selectedDate}
-                    isLoading={isPending}
-                    onNavigate={navigate}
-                />
-            </div>
-        </div>
+            }
+            sidebar={
+                <ExplorerSidebar isOpen={isSidebarOpen}>
+                    <BlogSidebar
+                        searchQuery={searchQuery}
+                        onSearchChange={handleSearch}
+                        genres={genres}
+                        selectedGenre={selectedGenre}
+                        onFilterGenre={onFilterGenre}
+                        archiveDates={archiveDates}
+                        selectedDate={selectedDate}
+                        onFilterDate={onFilterDate}
+                    />
+                </ExplorerSidebar>
+            }
+        >
+            <BlogMainContent
+                currentPost={currentPost}
+                postContent={postContent}
+                filteredPosts={filteredPosts}
+                searchQuery={searchQuery}
+                selectedGenre={selectedGenre}
+                selectedDate={selectedDate}
+                isLoading={isPending}
+                onNavigate={navigate}
+            />
+        </ExplorerAppLayout>
     );
 };

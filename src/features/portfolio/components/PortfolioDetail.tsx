@@ -14,7 +14,14 @@ export function PortfolioDetail({ project, onBack }: PortfolioDetailProps) {
     const { metadata, content } = project;
 
     return (
-        <div className={styles.detailContainer}>
+        <div
+            className={styles.detailContainer}
+            style={{
+                maxWidth: '1200px',
+                margin: '0 auto',
+                width: '100%'
+            }}
+        >
             <button className={styles.backButton} onClick={onBack}>
                 ← 戻る
             </button>
@@ -27,12 +34,33 @@ export function PortfolioDetail({ project, onBack }: PortfolioDetailProps) {
                 </div>
             </div>
 
-            <div className={styles.thumbnailWrapper} style={{ marginBottom: '30px', height: 'auto', maxHeight: '500px', background: '#f8f8f8' }}>
+            <div
+                className={styles.thumbnailWrapper}
+                style={{
+                    marginBottom: '30px',
+                    height: 'auto',
+                    maxHeight: '600px',
+                    background: '#f8f8f8',
+                    maxWidth: '980px',
+                    margin: '0 auto 30px auto',
+                    border: '1px solid #ccc',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    overflow: 'hidden'
+                }}
+            >
                 <img
                     src={typeof metadata.thumbnail === 'string' ? metadata.thumbnail : (metadata.thumbnail as StaticImageData).src}
                     alt={metadata.title}
                     className={styles.thumbnail}
-                    style={{ width: '100%', height: 'auto' }}
+                    style={{
+                        maxWidth: '100%',
+                        maxHeight: '100%',
+                        width: 'auto',
+                        height: 'auto',
+                        display: 'block'
+                    }}
                 />
             </div>
 

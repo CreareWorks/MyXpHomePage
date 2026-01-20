@@ -1,8 +1,13 @@
 import React from 'react';
+import {
+    SidebarSection,
+    SidebarHeader,
+    SidebarContent,
+    SidebarLink
+} from '@/components/xp/ExplorerSidebar/ExplorerSidebar';
 import styles from './BlogApp.module.css';
 
 interface BlogSidebarProps {
-    isOpen: boolean;
     searchQuery: string;
     onSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     genres: string[];
@@ -14,7 +19,6 @@ interface BlogSidebarProps {
 }
 
 export const BlogSidebar = ({
-    isOpen,
     searchQuery,
     onSearchChange,
     genres,
@@ -25,11 +29,11 @@ export const BlogSidebar = ({
     onFilterDate,
 }: BlogSidebarProps) => {
     return (
-        <div className={`${styles.sidebar} ${isOpen ? styles.open : ''}`}>
+        <>
             {/* 検索 */}
-            <div className={styles.sidebarBox}>
-                <div className={styles.sidebarHeader}>Search</div>
-                <div className={styles.sidebarContent}>
+            <SidebarSection>
+                <SidebarHeader title="Search" />
+                <SidebarContent>
                     <input
                         type="text"
                         className={styles.searchInput}
@@ -37,40 +41,40 @@ export const BlogSidebar = ({
                         value={searchQuery}
                         onChange={onSearchChange}
                     />
-                </div>
-            </div>
+                </SidebarContent>
+            </SidebarSection>
 
             {/* ジャンル */}
-            <div className={styles.sidebarBox}>
-                <div className={styles.sidebarHeader}>Categories</div>
-                <div className={styles.sidebarContent}>
+            <SidebarSection>
+                <SidebarHeader title="Categories" />
+                <SidebarContent>
                     {genres.map(genre => (
-                        <div
+                        <SidebarLink
                             key={genre}
-                            className={`${styles.filterItem} ${selectedGenre === genre ? styles.active : ''}`}
+                            label={genre}
+                            isActive={selectedGenre === genre}
                             onClick={() => onFilterGenre(genre)}
-                        >
-                            📁 {genre}
-                        </div>
+                            icon="📁"
+                        />
                     ))}
-                </div>
-            </div>
+                </SidebarContent>
+            </SidebarSection>
 
             {/* 日付アーカイブ */}
-            <div className={styles.sidebarBox}>
-                <div className={styles.sidebarHeader}>Archives</div>
-                <div className={styles.sidebarContent}>
+            <SidebarSection>
+                <SidebarHeader title="Archives" />
+                <SidebarContent>
                     {archiveDates.map(date => (
-                        <div
+                        <SidebarLink
                             key={date}
-                            className={`${styles.filterItem} ${selectedDate === date ? styles.active : ''}`}
+                            label={date}
+                            isActive={selectedDate === date}
                             onClick={() => onFilterDate(date)}
-                        >
-                            📅 {date}
-                        </div>
+                            icon="📅"
+                        />
                     ))}
-                </div>
-            </div>
-        </div>
+                </SidebarContent>
+            </SidebarSection>
+        </>
     );
 };

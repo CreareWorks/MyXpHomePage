@@ -6,8 +6,9 @@ import styles from './About.module.css';
 import { Sidebar } from "./components/Sidebar";
 import { ProfileHeader } from "./components/ProfileHeader";
 import { AboutBody } from "./components/AboutBody";
-import { MobileMenu } from "@/components/xp/WindowAppLayout/MobileMenu";
 import { useMobileSidebar } from "@/hooks/useMobileSidebar";
+import { ExplorerAppLayout } from "@/components/xp/WindowAppLayout/ExplorerAppLayout";
+import { ExplorerSidebar } from "@/components/xp/ExplorerSidebar/ExplorerSidebar";
 
 export function Content() {
     const [, setApp] = useQueryState('app', parseAsString.withDefault('').withOptions({ history: 'push' }));
@@ -19,19 +20,20 @@ export function Content() {
     };
 
     return (
-        <div className={`${styles.container} ${isSidebarOpen ? styles.sidebarOpen : ''}`}>
-            <MobileMenu
-                isOpen={isSidebarOpen}
-                onToggle={toggleSidebar}
-                onClose={closeSidebar}
-            />
-
-            <Sidebar onNavigate={navigateTo} />
-
+        <ExplorerAppLayout
+            isSidebarOpen={isSidebarOpen}
+            onToggleSidebar={toggleSidebar}
+            onCloseSidebar={closeSidebar}
+            sidebar={
+                <ExplorerSidebar isOpen={isSidebarOpen}>
+                    <Sidebar onNavigate={navigateTo} />
+                </ExplorerSidebar>
+            }
+        >
             <main className={styles.mainContent}>
                 <ProfileHeader />
                 <AboutBody />
             </main>
-        </div>
+        </ExplorerAppLayout>
     );
 }
