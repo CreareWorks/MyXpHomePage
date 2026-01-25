@@ -6,6 +6,10 @@ import { ServerBlogContent } from '@/features/blog/ServerBlogContent';
 import { Content as PortfolioContent } from '@/features/portfolio/Content';
 import { Content as RssContent } from '@/features/rss/Content';
 import { Content as SkillsheetContent } from '@/features/skillsheet/Content';
+import Minesweeper from '@/features/minesweeper/Minesweeper';
+import Pinball from '@/features/pinball/Pinball';
+import { FolderView } from '@/components/xp/FolderView/FolderView';
+import { DESKTOP_ICON_IDS } from '@/constants/desktopIconConstants';
 
 interface PageProps {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
@@ -14,10 +18,10 @@ interface PageProps {
 /**
  * メインデスクトップページ
  */
-export default async function DesktopPage({ searchParams}: PageProps ) {
+export default async function DesktopPage({ searchParams }: PageProps) {
 
   const params = await searchParams;
-  const slug = typeof params?.slug === 'string' ? params.slug : undefined;;
+  const slug = typeof params?.slug === 'string' ? params.slug : undefined;
 
   return (
     <Suspense fallback={<div>Loading XP...</div>}>
@@ -28,6 +32,9 @@ export default async function DesktopPage({ searchParams}: PageProps ) {
           portfolio: <PortfolioContent />,
           rss: <RssContent />,
           skills: <SkillsheetContent />,
+          minesweeper: <Minesweeper />,
+          pinball: <Pinball />,
+          games: <FolderView childrenIds={[DESKTOP_ICON_IDS.MINESWEEPER, DESKTOP_ICON_IDS.PINBALL]} />,
         }}
       </DesktopContent>
     </Suspense>

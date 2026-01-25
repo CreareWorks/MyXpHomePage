@@ -17,7 +17,7 @@
     border-radius: 2px;
 }
 
-.iconImage img{
+.iconImage img {
     width: 76px;
     height: 76px;
     pointer-events: none;
@@ -40,4 +40,29 @@
 .selected .label {
     background-color: #0B61FF;
     text-shadow: none;
+}
+
+.explorer .label {
+    color: #000;
+    text-shadow: none;
+    font-size: 11px;
+}
+
+.explorer .iconImage img {
+    width: 32px;
+    height: 32px;
+}
+
+.explorer {
+    width: 100px;
+}
+
+.explorer.selected {
+    background-color: rgba(49, 106, 197, 0.1);
+    border: 1px solid rgba(49, 106, 197, 0.3);
+}
+
+.explorer.selected .label {
+    background-color: #316ac5;
+    color: white;
 }

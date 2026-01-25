@@ -10,6 +10,7 @@ interface WindowFrameProps {
     onMinimize: () => void;
     onMaximize: () => void;
     children: React.ReactNode;
+    defaultSize?: { width: number; height: number } | undefined;
 }
 
 export function WindowFrame({
@@ -19,9 +20,10 @@ export function WindowFrame({
     onClose,
     onMinimize,
     onMaximize,
-    children
+    children,
+    defaultSize
 }: WindowFrameProps) {
-    const { 
+    const {
         position,
         size,
         isMounted,
@@ -29,12 +31,12 @@ export function WindowFrame({
         handleMouseDownResize,
         handleTouchStartDrag,
         handleTouchStartResize,
-    } = useWindowFrame();
+    } = useWindowFrame(defaultSize);
 
     if (!isMounted) return null;
 
     return (
-        <div 
+        <div
             className={`${styles.window} ${isMaximized ? styles.maximizedWindow : ''}`}
             style={isMaximized ? undefined : {
                 top: position.y,
@@ -43,20 +45,20 @@ export function WindowFrame({
                 height: size.height,
             }}
         >
-            <div 
+            <div
                 className={styles.titleBar}
                 onMouseDown={handleMouseDownDrag}
                 onTouchStart={handleTouchStartDrag}
                 style={{ cursor: 'default' }}
             >
                 <div className={styles.titleGroup}>
-                    <Image 
-                        src={icon} 
+                    <Image
+                        src={icon}
                         alt="コンテンツのアイコンイメージ"
-                        width={16} 
-                        height={16} 
+                        width={16}
+                        height={16}
                         className={styles.icon}
-                        draggable={false} 
+                        draggable={false}
                     />
                     <span className={styles.titleText}>{title}</span>
                 </div>
@@ -69,17 +71,17 @@ export function WindowFrame({
                             onMinimize();
                         }}
                         aria-label='Minimize'
-                        >
+                    >
                         _
                     </button>
-                    <button 
+                    <button
                         className={styles.maximizeButton}
                         onClick={(e) => {
                             e.stopPropagation();
                             onMaximize();
                         }}
                     >
-                        {isMaximized ? '❐' : '□'} 
+                        {isMaximized ? '❐' : '□'}
                     </button>
                     <button
                         className={styles.closeButton}
@@ -88,7 +90,7 @@ export function WindowFrame({
                             onClose();
                         }}
                         aria-label='Close'
-                        >
+                    >
                         ×
                     </button>
                 </div>
@@ -97,8 +99,8 @@ export function WindowFrame({
                 {children}
             </div>
 
-            <div 
-                className={styles.resizer} 
+            <div
+                className={styles.resizer}
                 onMouseDown={handleMouseDownResize}
                 onTouchStart={handleTouchStartResize}
             />

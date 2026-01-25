@@ -9,6 +9,7 @@ interface DesktopIconProps {
     onClick: () => void;
     onDoubleClick: () => void;
     priority?: boolean;
+    variant?: 'desktop' | 'explorer';
 }
 
 export function DesktopIcon({
@@ -17,7 +18,8 @@ export function DesktopIcon({
     isSelected,
     onClick,
     onDoubleClick,
-    priority
+    priority,
+    variant = 'desktop'
 }: DesktopIconProps) {
     const lastTapTimeRef = useRef<number>(0);
 
@@ -37,7 +39,7 @@ export function DesktopIcon({
 
     return (
         <div
-            className={`${styles.container} ${isSelected ? styles.selected : ''}`}
+            className={`${styles.container} ${isSelected ? styles.selected : ''} ${styles[variant]}`}
             // PC用: クリック
             onClick={(e) => {
                 e.stopPropagation();

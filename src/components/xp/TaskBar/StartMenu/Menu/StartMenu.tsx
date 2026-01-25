@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import styles from './StartMenu.module.css';
-import { DESKTOP_APPS } from '@/config/desktopApps';
+import { DESKTOP_APPS, ON_DESKTOP_ICON_IDS } from '@/config/desktopApps';
 import { SOCIAL_LINKS } from '@/config/socialLinks';
 import { type DesktopIconId } from '@/constants/desktopIconConstants';
 import userCover from '@/assets/userCover.png';
@@ -47,22 +47,24 @@ export const StartMenu = ({
                 <div className={styles.body}>
                     {/* 左カラム：アプリ一覧 (About, Portfolio, etc.) */}
                     <div className={styles.leftColumn}>
-                        {DESKTOP_APPS.map((app) => (
-                            <div
-                                key={app.id}
-                                className={styles.menuItem}
-                                onClick={() => onAppClick(app.id)}
-                            >
-                                <Image
-                                    src={app.icon}
-                                    alt="アプリ画像"
-                                    className={styles.appIcon}
-                                />
-                                <div className={styles.itemText}>
-                                    <span className={styles.itemTitle}>{app.title}</span>
+                        {DESKTOP_APPS
+                            .filter(app => ON_DESKTOP_ICON_IDS.includes(app.id))
+                            .map((app) => (
+                                <div
+                                    key={app.id}
+                                    className={styles.menuItem}
+                                    onClick={() => onAppClick(app.id)}
+                                >
+                                    <Image
+                                        src={app.icon}
+                                        alt="アプリ画像"
+                                        className={styles.appIcon}
+                                    />
+                                    <div className={styles.itemText}>
+                                        <span className={styles.itemTitle}>{app.title}</span>
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
+                            ))}
                     </div>
 
                     {/* 右カラム：ソーシャルリンク一覧 (GitHub, Qiita, etc.) */}
