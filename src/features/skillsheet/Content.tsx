@@ -20,7 +20,6 @@ export function Content() {
             isSidebarOpen={isSidebarOpen}
             onToggleSidebar={toggleSidebar}
             onCloseSidebar={closeSidebar}
-            mainClassName={styles.layoutOverride}
             containerClassName={styles.layoutContainerOverride}
             toolbar={
                 <div className={styles.toolbar}>
