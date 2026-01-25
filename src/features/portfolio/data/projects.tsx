@@ -55,7 +55,6 @@ export const PROJECTS: Project[] = [
                     <li>MDXを使用したブログ機能と詳細なメタデータ管理</li>
                     <li>Windows XPのデザインを模したUI</li>
                     <li>ポートフォリオサイトの管理機能</li>
-                    <li>RSSフィードの表示</li>
                     <li>スキル表示</li>
                 </ul>
             </div>

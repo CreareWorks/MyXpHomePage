@@ -89,6 +89,7 @@ function DesktopContentInner({ configs, children }: DesktopContentProps) {
                                 onMinimize={() => minimizeWindow(config.id)}
                                 onMaximize={() => toggleMaximizeWindow(config.id)}
                                 defaultSize={config.defaultSize}
+                                contentClassName={config.frameContentClassName}
                             >
                                 {children[config.id]}
                             </WindowFrame>

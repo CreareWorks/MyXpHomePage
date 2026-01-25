@@ -143,9 +143,9 @@ export const BlogAppLayout = ({ allPosts, currentPost, postContent }: BlogAppLay
 
     // ツールバーのアドレス表示用テキスト生成
     const getAddressText = () => {
-        if (currentPost) return `My Documents\\My Blog\\${currentPost.metadata.slug}`;
+        if (currentPost) return `My Documents\\Blog\\${currentPost.metadata.slug}`;
 
-        let path = `My Documents\\My Blog`;
+        let path = `My Documents\\Blog`;
         if (selectedGenre) path += `\\${selectedGenre}`;
         if (selectedDate) path += `\\${selectedDate}`;
         if (searchQuery) path += `\\Search: "${searchQuery}"`;

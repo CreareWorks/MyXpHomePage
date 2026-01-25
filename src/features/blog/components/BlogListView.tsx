@@ -9,7 +9,7 @@ interface BlogListPresenterProps {
     posts: PostMetadata[];
 }
 
-export const BlogListView = ({ posts }: BlogListPresenterProps) => {    
+export const BlogListView = ({ posts }: BlogListPresenterProps) => {
     const [, setSlug] = useQueryState('slug', {
         history: 'push',
         shallow: false,
@@ -31,7 +31,7 @@ export const BlogListView = ({ posts }: BlogListPresenterProps) => {
                     <span className={styles.addressLabel}>Address</span>
                     <div className={styles.addressInput}>
                         <span style={{ marginRight: 4 }}>📂</span>
-                        My Documents\My Blog
+                        My Documents\Blog
                     </div>
                     <button className={styles.goButton}>Go</button>
                 </div>
@@ -57,7 +57,7 @@ export const BlogListView = ({ posts }: BlogListPresenterProps) => {
                         </div>
                         <div className={styles.sidebarContent}>
                             <div style={{ fontSize: '11px', color: '#333' }}>
-                                <strong>My Blog</strong><br />
+                                <strong>Blog</strong><br />
                                 File Folder<br /><br />
                                 Total: {posts.length} posts
                             </div>

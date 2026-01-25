@@ -6,7 +6,6 @@ import { DESKTOP_ICON_IDS, type DesktopIconId } from '@/constants/desktopIconCon
 import aboutIcon from '@/assets/icon/about.png';
 import blogIcon from '@/assets/icon/blog.png';
 import portfolioIcon from '@/assets/icon/portfolio.png';
-import rssIcon from '@/assets/icon/rss.png';
 import skillsheetIcon from '@/assets/icon/skillsheet.png';
 import minesweeperIcon from '@/assets/icon/minesweeper.png';
 import folderIcon from '@/assets/icon/folder.png';
@@ -23,6 +22,7 @@ export interface DesktopAppConfig {
     serverComponentPath?: string;
     defaultSize?: { width: number; height: number };
     childrenIds?: DesktopIconId[]; // フォルダの場合の中身
+    frameContentClassName?: string;
 }
 
 /**
@@ -51,18 +51,12 @@ export const DESKTOP_APP_CONFIGS: Omit<DesktopAppConfig, 'component'>[] = [
         serverComponentPath: '@/features/portfolio/Content',
     },
     {
-        id: DESKTOP_ICON_IDS.RSS,
-        title: 'RSS',
-        icon: rssIcon,
-        type: 'app',
-        serverComponentPath: '@/features/rss/Content',
-    },
-    {
         id: DESKTOP_ICON_IDS.SKILLSHEET,
         title: 'スキルシート',
         icon: skillsheetIcon,
         type: 'app',
         serverComponentPath: '@/features/skillsheet/Content',
+        frameContentClassName: 'skillsheet-frame-override',
     },
     {
         id: DESKTOP_ICON_IDS.MINESWEEPER,
@@ -95,7 +89,6 @@ export const ON_DESKTOP_ICON_IDS: DesktopIconId[] = [
     DESKTOP_ICON_IDS.ABOUT,
     DESKTOP_ICON_IDS.BLOG,
     DESKTOP_ICON_IDS.PORTFOLIO,
-    DESKTOP_ICON_IDS.RSS,
     DESKTOP_ICON_IDS.SKILLSHEET,
     DESKTOP_ICON_IDS.GAMES_FOLDER, // マインスイーパーはこの中
 ];

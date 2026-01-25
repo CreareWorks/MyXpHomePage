@@ -11,6 +11,7 @@ interface WindowFrameProps {
     onMaximize: () => void;
     children: React.ReactNode;
     defaultSize?: { width: number; height: number } | undefined;
+    contentClassName?: string | undefined;
 }
 
 export function WindowFrame({
@@ -21,7 +22,8 @@ export function WindowFrame({
     onMinimize,
     onMaximize,
     children,
-    defaultSize
+    defaultSize,
+    contentClassName
 }: WindowFrameProps) {
     const {
         position,
@@ -95,7 +97,7 @@ export function WindowFrame({
                     </button>
                 </div>
             </div>
-            <div className={styles.content}>
+            <div className={`${styles.content} ${contentClassName || ''}`}>
                 {children}
             </div>
 

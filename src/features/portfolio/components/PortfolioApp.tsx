@@ -42,7 +42,7 @@ export function PortfolioApp() {
                 <div className={styles.toolbar}>
                     <div style={{ fontSize: '11px', color: '#666' }}>Address</div>
                     <AddressBar
-                        address={`My Documents\\My Portfolio${currentProject ? `\\${currentProject.metadata.title}` : selectedCategory ? `\\${selectedCategory}` : ''}`}
+                        address={`My Documents\\Portfolio${currentProject ? `\\${currentProject.metadata.title}` : selectedCategory ? `\\${selectedCategory}` : ''}`}
                     />
                 </div>
             }

@@ -4,7 +4,6 @@ import { DESKTOP_APP_CONFIGS } from '@/config/desktopApps';
 import { Content as AboutContent } from '@/features/about/Content';
 import { ServerBlogContent } from '@/features/blog/ServerBlogContent';
 import { Content as PortfolioContent } from '@/features/portfolio/Content';
-import { Content as RssContent } from '@/features/rss/Content';
 import { Content as SkillsheetContent } from '@/features/skillsheet/Content';
 import Minesweeper from '@/features/minesweeper/Minesweeper';
 import Pinball from '@/features/pinball/Pinball';
@@ -30,7 +29,6 @@ export default async function DesktopPage({ searchParams }: PageProps) {
           about: <AboutContent />,
           blog: <ServerBlogContent slug={slug} />,
           portfolio: <PortfolioContent />,
-          rss: <RssContent />,
           skills: <SkillsheetContent />,
           minesweeper: <Minesweeper />,
           pinball: <Pinball />,

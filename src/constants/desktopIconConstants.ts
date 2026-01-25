@@ -2,7 +2,6 @@ export const DESKTOP_ICON_IDS = {
     ABOUT: 'about',
     PORTFOLIO: 'portfolio',
     BLOG: 'blog',
-    RSS: 'rss',
     SKILLSHEET: 'skills',
     MINESWEEPER: 'minesweeper',
     GAMES_FOLDER: 'games',
