@@ -37,6 +37,7 @@ export function PortfolioApp() {
             isSidebarOpen={isSidebarOpen}
             onToggleSidebar={toggleSidebar}
             onCloseSidebar={closeSidebar}
+            mainClassName={styles.contentArea}
             toolbar={
                 <div className={styles.toolbar}>
                     <div style={{ fontSize: '11px', color: '#666' }}>Address</div>

@@ -9,8 +9,8 @@ interface ExplorerAppLayoutProps {
     isSidebarOpen: boolean;
     onToggleSidebar: () => void;
     onCloseSidebar: () => void;
-    containerClassName?: string;
-    mainClassName?: string;
+    containerClassName?: string | undefined;
+    mainClassName?: string | undefined;
 }
 
 export function ExplorerAppLayout({
