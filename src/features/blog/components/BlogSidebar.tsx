@@ -32,12 +32,12 @@ export const BlogSidebar = ({
         <>
             {/* 検索 */}
             <SidebarSection>
-                <SidebarHeader title="Search" />
+                <SidebarHeader title="検索" />
                 <SidebarContent>
                     <input
                         type="text"
                         className={styles.searchInput}
-                        placeholder="Search titles..."
+                        placeholder="タイトルで検索..."
                         value={searchQuery}
                         onChange={onSearchChange}
                     />
@@ -46,7 +46,7 @@ export const BlogSidebar = ({
 
             {/* ジャンル */}
             <SidebarSection>
-                <SidebarHeader title="Categories" />
+                <SidebarHeader title="ジャンル" />
                 <SidebarContent>
                     {genres.map(genre => (
                         <SidebarLink
@@ -62,7 +62,7 @@ export const BlogSidebar = ({
 
             {/* 日付アーカイブ */}
             <SidebarSection>
-                <SidebarHeader title="Archives" />
+                <SidebarHeader title="アーカイブ" />
                 <SidebarContent>
                     {archiveDates.map(date => (
                         <SidebarLink

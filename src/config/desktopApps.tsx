@@ -71,6 +71,7 @@ export const DESKTOP_APP_CONFIGS: Omit<DesktopAppConfig, 'component'>[] = [
         icon: pinballIcon,
         type: 'app',
         defaultSize: { width: 600, height: 800 },
+        frameContentClassName: 'pinball-frame-override',
     },
     {
         id: DESKTOP_ICON_IDS.GAMES_FOLDER,
