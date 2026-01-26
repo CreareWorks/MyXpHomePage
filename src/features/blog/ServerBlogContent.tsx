@@ -2,6 +2,7 @@ import { getAllPosts, getPostBySlug } from './utils/fetchPosts';
 import { BlogAppLayout } from './components/BlogAppLayout';
 import { BlogPost } from './types';
 import { MDXRemote } from 'next-mdx-remote/rsc';
+import { LinkCard } from '@/components/common/LinkCard/LinkCard';
 
 interface ServerBlogContentProps {
     slug?: string | undefined;
@@ -20,7 +21,12 @@ export async function ServerBlogContent({ slug }: ServerBlogContentProps) {
     if (slug) {
         currentPost = await getPostBySlug(slug);
         if (currentPost) {
-            postContent = <MDXRemote source={currentPost.content} />;
+            postContent = (
+                <MDXRemote
+                    source={currentPost.content}
+                    components={{ LinkCard }}
+                />
+            );
         }
     }
 
