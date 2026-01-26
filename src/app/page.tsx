@@ -9,9 +9,63 @@ import Minesweeper from '@/features/minesweeper/Minesweeper';
 import Pinball from '@/features/pinball/Pinball';
 import { FolderView } from '@/components/xp/FolderView/FolderView';
 import { DESKTOP_ICON_IDS } from '@/constants/desktopIconConstants';
+import { Metadata } from 'next';
+import { getPostBySlug } from '@/features/blog/utils/fetchPosts';
 
 interface PageProps {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}
+
+export async function generateMetadata({ searchParams }: PageProps): Promise<Metadata> {
+  const params = await searchParams;
+  const app = typeof params?.app === 'string' ? params.app : undefined;
+  const slug = typeof params?.slug === 'string' ? params.slug : undefined;
+
+  let title = 'youta.dev';
+  let description = 'Windows XPをモチーフにしたポートフォリオサイト';
+
+  if (app === DESKTOP_ICON_IDS.BLOG && slug) {
+    const post = await getPostBySlug(slug);
+    if (post) {
+      title = `${post.metadata.title} | youta.dev`;
+      description = post.metadata.description || description;
+    }
+  } else if (app) {
+    const config = DESKTOP_APP_CONFIGS.find(c => c.id === app);
+    if (config) {
+      title = `${config.title} | youta.dev`;
+    }
+  }
+
+  const baseUrl = 'https://youta-dev.vercel.app';
+  const imageUrl = `${baseUrl}/og-image.png`;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url: baseUrl,
+      siteName: 'youta.dev',
+      images: [
+        {
+          url: imageUrl,
+          width: 1200,
+          height: 630,
+          alt: 'youta.dev - Windows XP Portfolio',
+        },
+      ],
+      locale: 'ja_JP',
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [imageUrl],
+    },
+  };
 }
 
 /**
