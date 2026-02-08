@@ -4,18 +4,14 @@ import { AddressBar } from '@/components/xp/AddressBar/AddressBar';
 
 interface BlogToolbarProps {
     canGoBack: boolean;
-    canGoForward: boolean;
     goBack: () => void;
-    goForward: () => void;
     onUp: () => void;
     addressText: string;
 }
 
 export const BlogToolbar = ({
     canGoBack,
-    canGoForward,
     goBack,
-    goForward,
     onUp,
     addressText,
 }: BlogToolbarProps) => {
@@ -33,14 +29,6 @@ export const BlogToolbar = ({
                         </div>
                         <span className={styles.xpBackText}>戻る</span>
                     </div>
-                    <button
-                        className={styles.xpForwardButton}
-                        onClick={goForward}
-                        disabled={!canGoForward}
-                        title="Forward"
-                    >
-                        →
-                    </button>
 
                     <button
                         className={styles.upButton}

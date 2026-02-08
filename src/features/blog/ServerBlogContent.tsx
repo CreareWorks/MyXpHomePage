@@ -32,6 +32,7 @@ export async function ServerBlogContent({ slug }: ServerBlogContentProps) {
 
     return (
         <BlogAppLayout
+            key={slug || 'list'}
             allPosts={allPosts}
             currentPost={currentPost ?? undefined}
             postContent={postContent}

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo, useTransition } from 'react';
+import React, { useState, useMemo, useTransition, useEffect, useRef } from 'react';
 import styles from '@/features/blog/components/BlogApp.module.css';
 import { PostMetadata, BlogPost } from '@/features/blog/types/index';
 import { useQueryState } from 'nuqs';
@@ -23,6 +23,11 @@ export const BlogAppLayout = ({ allPosts, currentPost, postContent }: BlogAppLay
     const { isSidebarOpen, toggleSidebar, closeSidebar } = useMobileSidebar();
     const [isPending, startTransition] = useTransition();
 
+    const historyIndexRef = useRef(0);
+    const historyStackRef = useRef<(string | null)[]>([null]);
+    const [canGoBack, setCanGoBack] = useState(false);
+    const previousSlugRef = useRef<string | null>(null);
+
     // フィルタ条件のState
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedDate, setSelectedDate] = useState<string | null>(null);
@@ -34,50 +39,61 @@ export const BlogAppLayout = ({ allPosts, currentPost, postContent }: BlogAppLay
         shallow: false,
     });
 
-    // 履歴スタック (初期値は現在のslug)
-    const [historyStack, setHistoryStack] = useState<(string | null)[]>([slug ?? null]);
-    const [currentIndex, setCurrentIndex] = useState(0);
+    // 履歴の状態を更新する関数
+    const updateHistoryState = () => {
+        setCanGoBack(historyIndexRef.current > 0);
+    };
 
-    // ナビゲーション処理（新規移動）
+    // slugが変更されたときの処理
+    useEffect(() => {
+        const currentSlug = slug;
+        const previousSlug = previousSlugRef.current;
+
+        if (previousSlug === null && currentSlug === null) {
+            previousSlugRef.current = currentSlug;
+            updateHistoryState();
+            return;
+        }
+
+        if (currentSlug === previousSlug) {
+            return;
+        }
+
+        const slugIndexInHistory = historyStackRef.current.findIndex(
+            (item, idx) => item === currentSlug && idx !== historyIndexRef.current
+        );
+
+        if (slugIndexInHistory !== -1) {
+            historyIndexRef.current = slugIndexInHistory;
+            previousSlugRef.current = currentSlug;
+            updateHistoryState();
+        } else {
+            historyStackRef.current = historyStackRef.current.slice(0, historyIndexRef.current + 1);
+            historyStackRef.current.push(currentSlug);
+            historyIndexRef.current = historyStackRef.current.length - 1;
+            previousSlugRef.current = currentSlug;
+            updateHistoryState();
+        }
+    }, [slug]);
+
     const navigate = (newSlug: string | null) => {
-        if (newSlug === historyStack[currentIndex]) return;
+        if (newSlug === slug) return;
 
         startTransition(() => {
             setSlug(newSlug);
-            const newHistory = historyStack.slice(0, currentIndex + 1);
-            newHistory.push(newSlug);
-            setHistoryStack(newHistory);
-            setCurrentIndex(newHistory.length - 1);
         });
     };
 
-    // 戻る
     const goBack = () => {
-        if (currentIndex > 0) {
-            const prevIndex = currentIndex - 1;
-            const prevSlug = historyStack[prevIndex] ?? null;
+        if (historyIndexRef.current > 0) {
+            const targetIndex = historyIndexRef.current - 1;
+            const targetSlug = historyStackRef.current[targetIndex] ?? null;
+
             startTransition(() => {
-                setSlug(prevSlug);
-                setCurrentIndex(prevIndex);
+                setSlug(targetSlug);
             });
         }
     };
-
-    // 進む
-    const goForward = () => {
-        if (currentIndex < historyStack.length - 1) {
-            const nextIndex = currentIndex + 1;
-            const nextSlug = historyStack[nextIndex] ?? null;
-            startTransition(() => {
-                setSlug(nextSlug);
-                setCurrentIndex(nextIndex);
-            });
-        }
-    };
-
-    const canGoBack = currentIndex > 0;
-    const canGoForward = currentIndex < historyStack.length - 1;
-
 
     // フィルタリング
     const filteredPosts = useMemo(() => {
@@ -160,9 +176,7 @@ export const BlogAppLayout = ({ allPosts, currentPost, postContent }: BlogAppLay
             toolbar={
                 <BlogToolbar
                     canGoBack={canGoBack}
-                    canGoForward={canGoForward}
                     goBack={goBack}
-                    goForward={goForward}
                     onUp={onUp}
                     addressText={getAddressText()}
                 />

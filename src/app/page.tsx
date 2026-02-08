@@ -24,11 +24,21 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
   let title = 'youta.dev';
   let description = 'Windows XPをモチーフにしたポートフォリオサイト';
 
+  const baseUrl = 'https://youta-dev.vercel.app';
+  let imageUrl = `${baseUrl}/og-image.png`;
+
   if (app === DESKTOP_ICON_IDS.BLOG && slug) {
     const post = await getPostBySlug(slug);
     if (post) {
       title = `${post.metadata.title} | youta.dev`;
       description = post.metadata.description || description;
+
+      const ogParams = new URLSearchParams({
+        title: post.metadata.title,
+        date: post.metadata.date,
+        category: post.metadata.category || '',
+      });
+      imageUrl = `${baseUrl}/api/og-blog?${ogParams.toString()}`;
     }
   } else if (app) {
     const config = DESKTOP_APP_CONFIGS.find(c => c.id === app);
@@ -36,9 +46,6 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
       title = `${config.title} | youta.dev`;
     }
   }
-
-  const baseUrl = 'https://youta-dev.vercel.app';
-  const imageUrl = `${baseUrl}/og-image.png`;
 
   return {
     title,
