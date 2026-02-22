@@ -58,7 +58,6 @@ function DesktopContentInner({ configs, children }: DesktopContentProps) {
                         isSelected={selectedIconId === config.id}
                         onClick={() => selectIcon(config.id)}
                         onDoubleClick={() => openWindow(config.id)}
-                        priority={true}
                     />
                 ))}
 

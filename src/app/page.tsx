@@ -24,29 +24,28 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
   let title = 'youta.dev';
   let description = 'Windows XPをモチーフにしたポートフォリオサイト';
 
-  const baseUrl = 'https://youta-dev.vercel.app';
-  let imageUrl = `${baseUrl}/og-image.png`;
-  let canonicalUrl = baseUrl;
+  let imageUrl: string | URL = '/og-image.png';
+  let canonicalUrl = '/';
 
   if (app === DESKTOP_ICON_IDS.BLOG && slug) {
     const post = await getPostBySlug(slug);
     if (post) {
       title = `${post.metadata.title} | youta.dev`;
       description = post.metadata.description || description;
-      canonicalUrl = `${baseUrl}/?app=${app}&slug=${slug}`;
+      canonicalUrl = `/?app=${app}&slug=${slug}`;
 
       const ogParams = new URLSearchParams({
         title: post.metadata.title,
         date: post.metadata.date,
         category: post.metadata.category || '',
       });
-      imageUrl = `${baseUrl}/api/og-blog?${ogParams.toString()}`;
+      imageUrl = `/api/og-blog?${ogParams.toString()}`;
     }
   } else if (app) {
     const config = DESKTOP_APP_CONFIGS.find(c => c.id === app);
     if (config) {
       title = `${config.title} | youta.dev`;
-      canonicalUrl = `${baseUrl}/?app=${app}`;
+      canonicalUrl = `/?app=${app}`;
     }
   }
 
