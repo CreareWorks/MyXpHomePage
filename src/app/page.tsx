@@ -11,10 +11,14 @@ import { FolderView } from '@/components/xp/FolderView/FolderView';
 import { DESKTOP_ICON_IDS } from '@/constants/desktopIconConstants';
 import { Metadata } from 'next';
 import { getPostBySlug } from '@/features/blog/utils/fetchPosts';
+import { PROJECTS } from '@/features/portfolio/data/projects';
 
 interface PageProps {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
+
+export const revalidate = 60; // 1 minute
+
 
 export async function generateMetadata({ searchParams }: PageProps): Promise<Metadata> {
   const params = await searchParams;
@@ -24,28 +28,43 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
   let title = 'youta.dev';
   let description = 'Windows XPをモチーフにしたポートフォリオサイト';
 
-  let imageUrl: string | URL = '/og-image.png';
-  let canonicalUrl = '/';
+  const baseUrl = 'https://youta-dev.vercel.app';
+  let imageUrl = `${baseUrl}/og-image.png`;
+  let canonicalUrl = baseUrl;
 
   if (app === DESKTOP_ICON_IDS.BLOG && slug) {
     const post = await getPostBySlug(slug);
     if (post) {
       title = `${post.metadata.title} | youta.dev`;
       description = post.metadata.description || description;
-      canonicalUrl = `/?app=${app}&slug=${slug}`;
+      canonicalUrl = `${baseUrl}/?app=${app}&slug=${slug}`;
 
       const ogParams = new URLSearchParams({
         title: post.metadata.title,
         date: post.metadata.date,
         category: post.metadata.category || '',
       });
-      imageUrl = `/api/og-blog?${ogParams.toString()}`;
+      imageUrl = `${baseUrl}/api/og-blog?${ogParams.toString()}`;
+    }
+  } else if (app === DESKTOP_ICON_IDS.PORTFOLIO && slug) {
+    const project = PROJECTS.find(p => p.metadata.id === slug);
+    if (project) {
+      title = `${project.metadata.title} | Portfolio | youta.dev`;
+      description = project.metadata.description || description;
+      canonicalUrl = `${baseUrl}/?app=${app}&slug=${slug}`;
+
+      const ogParams = new URLSearchParams({
+        title: project.metadata.title,
+        date: project.metadata.date,
+        category: project.metadata.category || '',
+      });
+      imageUrl = `${baseUrl}/api/og-portfolio?${ogParams.toString()}`;
     }
   } else if (app) {
     const config = DESKTOP_APP_CONFIGS.find(c => c.id === app);
     if (config) {
       title = `${config.title} | youta.dev`;
-      canonicalUrl = `/?app=${app}`;
+      canonicalUrl = `${baseUrl}/?app=${app}`;
     }
   }
 
@@ -55,14 +74,6 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
     alternates: {
       canonical: canonicalUrl,
     },
-    robots: {
-      index: true,
-      follow: true,
-      googleBot: {
-        index: true,
-        follow: true,
-      },
-    },
     openGraph: {
       title,
       description,
@@ -71,9 +82,11 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
       images: [
         {
           url: imageUrl,
+          secureUrl: imageUrl,
           width: 1200,
           height: 630,
           alt: title,
+          type: 'image/png',
         },
       ],
       locale: 'ja_JP',
