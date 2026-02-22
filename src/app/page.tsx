@@ -29,10 +29,10 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
   let description = 'Windows XPをモチーフにしたポートフォリオサイト';
 
   const baseUrl = 'https://youta-dev.vercel.app';
-  let imageUrl = `${baseUrl}/og-image.png`;
+  let imageUrl = `${baseUrl}/og-image.jpg`;
   let canonicalUrl = baseUrl;
-  let imageWidth = 1024;
-  let imageHeight = 1024;
+  let imageWidth = 1200;
+  let imageHeight = 630;
   let imageType = 'image/jpeg';
 
   if (app === DESKTOP_ICON_IDS.BLOG && slug) {
