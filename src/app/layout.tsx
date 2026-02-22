@@ -3,6 +3,7 @@ import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import '@/app/globals.css';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://youta-dev.vercel.app'),
   title: 'youta.dev',
   description: 'Windows XPをモチーフにしたポートフォリオサイト',
 }

@@ -56,6 +56,14 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
     alternates: {
       canonical: canonicalUrl,
     },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+      },
+    },
     openGraph: {
       title,
       description,
@@ -77,6 +85,7 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
       title,
       description,
       site: '@creareworks',
+      creator: '@creareworks',
       images: [imageUrl],
     },
   };
