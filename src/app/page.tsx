@@ -12,6 +12,7 @@ import { DESKTOP_ICON_IDS } from '@/constants/desktopIconConstants';
 import { Metadata } from 'next';
 import { getPostBySlug } from '@/features/blog/utils/fetchPosts';
 import { PROJECTS } from '@/features/portfolio/data/projects';
+import robots from './robots';
 
 interface PageProps {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
@@ -73,6 +74,14 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
     description,
     alternates: {
       canonical: canonicalUrl,
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+      },
     },
     openGraph: {
       title,

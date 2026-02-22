@@ -7,12 +7,12 @@ interface StartButtonProps {
     onClick: () => void;
 }
 
-export function StartButton({ 
+export function StartButton({
     isOpen,
-    onClick 
+    onClick
 }: StartButtonProps) {
     return (
-        <button 
+        <button
             className={`${styles.container} ${isOpen ? styles.active : ''}`}
             onClick={(e) => {
                 e.stopPropagation();
@@ -26,7 +26,6 @@ export function StartButton({
                     alt='Windows XP logo'
                     width={18}
                     height={18}
-                    priority
                 />
             </div>
             <span className={styles.startText}>スタート</span>
