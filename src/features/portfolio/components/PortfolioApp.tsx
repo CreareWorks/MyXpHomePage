@@ -15,7 +15,7 @@ import { ExplorerSidebar, SidebarSection, SidebarHeader, SidebarContent, Sidebar
 export function PortfolioApp() {
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
     const { isSidebarOpen, toggleSidebar, closeSidebar } = useMobileSidebar();
-    const [projectId, setProjectId] = useQueryState('pid', {
+    const [projectId, setProjectId] = useQueryState('slug', {
         history: 'push',
         shallow: true
     });
