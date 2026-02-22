@@ -12,7 +12,6 @@ import { DESKTOP_ICON_IDS } from '@/constants/desktopIconConstants';
 import { Metadata } from 'next';
 import { getPostBySlug } from '@/features/blog/utils/fetchPosts';
 import { PROJECTS } from '@/features/portfolio/data/projects';
-import robots from './robots';
 
 interface PageProps {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
@@ -32,6 +31,9 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
   const baseUrl = 'https://youta-dev.vercel.app';
   let imageUrl = `${baseUrl}/og-image.png`;
   let canonicalUrl = baseUrl;
+  let imageWidth = 1024;
+  let imageHeight = 1024;
+  let imageType = 'image/jpeg';
 
   if (app === DESKTOP_ICON_IDS.BLOG && slug) {
     const post = await getPostBySlug(slug);
@@ -46,6 +48,9 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
         category: post.metadata.category || '',
       });
       imageUrl = `${baseUrl}/api/og-blog?${ogParams.toString()}`;
+      imageWidth = 1200;
+      imageHeight = 630;
+      imageType = 'image/png';
     }
   } else if (app === DESKTOP_ICON_IDS.PORTFOLIO && slug) {
     const project = PROJECTS.find(p => p.metadata.id === slug);
@@ -60,6 +65,9 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
         category: project.metadata.category || '',
       });
       imageUrl = `${baseUrl}/api/og-portfolio?${ogParams.toString()}`;
+      imageWidth = 1200;
+      imageHeight = 630;
+      imageType = 'image/png';
     }
   } else if (app) {
     const config = DESKTOP_APP_CONFIGS.find(c => c.id === app);
@@ -92,10 +100,10 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
         {
           url: imageUrl,
           secureUrl: imageUrl,
-          width: 1200,
-          height: 630,
+          width: imageWidth,
+          height: imageHeight,
           alt: title,
-          type: 'image/png',
+          type: imageType,
         },
       ],
       locale: 'ja_JP',
