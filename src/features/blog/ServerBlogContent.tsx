@@ -4,7 +4,7 @@ import { BlogPost } from './types';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import { LinkCard } from '@/components/common/LinkCard/LinkCard';
 
-interface ServerBlogContentProps {
+interface ServerBlogContentProps { 
     slug?: string | undefined;
 }
 

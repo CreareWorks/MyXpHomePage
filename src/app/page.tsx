@@ -26,12 +26,14 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
 
   const baseUrl = 'https://youta-dev.vercel.app';
   let imageUrl = `${baseUrl}/og-image.png`;
+  let canonicalUrl = baseUrl;
 
   if (app === DESKTOP_ICON_IDS.BLOG && slug) {
     const post = await getPostBySlug(slug);
     if (post) {
       title = `${post.metadata.title} | youta.dev`;
       description = post.metadata.description || description;
+      canonicalUrl = `${baseUrl}/?app=${app}&slug=${slug}`;
 
       const ogParams = new URLSearchParams({
         title: post.metadata.title,
@@ -44,32 +46,37 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
     const config = DESKTOP_APP_CONFIGS.find(c => c.id === app);
     if (config) {
       title = `${config.title} | youta.dev`;
+      canonicalUrl = `${baseUrl}/?app=${app}`;
     }
   }
 
   return {
     title,
     description,
+    alternates: {
+      canonical: canonicalUrl,
+    },
     openGraph: {
       title,
       description,
-      url: baseUrl,
+      url: canonicalUrl,
       siteName: 'youta.dev',
       images: [
         {
           url: imageUrl,
           width: 1200,
           height: 630,
-          alt: 'youta.dev - Windows XP Portfolio',
+          alt: title,
         },
       ],
       locale: 'ja_JP',
-      type: 'website',
+      type: app === DESKTOP_ICON_IDS.BLOG ? 'article' : 'website',
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
+      site: '@creareworks',
       images: [imageUrl],
     },
   };
