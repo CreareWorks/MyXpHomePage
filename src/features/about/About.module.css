@@ -35,8 +35,8 @@
     font-size: 32px;
     color: #003399;
     margin: 0;
-    font-weight: 500;
-    letter-spacing: -0.5px;
+    font-weight: bold;
+    font-family: "Tahoma", sans-serif;
 }
 
 .subtitle {
@@ -61,19 +61,31 @@
 }
 
 .sectionTitle {
-    font-size: 13px;
+    font-size: 16px;
     font-weight: bold;
     color: #003399;
-    border-bottom: 1px solid #b5c4df;
-    padding-bottom: 4px;
-    margin-bottom: 15px;
+    border-bottom: 1px solid #0054E3;
+    padding-bottom: 6px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sectionTitle::before {
+    content: "";
+    width: 4px;
+    height: 18px;
+    background: #3E9C4E;
+    /* XPグリーンのアクセント */
+    display: inline-block;
 }
 
 .paragraph {
-    font-size: 13px;
-    line-height: 1.6;
+    font-size: 14px;
+    line-height: 1.8;
     color: #333;
-    margin-bottom: 12px;
+    margin-bottom: 15px;
 }
 
 /* 接続リンク (コントロールパネル風) */

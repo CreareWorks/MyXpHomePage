@@ -36,7 +36,10 @@ export const BlogMainContent = ({
                 <div className={styles.detailContainer}>
                     <h1 className={styles.detailTitle}>{currentPost.metadata.title}</h1>
                     <div className={styles.detailMeta}>
-                        {currentPost.metadata.date}
+                        <span className={styles.detailDate}>📅 {currentPost.metadata.date}</span>
+                        {currentPost.metadata.category && (
+                            <span className={styles.detailCategory}>📁 {currentPost.metadata.category}</span>
+                        )}
                     </div>
                     <div className={`markdown-body ${styles.detailBody}`}>
                         {postContent || <pre>{currentPost.content}</pre>}

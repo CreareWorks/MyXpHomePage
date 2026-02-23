@@ -85,6 +85,9 @@
 
 .detailContainer {
     animation: fadeIn 0.3s;
+    padding: 30px 40px;
+    max-width: 1000px;
+    margin: 0 auto;
 }
 
 @keyframes fadeIn {
@@ -100,16 +103,17 @@
 .backButton {
     display: inline-flex;
     align-items: center;
-    height: 22px;
-    padding: 0 12px;
+    height: 24px;
+    padding: 0 15px;
     background: linear-gradient(to bottom, #ffffff 0%, #ebeadb 100%);
     border: 1px solid #003c74;
     border-radius: 3px;
     font-size: 11px;
     color: #000;
     cursor: pointer;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     box-shadow: inset 1px 1px 0 #fff;
+    transition: all 0.1s;
 }
 
 .backButton:hover {
@@ -120,56 +124,67 @@
 .backButton:active {
     background: #dcdcdc;
     box-shadow: inset 2px 2px 3px rgba(0, 0, 0, 0.1);
-    padding: 1px 11px 0 13px;
+    transform: translateY(1px);
 }
 
 .detailHeader {
-    border-bottom: 2px solid #245DDA;
-    padding-bottom: 15px;
-    margin-bottom: 20px;
+    border-bottom: 2px solid #0054E3;
+    padding-bottom: 10px;
+    margin-bottom: 30px;
 }
 
 .detailTitle {
-    font-size: 28px;
-    color: #000;
+    font-size: 32px;
+    font-weight: bold;
+    color: #003399;
+    margin-bottom: 8px;
+    font-family: "Tahoma", sans-serif;
 }
 
 .detailMeta {
     font-size: 13px;
     color: #666;
-    margin-top: 8px;
     display: flex;
     gap: 20px;
+    align-items: center;
 }
 
 .detailBody {
     line-height: 1.8;
     color: #333;
-    font-size: 14px;
+    font-size: 15px;
+}
+
+.detailBody h3 {
+    font-size: 20px;
+    color: #003399;
+    border-left: 5px solid #0054E3;
+    padding: 5px 15px;
+    margin: 35px 0 15px 0;
+    background: linear-gradient(to right, #f0f7ff, transparent);
+    font-family: "Tahoma", sans-serif;
+}
+
+.detailBody p {
+    margin-bottom: 1.2em;
 }
 
 .detailBody ul,
 .detailBody ol {
     padding-left: 24px;
-    margin-bottom: 16px;
+    margin-bottom: 1.5em;
 }
 
 .detailBody li {
-    margin-bottom: 4px;
-}
-
-.detailBody h3 {
-    margin-top: 25px;
-    margin-bottom: 10px;
-    color: #245DDA;
-    border-left: 4px solid #245DDA;
-    padding-left: 10px;
+    margin-bottom: 0.8em;
 }
 
 .actionButtons {
-    margin-top: 30px;
+    margin-top: 40px;
     display: flex;
-    gap: 12px;
+    gap: 15px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
 }
 
 .actionButton {
