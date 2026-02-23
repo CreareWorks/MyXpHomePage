@@ -392,13 +392,15 @@
 }
 
 @media (max-width: 768px) {
-    .contentArea {
-        padding-top: 10px;
-        position: relative;
+    .detailContainer {
+        padding: 0px 15px 20px 15px;
+    }
+
+    .detailTitle {
+        font-size: 24px;
     }
 }
 
-/* ローディング表示 */
 .loadingOverlay {
     position: absolute;
     top: 0;

@@ -28,7 +28,6 @@
 
 @media (max-width: 768px) {
     .contentArea {
-        padding-top: 40px;
-        /* メニューボタン分を確保 */
+        padding-top: 10px;
     }
 }

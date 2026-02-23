@@ -210,13 +210,15 @@
 }
 
 @media (max-width: 768px) {
-
     .contentArea {
-        padding: 15px;
-        padding-top: 15px;
+        padding: 0;
+    }
+
+    .detailContainer {
+        padding: 5px 15px 20px 15px;
     }
 
     .detailTitle {
-        font-size: 20px;
+        font-size: 24px;
     }
 }
