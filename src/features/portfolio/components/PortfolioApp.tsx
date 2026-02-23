@@ -11,6 +11,8 @@ import { useMobileSidebar } from '@/hooks/useMobileSidebar';
 import { AddressBar } from '@/components/xp/AddressBar/AddressBar';
 import { ExplorerAppLayout } from '@/components/xp/WindowAppLayout/ExplorerAppLayout';
 import { ExplorerSidebar, SidebarSection, SidebarHeader, SidebarContent, SidebarLink } from '@/components/xp/ExplorerSidebar/ExplorerSidebar';
+import { SidebarAppLinks } from '@/components/xp/ExplorerSidebar/SidebarAppLinks';
+import { DESKTOP_ICON_IDS } from '@/constants/desktopIconConstants';
 
 export function PortfolioApp() {
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -48,6 +50,7 @@ export function PortfolioApp() {
             }
             sidebar={
                 <ExplorerSidebar isOpen={isSidebarOpen}>
+                    <SidebarAppLinks currentAppId={DESKTOP_ICON_IDS.PORTFOLIO} />
                     <SidebarSection>
                         <SidebarHeader title="Categories" />
                         <SidebarContent>

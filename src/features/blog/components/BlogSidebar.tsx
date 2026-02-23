@@ -6,6 +6,8 @@ import {
     SidebarLink
 } from '@/components/xp/ExplorerSidebar/ExplorerSidebar';
 import styles from './BlogApp.module.css';
+import { SidebarAppLinks } from '@/components/xp/ExplorerSidebar/SidebarAppLinks';
+import { DESKTOP_ICON_IDS } from '@/constants/desktopIconConstants';
 
 interface BlogSidebarProps {
     searchQuery: string;
@@ -30,6 +32,7 @@ export const BlogSidebar = ({
 }: BlogSidebarProps) => {
     return (
         <>
+            <SidebarAppLinks currentAppId={DESKTOP_ICON_IDS.BLOG} />
             {/* 検索 */}
             <SidebarSection>
                 <SidebarHeader title="検索" />

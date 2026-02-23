@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
             userAgent: '*',
             allow: '/',
         },
-        sitemap: 'https://youta-dev.vercel.app/sitemap.xml',
+        sitemap: 'https://y-creare.dev/sitemap.xml',
     };
 }

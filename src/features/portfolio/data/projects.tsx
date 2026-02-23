@@ -40,7 +40,7 @@ export const PROJECTS: Project[] = [
             category: PORTFOLIO_CATEGORIES.WEB_APP,
             description: 'Windows XPのUIを模したHP、当サイトです。',
             thumbnail: xpPortfolio,
-            url: 'https://youta-dev.vercel.app',
+            url: 'https://y-creare.dev',
             githubUrl: 'https://github.com/CreareWorks/MyXpHomePage',
             techStack: ['Next.js', 'React', 'TypeScript', 'CSS Modules'],
         },

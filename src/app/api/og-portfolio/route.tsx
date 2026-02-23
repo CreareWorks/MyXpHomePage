@@ -6,7 +6,7 @@ export const runtime = 'edge';
 export async function GET(request: NextRequest) {
     try {
         const { searchParams } = new URL(request.url);
-        const title = searchParams.get('title') || 'youta.dev';
+        const title = searchParams.get('title') || 'y-creare.dev';
         const date = searchParams.get('date') || '';
         const category = searchParams.get('category') || '';
 
@@ -110,7 +110,7 @@ export async function GET(request: NextRequest) {
                         >
                             💻
                         </div>
-                        <div style={{ display: 'flex' }}>youta.dev</div>
+                        <div style={{ display: 'flex' }}>y-creare.dev</div>
                     </div>
                 </div>
             ),

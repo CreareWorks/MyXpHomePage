@@ -6,6 +6,7 @@ import { ExplorerAppLayout } from '@/components/xp/WindowAppLayout/ExplorerAppLa
 import { AddressBar } from '@/components/xp/AddressBar/AddressBar';
 import { useMobileSidebar } from '@/hooks/useMobileSidebar';
 import { ExplorerSidebar, SidebarSection, SidebarHeader, SidebarContent, SidebarLink } from '@/components/xp/ExplorerSidebar/ExplorerSidebar';
+import { SidebarAppLinks } from '@/components/xp/ExplorerSidebar/SidebarAppLinks';
 import { useWindows } from '@/contexts/WindowsContext';
 import { DESKTOP_ICON_IDS } from '@/constants/desktopIconConstants';
 
@@ -29,6 +30,7 @@ export function Content() {
             }
             sidebar={
                 <ExplorerSidebar isOpen={isSidebarOpen}>
+                    <SidebarAppLinks currentAppId={DESKTOP_ICON_IDS.SKILLSHEET} />
                     <SidebarSection>
                         <SidebarHeader title="関連リンク" />
                         <SidebarContent>

@@ -3,7 +3,7 @@ import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import '@/app/globals.css';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://youta-dev.vercel.app'),
+  metadataBase: new URL('https://y-creare.dev'),
 }
 
 export const viewport: Viewport = {

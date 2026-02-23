@@ -1,7 +1,6 @@
 'use client';
 
 import React from "react";
-import { useQueryState, parseAsString } from 'nuqs';
 import styles from './About.module.css';
 import { Sidebar } from "./components/Sidebar";
 import { ProfileHeader } from "./components/ProfileHeader";
@@ -11,13 +10,7 @@ import { ExplorerAppLayout } from "@/components/xp/WindowAppLayout/ExplorerAppLa
 import { ExplorerSidebar } from "@/components/xp/ExplorerSidebar/ExplorerSidebar";
 
 export function Content() {
-    const [, setApp] = useQueryState('app', parseAsString.withDefault('').withOptions({ history: 'push' }));
     const { isSidebarOpen, toggleSidebar, closeSidebar } = useMobileSidebar();
-
-    const navigateTo = (id: string) => {
-        setApp(id);
-        closeSidebar();
-    };
 
     return (
         <ExplorerAppLayout
@@ -26,7 +19,7 @@ export function Content() {
             onCloseSidebar={closeSidebar}
             sidebar={
                 <ExplorerSidebar isOpen={isSidebarOpen}>
-                    <Sidebar onNavigate={navigateTo} />
+                    <Sidebar />
                 </ExplorerSidebar>
             }
         >
