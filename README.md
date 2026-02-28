@@ -77,7 +77,7 @@ WindowsXPのUIをNextで再現した、ポートフォリオサイト(HP)兼エ�
 
 ## 開発コマンド
 ```bash
-npm run dev    # 開発サーバー起動
-npm run build  # ビルド
-npm run start  # プロダクション実行
+pnpm dev    # 開発サーバー起動
+pnpm build  # ビルド
+pnpm start  # プロダクション実行
 ```
