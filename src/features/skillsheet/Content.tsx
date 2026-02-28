@@ -53,11 +53,11 @@ export function Content() {
             <div className={styles.container}>
                 <div className={styles.introSection}>
                     <div className={styles.introTitle}>
-                        Skill Sheet Builder 出力結果
+                        スキル(Skill Sheet Builder 出力結果)
                     </div>
                     <p>
-                        このスキルシートは、自作サービス「<strong>Skill Sheet Builder</strong>」を使用して作成されました。
-                        AIとの対話を通じて、自身の経歴を客観的に分析し、最適なフォーマットで出力したものです。
+                        このスキルシートは、自作サービス「<strong>Skill Sheet Builder</strong>」を使用して作成したものです。<br />
+                        AIとの対話を通じて、自身の経歴を客観的に分析し、事前に定義しているフォーマットで出力したものです。
                     </p>
                     <button
                         className={styles.portfolioLink}
