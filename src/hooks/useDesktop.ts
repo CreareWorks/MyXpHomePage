@@ -2,15 +2,21 @@ import { useState, useCallback, useEffect, useRef, RefObject } from 'react';
 import { useQueryState, parseAsString } from 'nuqs';
 import { DESKTOP_ICON_IDS, type DesktopIconId } from '@/constants/desktopIconConstants';
 
+const VALID_ICON_IDS = new Set<string>(Object.values(DESKTOP_ICON_IDS));
+function toDesktopIconId(id: string | null): DesktopIconId | null {
+    if (id && VALID_ICON_IDS.has(id)) return id as DesktopIconId;
+    return null;
+}
+
 export const useDesktop = () => {
     const [appId, setAppId] = useQueryState('app', parseAsString.withOptions({ history: 'push' }));
 
-    const activeWindowId: DesktopIconId = (appId as DesktopIconId) || null;
+    const activeWindowId = toDesktopIconId(appId);
 
     const [selectedIconId, setSelectedIconId] = useState<DesktopIconId | null>(null);
     const [openWindowIds, setOpenWindowIds] = useState<DesktopIconId[]>([]);
     const [minimizedWindowIds, setMinimizedWindowIds] = useState<DesktopIconId[]>([]);
-    const [maximizedWindowIds, setMaximizedWindowsIds] = useState<DesktopIconId[]>([]);
+    const [maximizedWindowIds, setMaximizedWindowIds] = useState<DesktopIconId[]>([]);
 
     const [isStartMenuOpen, setIsStartMenuOpen] = useState(false);
 
@@ -25,12 +31,12 @@ export const useDesktop = () => {
             if (activeWindowId) {
                 // URL指定がある場合
                 setOpenWindowIds([activeWindowId]);
-                setMaximizedWindowsIds([activeWindowId]);
+                setMaximizedWindowIds([activeWindowId]);
             } else {
                 // URL指定がない場合: デフォルトで About を開く
                 setAppId(DESKTOP_ICON_IDS.ABOUT);
                 setOpenWindowIds([DESKTOP_ICON_IDS.ABOUT]);
-                setMaximizedWindowsIds([DESKTOP_ICON_IDS.ABOUT]);
+                setMaximizedWindowIds([DESKTOP_ICON_IDS.ABOUT]);
             }
         }, 0);
 
@@ -55,7 +61,7 @@ export const useDesktop = () => {
             });
 
             // 最大化（URLからの遷移時はデフォルトで最大化）
-            setMaximizedWindowsIds((prev) => {
+            setMaximizedWindowIds((prev) => {
                 if (prev.includes(activeWindowId)) return prev;
                 return [...prev, activeWindowId];
             });
@@ -75,7 +81,7 @@ export const useDesktop = () => {
         });
         setMinimizedWindowIds((prev) => prev.filter((minId) => minId !== id));
         // デフォルトで最大化させる
-        setMaximizedWindowsIds((prev) => {
+        setMaximizedWindowIds((prev) => {
             if (!prev.includes(id)) return [...prev, id];
             return prev;
         });
@@ -88,7 +94,7 @@ export const useDesktop = () => {
     const closeWindow = useCallback((id: DesktopIconId) => {
         setOpenWindowIds((prev) => prev.filter((openId) => openId !== id));
         setMinimizedWindowIds((prev) => prev.filter((minId) => minId !== id));
-        setMaximizedWindowsIds((prev) => prev.filter((maxId) => maxId !== id));
+        setMaximizedWindowIds((prev) => prev.filter((maxId) => maxId !== id));
 
         if (activeWindowId === id) {
             setAppId(null);
@@ -96,7 +102,7 @@ export const useDesktop = () => {
     }, [activeWindowId, setAppId]);
 
     const toggleMaximizeWindow = useCallback((id: DesktopIconId) => {
-        setMaximizedWindowsIds((prev) => {
+        setMaximizedWindowIds((prev) => {
             const isMaximized = prev.includes(id);
             if (isMaximized) {
                 return prev.filter((maxId) => maxId !== id);
@@ -153,7 +159,7 @@ export const useDesktop = () => {
     const closeAllWindows = useCallback(() => {
         setOpenWindowIds([]);
         setMinimizedWindowIds([]);
-        setMaximizedWindowsIds([]);
+        setMaximizedWindowIds([]);
         setAppId(null);
         setIsStartMenuOpen(false);
     }, [setAppId]);

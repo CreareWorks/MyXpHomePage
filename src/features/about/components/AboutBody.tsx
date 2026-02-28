@@ -4,6 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import styles from '../About.module.css';
 import { SOCIAL_LINKS } from "@/config/socialLinks";
+import introduceImage from '@/assets/about/introduce.png';
 
 export function AboutBody() {
     return (
@@ -29,7 +30,7 @@ export function AboutBody() {
                 </div>
                 <div className={styles.introImageWrapper}>
                     <Image
-                        src={require('@/assets/about/introduce.png')}
+                        src={introduceImage}
                         alt="HPの楽しみ方"
                         className={styles.introImage}
                     />

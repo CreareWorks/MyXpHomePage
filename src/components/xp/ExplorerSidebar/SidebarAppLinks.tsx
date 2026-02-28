@@ -1,10 +1,9 @@
-'use client';
-
 import React from 'react';
 import Image from 'next/image';
 import { DESKTOP_APP_CONFIGS, ON_DESKTOP_ICON_IDS } from '@/config/desktopApps';
 import { useWindows } from '@/contexts/WindowsContext';
 import { useMobileSidebar } from '@/hooks/useMobileSidebar';
+import { DesktopIconId } from '@/constants/desktopIconConstants';
 import {
     SidebarSection,
     SidebarHeader,
@@ -13,7 +12,7 @@ import {
 } from './ExplorerSidebar';
 
 interface SidebarAppLinksProps {
-    currentAppId?: string;
+    currentAppId?: DesktopIconId;
 }
 
 export function SidebarAppLinks({ currentAppId }: SidebarAppLinksProps) {
@@ -24,8 +23,8 @@ export function SidebarAppLinks({ currentAppId }: SidebarAppLinksProps) {
         ON_DESKTOP_ICON_IDS.includes(app.id) && app.id !== currentAppId
     );
 
-    const handleNavigate = (id: string) => {
-        openWindow(id as any);
+    const handleNavigate = (id: DesktopIconId) => {
+        openWindow(id);
         closeSidebar();
     };
 

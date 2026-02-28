@@ -43,6 +43,20 @@
     background: #eee;
 }
 
+/* 詳細ビューでのサムネイル表示 */
+.detailContainer .thumbnailWrapper {
+    aspect-ratio: unset;
+    max-height: 600px;
+    max-width: 980px;
+    margin: 0 auto 30px auto;
+    background: #f8f8f8;
+    border: 1px solid #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
 .thumbnail {
     display: block;
     object-fit: contain;

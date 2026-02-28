@@ -1,9 +1,9 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import styles from './PortfolioApp.module.css';
 import { ProjectMetadata } from '../types';
-import { StaticImageData } from 'next/image';
 
 interface PortfolioListProps {
     projects: ProjectMetadata[];
@@ -20,10 +20,13 @@ export function PortfolioList({ projects, onSelect }: PortfolioListProps) {
                     onClick={() => onSelect(project.id)}
                 >
                     <div className={styles.thumbnailWrapper}>
-                        <img
-                            src={typeof project.thumbnail === 'string' ? project.thumbnail : (project.thumbnail as StaticImageData).src}
+                        <Image
+                            src={project.thumbnail}
                             alt={project.title}
                             className={styles.thumbnail}
+                            width={400}
+                            height={250}
+                            style={{ objectFit: 'cover' }}
                         />
                     </div>
                     <div className={styles.cardInfo}>
