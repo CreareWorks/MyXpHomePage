@@ -1,9 +1,10 @@
 import type { Metadata, Viewport } from 'next';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import '@/app/globals.css';
+import { SITE_BASE_URL } from '@/constants/siteConstants';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://y-creare.dev'),
+  metadataBase: new URL(SITE_BASE_URL),
 }
 
 export const viewport: Viewport = {

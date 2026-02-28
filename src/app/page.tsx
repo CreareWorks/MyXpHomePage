@@ -12,6 +12,7 @@ import { DESKTOP_ICON_IDS } from '@/constants/desktopIconConstants';
 import { Metadata } from 'next';
 import { getPostBySlug } from '@/features/blog/utils/fetchPosts';
 import { PROJECTS } from '@/features/portfolio/data/projects';
+import { SITE_BASE_URL, SITE_NAME } from '@/constants/siteConstants';
 
 interface PageProps {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
@@ -25,10 +26,10 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
   const app = typeof params?.app === 'string' ? params.app : undefined;
   const slug = typeof params?.slug === 'string' ? params.slug : undefined;
 
-  let title = 'y-creare.dev';
+  let title = SITE_NAME;
   let description = 'はじめまして、Creare(大島)と申します、当サイトはWindows XPをモチーフにしたポートフォリオサイトとなります。ご覧いただけると幸いです。';
 
-  const baseUrl = 'https://y-creare.dev';
+  const baseUrl = SITE_BASE_URL;
   let imageUrl = `${baseUrl}/og-image.jpg`;
   let canonicalUrl = baseUrl;
   let imageWidth = 1200;
@@ -38,7 +39,7 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
   if (app === DESKTOP_ICON_IDS.BLOG && slug) {
     const post = await getPostBySlug(slug);
     if (post) {
-      title = `${post.metadata.title} | y-creare.dev`;
+      title = `${post.metadata.title} | ${SITE_NAME}`;
       description = post.metadata.description || description;
       canonicalUrl = `${baseUrl}/?app=${app}&slug=${slug}`;
 
@@ -55,7 +56,7 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
   } else if (app === DESKTOP_ICON_IDS.PORTFOLIO && slug) {
     const project = PROJECTS.find(p => p.metadata.id === slug);
     if (project) {
-      title = `${project.metadata.title} | Portfolio | y-creare.dev`;
+      title = `${project.metadata.title} | Portfolio | ${SITE_NAME}`;
       description = project.metadata.description || description;
       canonicalUrl = `${baseUrl}/?app=${app}&slug=${slug}`;
 
@@ -72,7 +73,7 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
   } else if (app) {
     const config = DESKTOP_APP_CONFIGS.find(c => c.id === app);
     if (config) {
-      title = `${config.title} | y-creare.dev`;
+      title = `${config.title} | ${SITE_NAME}`;
       canonicalUrl = `${baseUrl}/?app=${app}`;
     }
   }
@@ -95,7 +96,7 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
       title,
       description,
       url: canonicalUrl,
-      siteName: 'y-creare.dev',
+      siteName: SITE_NAME,
       images: [
         {
           url: imageUrl,

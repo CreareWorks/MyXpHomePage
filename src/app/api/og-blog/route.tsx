@@ -1,12 +1,13 @@
 import { ImageResponse } from 'next/og';
 import { NextRequest } from 'next/server';
+import { SITE_NAME } from '@/constants/siteConstants';
 
 export const runtime = 'edge';
 
 export async function GET(request: NextRequest) {
     try {
         const { searchParams } = new URL(request.url);
-        const title = searchParams.get('title') || 'y-creare.dev';
+        const title = searchParams.get('title') || SITE_NAME;
         const date = searchParams.get('date') || '';
         const category = searchParams.get('category') || '';
 
@@ -110,7 +111,7 @@ export async function GET(request: NextRequest) {
                         >
                             💻
                         </div>
-                        <div style={{ display: 'flex' }}>y-creare.dev</div>
+                        <div style={{ display: 'flex' }}>{SITE_NAME}</div>
                     </div>
                 </div>
             ),

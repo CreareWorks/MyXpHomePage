@@ -1,4 +1,5 @@
 import { MetadataRoute } from 'next';
+import { SITE_BASE_URL } from '@/constants/siteConstants';
 
 export default function robots(): MetadataRoute.Robots {
     return {
@@ -6,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
             userAgent: '*',
             allow: '/',
         },
-        sitemap: 'https://y-creare.dev/sitemap.xml',
+        sitemap: `${SITE_BASE_URL}/sitemap.xml`,
     };
 }

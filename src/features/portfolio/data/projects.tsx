@@ -1,6 +1,7 @@
 import React from 'react';
 import { Project } from '../types';
 import { PORTFOLIO_CATEGORIES } from '../constants/portfolioConstants';
+import { SITE_BASE_URL } from '@/constants/siteConstants';
 import xpPortfolio from '@/assets/portfolio/youta-dev-xp-hp.png';
 import skillsheetBuilder from '@/assets/portfolio/skillsheet-builder.png';
 
@@ -40,7 +41,7 @@ export const PROJECTS: Project[] = [
             category: PORTFOLIO_CATEGORIES.WEB_APP,
             description: 'Windows XPのUIを模したHP、当サイトです。',
             thumbnail: xpPortfolio,
-            url: 'https://y-creare.dev',
+            url: SITE_BASE_URL,
             githubUrl: 'https://github.com/CreareWorks/MyXpHomePage',
             techStack: ['Next.js', 'React', 'TypeScript', 'CSS Modules'],
         },
