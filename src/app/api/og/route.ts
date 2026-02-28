@@ -9,8 +9,19 @@ export async function GET(request: NextRequest) {
         return NextResponse.json({ error: 'URL is required' }, { status: 400 });
     }
 
+    let parsedUrl: URL;
     try {
-        const response = await fetch(url, {
+        parsedUrl = new URL(url);
+    } catch {
+        return NextResponse.json({ error: 'Invalid URL format' }, { status: 400 });
+    }
+
+    if (parsedUrl.protocol !== 'http:' && parsedUrl.protocol !== 'https:') {
+        return NextResponse.json({ error: 'Invalid URL protocol' }, { status: 400 });
+    }
+
+    try {
+        const response = await fetch(parsedUrl.toString(), {
             headers: {
                 'User-Agent': 'AntigravityLinkPreview/1.0',
             },
