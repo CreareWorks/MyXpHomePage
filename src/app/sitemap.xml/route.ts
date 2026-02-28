@@ -55,7 +55,7 @@ export async function GET() {
 
         // ブログ記事（MDXから自動取得）
         ...allPosts.map((post) => ({
-            url: `${SITE_BASE_URL}/?app=${DESKTOP_ICON_IDS.BLOG}&slug=${post.slug}`,
+            url: `${SITE_BASE_URL}/blog/${post.slug}`,
             lastmod: post.date ? new Date(post.date).toISOString() : now,
             changefreq: 'weekly',
             priority: '0.7',
@@ -63,7 +63,7 @@ export async function GET() {
 
         // ポートフォリオ各プロジェクト
         ...PROJECTS.map((project) => ({
-            url: `${SITE_BASE_URL}/?app=${DESKTOP_ICON_IDS.PORTFOLIO}&slug=${project.metadata.id}`,
+            url: `${SITE_BASE_URL}/portfolio/${project.metadata.id}`,
             lastmod: project.metadata.date
                 ? new Date(project.metadata.date).toISOString()
                 : now,

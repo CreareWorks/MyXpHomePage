@@ -41,7 +41,7 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
     if (post) {
       title = `${post.metadata.title} | ${SITE_NAME}`;
       description = post.metadata.description || description;
-      canonicalUrl = `${baseUrl}/?app=${app}&slug=${slug}`;
+      canonicalUrl = `${baseUrl}/blog/${slug}`;
 
       const ogParams = new URLSearchParams({
         title: post.metadata.title,
@@ -58,7 +58,7 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
     if (project) {
       title = `${project.metadata.title} | Portfolio | ${SITE_NAME}`;
       description = project.metadata.description || description;
-      canonicalUrl = `${baseUrl}/?app=${app}&slug=${slug}`;
+      canonicalUrl = `${baseUrl}/portfolio/${slug}`;
 
       const ogParams = new URLSearchParams({
         title: project.metadata.title,
