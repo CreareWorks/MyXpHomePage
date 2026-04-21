@@ -28,6 +28,9 @@ export function PortfolioList({ projects, onSelect }: PortfolioListProps) {
                             height={250}
                             style={{ objectFit: 'cover' }}
                         />
+                        {project.status === 'suspended' && (
+                            <div className={styles.suspendedBadge}>サービス停止中</div>
+                        )}
                     </div>
                     <div className={styles.cardInfo}>
                         <div className={styles.cardTitle}>{project.title}</div>

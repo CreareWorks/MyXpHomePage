@@ -16,6 +16,7 @@ export const PROJECTS: Project[] = [
             thumbnail: skillsheetBuilder,
             url: 'https://skillsheet-builder.vercel.app/',
             techStack: ['Next.js', 'React', 'Gemini AI', 'Google Sheets API', 'TypeScript'],
+            status: 'suspended',
         },
         content: (
             <div>

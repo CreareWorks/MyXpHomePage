@@ -11,6 +11,7 @@ export interface ProjectMetadata {
     url?: string;
     githubUrl?: string;
     techStack: string[];
+    status?: 'active' | 'suspended';
 }
 
 export interface Project {

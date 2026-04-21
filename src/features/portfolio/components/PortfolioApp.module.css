@@ -41,6 +41,7 @@
     width: 100%;
     aspect-ratio: 16 / 9;
     background: #eee;
+    overflow: hidden;
 }
 
 /* 詳細ビューでのサムネイル表示 */
@@ -63,6 +64,29 @@
     width: 100%;
     height: 100%;
     max-width: 980px;
+}
+
+.suspendedBadge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: #cc0000;
+    color: #fff;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 2px 8px;
+    border-radius: 3px;
+    pointer-events: none;
+}
+
+.suspendedNotice {
+    background: #fff3cd;
+    border: 1px solid #ffc107;
+    color: #856404;
+    padding: 10px 16px;
+    border-radius: 4px;
+    font-size: 14px;
+    margin-bottom: 20px;
 }
 
 .cardInfo {

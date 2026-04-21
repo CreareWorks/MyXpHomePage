@@ -19,6 +19,12 @@ export function PortfolioDetail({ project, onBack }: PortfolioDetailProps) {
                 ← 戻る
             </button>
 
+            {metadata.status === 'suspended' && (
+                <div className={styles.suspendedNotice}>
+                    ⚠️ このサービスは現在停止中です。
+                </div>
+            )}
+
             <div className={styles.detailHeader}>
                 <h2 className={styles.detailTitle}>{metadata.title}</h2>
                 <div className={styles.detailMeta}>
