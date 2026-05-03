@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './BlogApp.module.css';
 import { BlogPost, PostMetadata } from '@/features/blog/types/index';
 
@@ -13,6 +13,8 @@ interface BlogMainContentProps {
     onNavigate: (slug: string) => void;
 }
 
+const ITEMS_PER_PAGE = 10;
+
 export const BlogMainContent = ({
     currentPost,
     postContent,
@@ -23,6 +25,18 @@ export const BlogMainContent = ({
     isLoading,
     onNavigate,
 }: BlogMainContentProps) => {
+    const [currentPage, setCurrentPage] = useState(1);
+
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [searchQuery, selectedGenre, selectedDate]);
+
+    const totalPages = Math.ceil(filteredPosts.length / ITEMS_PER_PAGE);
+    const paginatedPosts = filteredPosts.slice(
+        (currentPage - 1) * ITEMS_PER_PAGE,
+        currentPage * ITEMS_PER_PAGE
+    );
+
     return (
         <div className={styles.contentArea}>
             {isLoading && (
@@ -55,22 +69,51 @@ export const BlogMainContent = ({
                     )}
 
                     {filteredPosts.length > 0 ? (
-                        <div className={styles.fileGrid}>
-                            {filteredPosts.map((post) => (
-                                <div
-                                    key={post.slug}
-                                    className={styles.fileItem}
-                                    onClick={() => onNavigate(post.slug)}
-                                    title={post.title}
-                                    style={{ cursor: 'pointer', userSelect: 'none' }}
-                                >
-                                    <div className={styles.fileIcon}>📄</div>
-                                    <span className={styles.fileLabel}>
-                                        {post.title}
+                        <div className={styles.blogListWrapper}>
+                            <div className={styles.blogList}>
+                                {paginatedPosts.map((post) => (
+                                    <div
+                                        key={post.slug}
+                                        className={styles.blogListItem}
+                                        onClick={() => onNavigate(post.slug)}
+                                    >
+                                        <div className={styles.blogListItemHeader}>
+                                            <h2 className={styles.blogListTitle}>{post.title}</h2>
+                                            <div className={styles.blogListMeta}>
+                                                <span className={styles.blogListDate}>📅 {post.date}</span>
+                                                {post.category && (
+                                                    <span className={styles.blogListCategory}>📁 {post.category}</span>
+                                                )}
+                                            </div>
+                                        </div>
+                                        {post.description && (
+                                            <p className={styles.blogListDescription}>{post.description}</p>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                            
+                            {totalPages > 0 && (
+                                <div className={styles.pager}>
+                                    <button 
+                                        className={styles.pagerButton} 
+                                        disabled={currentPage === 1}
+                                        onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                                    >
+                                        &lt; 前へ
+                                    </button>
+                                    <span className={styles.pagerInfo}>
+                                        {currentPage} / {totalPages}
                                     </span>
-                                    <span className={styles.fileDate}>{post.date}</span>
+                                    <button 
+                                        className={styles.pagerButton} 
+                                        disabled={currentPage === totalPages}
+                                        onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                                    >
+                                        次へ &gt;
+                                    </button>
                                 </div>
-                            ))}
+                            )}
                         </div>
                     ) : (
                         <div className={styles.noItemsMessage}>
