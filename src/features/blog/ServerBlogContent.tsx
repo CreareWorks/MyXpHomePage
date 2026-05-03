@@ -4,6 +4,21 @@ import { BlogPost } from './types';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import { LinkCard } from '@/components/common/LinkCard/LinkCard';
 
+import remarkGfm from 'remark-gfm';
+import tableStyles from './components/MdxTable.module.css';
+
+const mdxComponents = {
+    LinkCard,
+    table: (props: any) => (
+        <div className={tableStyles.tableWrapper}>
+            <table className={tableStyles.table} {...props} />
+        </div>
+    ),
+    th: (props: any) => <th className={tableStyles.th} {...props} />,
+    td: (props: any) => <td className={tableStyles.td} {...props} />,
+    tr: (props: any) => <tr className={tableStyles.tr} {...props} />,
+};
+
 interface ServerBlogContentProps { 
     slug?: string | undefined;
 }
@@ -24,7 +39,8 @@ export async function ServerBlogContent({ slug }: ServerBlogContentProps) {
             postContent = (
                 <MDXRemote
                     source={currentPost.content}
-                    components={{ LinkCard }}
+                    options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }}
+                    components={mdxComponents}
                 />
             );
         }
