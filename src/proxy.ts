@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server';
 
 const BOT_USER_AGENTS = /googlebot|bingbot|yandexbot|duckduckbot|slurp|baiduspider|ia_archiver|twitterbot|facebookexternalhit|facebot|linkedinbot|embedly|pinterest|slackbot|vkShare|outbrain|W3C_Validator/i;
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
     const { pathname } = request.nextUrl;
     const userAgent = request.headers.get('user-agent') || '';
 
