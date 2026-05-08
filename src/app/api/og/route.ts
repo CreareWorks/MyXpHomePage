@@ -1,6 +1,25 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { parse } from 'node-html-parser';
 
+const BLOCKED_HOSTNAMES = new Set(['localhost', '0.0.0.0']);
+
+function isBlockedHost(hostname: string): boolean {
+    if (BLOCKED_HOSTNAMES.has(hostname)) return true;
+    if (hostname === '127.0.0.1' || hostname.startsWith('127.')) return true;
+    if (hostname === '::1' || hostname === '[::1]') return true;
+    if (hostname === '169.254.169.254') return true;
+
+    const parts = hostname.split('.').map(Number);
+    if (parts.length === 4 && parts.every((p) => !isNaN(p) && p >= 0 && p <= 255)) {
+        const [a, b] = parts as [number, number, number, number];
+        if (a === 10) return true;
+        if (a === 172 && b >= 16 && b <= 31) return true;
+        if (a === 192 && b === 168) return true;
+    }
+
+    return false;
+}
+
 export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const url = searchParams.get('url');
@@ -20,12 +39,21 @@ export async function GET(request: NextRequest) {
         return NextResponse.json({ error: 'Invalid URL protocol' }, { status: 400 });
     }
 
+    if (isBlockedHost(parsedUrl.hostname)) {
+        return NextResponse.json({ error: 'Invalid URL' }, { status: 400 });
+    }
+
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 5000);
+
     try {
         const response = await fetch(parsedUrl.toString(), {
             headers: {
                 'User-Agent': 'AntigravityLinkPreview/1.0',
             },
+            signal: controller.signal,
         });
+        clearTimeout(timeoutId);
 
         if (!response.ok) {
             throw new Error(`Failed to fetch: ${response.statusText}`);

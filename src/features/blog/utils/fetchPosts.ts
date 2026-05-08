@@ -85,7 +85,11 @@ export const getAllPosts = cache((): PostMetadata[] => {
 /**
  * 特定の記事を取得する (詳細表示用)
  */
+const VALID_SLUG_PATTERN = /^[a-zA-Z0-9_-]+$/;
+
 export const getPostBySlug = cache((slug: string): BlogPost | null => {
+    if (!VALID_SLUG_PATTERN.test(slug)) return null;
+
     // ファイルパスを特定するために全探索 (年月フォルダ構造のため)
     const allFiles = getFilesRecursively(postsDirectory);
 
