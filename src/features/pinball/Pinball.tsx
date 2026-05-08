@@ -22,6 +22,7 @@ export default function Pinball() {
                     allow="autoplay; fullscreen; pointer-lock"
                     loading="eager"
                     referrerPolicy="no-referrer"
+                    sandbox="allow-scripts allow-same-origin allow-pointer-lock allow-fullscreen"
                 />
             ) : (
                 <div style={{ flex: 1, backgroundColor: 'black' }} />
