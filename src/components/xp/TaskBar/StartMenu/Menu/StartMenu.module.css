@@ -228,3 +228,33 @@
     z-index: 9990;
     cursor: default;
 }
+.shutdownDialog {
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 11px;
+    color: #000;
+    flex: 1;
+}
+
+.shutdownDialog p {
+    margin: 0;
+    line-height: 1.6;
+}
+
+.shutdownOkButton {
+    margin-top: 12px;
+    align-self: flex-end;
+    padding: 4px 20px;
+    font-size: 11px;
+    font-family: Tahoma, sans-serif;
+    cursor: pointer;
+    background: #ece9d8;
+    border: 1px solid #7f9db9;
+    border-radius: 2px;
+}
+
+.shutdownOkButton:hover {
+    background: #dff0ff;
+}

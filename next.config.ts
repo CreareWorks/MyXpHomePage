@@ -1,7 +1,6 @@
 import type { NextConfig } from "next";
 
-const securityHeaders = [
-    { key: 'X-Frame-Options', value: 'DENY' },
+const commonHeaders = [
     { key: 'X-Content-Type-Options', value: 'nosniff' },
     { key: 'Strict-Transport-Security', value: 'max-age=31536000; includeSubDomains; preload' },
     { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
@@ -13,8 +12,19 @@ const nextConfig: NextConfig = {
     async headers() {
         return [
             {
+                // 全パスにデフォルトヘッダーを適用
                 source: '/(.*)',
-                headers: securityHeaders,
+                headers: [
+                    ...commonHeaders,
+                    { key: 'X-Frame-Options', value: 'DENY' },
+                ],
+            },
+            {
+                // PDF は後から上書き: 同一オリジンの iframe 表示を許可
+                source: '/(.*\\.pdf)',
+                headers: [
+                    { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+                ],
             },
         ];
     },

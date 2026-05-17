@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import type { MouseEvent } from 'react';
 import styles from './Minesweeper.module.css';
 
 type CellValue = number | 'B'; // 数字またはボム
@@ -96,22 +97,26 @@ export default function Minesweeper() {
             return;
         }
 
-        const floodFill = (ri: number, ci: number) => {
+        const stack: [number, number][] = [[r, c]];
+        while (stack.length > 0) {
+            const entry = stack.pop();
+            if (!entry) continue;
+            const [ri, ci] = entry;
             const currentCell = newGrid[ri]?.[ci];
-            if (ri < 0 || ri >= ROWS || ci < 0 || ci >= COLS || !currentCell || currentCell.state !== 'hidden') return;
-
+            if (!currentCell || currentCell.state !== 'hidden') continue;
             currentCell.state = 'revealed';
-
             if (currentCell.value === 0) {
                 for (let dr = -1; dr <= 1; dr++) {
                     for (let dc = -1; dc <= 1; dc++) {
-                        floodFill(ri + dr, ci + dc);
+                        const nr = ri + dr;
+                        const nc = ci + dc;
+                        if (nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS) {
+                            stack.push([nr, nc]);
+                        }
                     }
                 }
             }
-        };
-
-        floodFill(r, c);
+        }
         setGrid(newGrid);
 
         // 勝利判定
@@ -121,7 +126,7 @@ export default function Minesweeper() {
         }
     };
 
-    const toggleFlag = (e: React.MouseEvent, r: number, c: number) => {
+    const toggleFlag = (e: MouseEvent, r: number, c: number) => {
         e.preventDefault();
         const cell = grid[r]?.[c];
         if (!cell || gameState !== 'playing' || cell.state === 'revealed') return;

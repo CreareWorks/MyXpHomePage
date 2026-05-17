@@ -1,6 +1,5 @@
 'use client';
 
-import React from "react";
 import styles from './About.module.css';
 import { Sidebar } from "./components/Sidebar";
 import { ProfileHeader } from "./components/ProfileHeader";

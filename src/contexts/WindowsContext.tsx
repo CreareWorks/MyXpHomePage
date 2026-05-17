@@ -1,8 +1,7 @@
 'use client';
 
-import React, { createContext, useContext, ReactNode } from 'react';
+import { createContext, useContext, ReactNode } from 'react';
 import { useDesktop } from '@/hooks/useDesktop';
-import { DesktopIconId } from '@/constants/desktopIconConstants';
 
 type WindowsContextType = ReturnType<typeof useDesktop>;
 

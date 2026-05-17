@@ -1,3 +1,4 @@
+import type { HTMLAttributes, ThHTMLAttributes, TdHTMLAttributes, ReactNode } from 'react';
 import { getAllPosts, getPostBySlug } from './utils/fetchPosts';
 import { BlogAppLayout } from './components/BlogAppLayout';
 import { BlogPost } from './types';
@@ -9,29 +10,25 @@ import tableStyles from './components/MdxTable.module.css';
 
 const mdxComponents = {
     LinkCard,
-    table: (props: any) => (
+    table: (props: HTMLAttributes<HTMLTableElement>) => (
         <div className={tableStyles.tableWrapper}>
             <table className={tableStyles.table} {...props} />
         </div>
     ),
-    th: (props: any) => <th className={tableStyles.th} {...props} />,
-    td: (props: any) => <td className={tableStyles.td} {...props} />,
-    tr: (props: any) => <tr className={tableStyles.tr} {...props} />,
+    th: (props: ThHTMLAttributes<HTMLTableCellElement>) => <th className={tableStyles.th} {...props} />,
+    td: (props: TdHTMLAttributes<HTMLTableCellElement>) => <td className={tableStyles.td} {...props} />,
+    tr: (props: HTMLAttributes<HTMLTableRowElement>) => <tr className={tableStyles.tr} {...props} />,
 };
 
-interface ServerBlogContentProps { 
+interface ServerBlogContentProps {
     slug?: string | undefined;
 }
 
-/**
- * ブログのServer Component
- */
 export async function ServerBlogContent({ slug }: ServerBlogContentProps) {
-    // slugがないときは一覧表示
     const allPosts = await getAllPosts();
 
     let currentPost: BlogPost | null | undefined = undefined;
-    let postContent: React.ReactNode = null;
+    let postContent: ReactNode = null;
 
     if (slug) {
         currentPost = await getPostBySlug(slug);
@@ -56,11 +53,3 @@ export async function ServerBlogContent({ slug }: ServerBlogContentProps) {
     );
 }
 
-// ここでしか使わないので別ファイルに切り分けしないでおく
-const styles = {
-    container: {
-        padding: '20px',
-        background: 'white',
-        height: '100%',
-    },
-}

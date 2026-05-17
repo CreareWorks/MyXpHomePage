@@ -1,4 +1,4 @@
-import React from 'react';
+import type { ChangeEvent } from 'react';
 import {
     SidebarSection,
     SidebarHeader,
@@ -11,7 +11,7 @@ import { DESKTOP_ICON_IDS } from '@/constants/desktopIconConstants';
 
 interface BlogSidebarProps {
     searchQuery: string;
-    onSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    onSearchChange: (e: ChangeEvent<HTMLInputElement>) => void;
     genres: string[];
     selectedGenre: string | null;
     onFilterGenre: (genre: string) => void;

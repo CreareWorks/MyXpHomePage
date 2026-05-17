@@ -1,4 +1,3 @@
-import React from 'react';
 import styles from './BlogApp.module.css';
 import { AddressBar } from '@/components/xp/AddressBar/AddressBar';
 
@@ -19,16 +18,15 @@ export const BlogToolbar = ({
         <div className={styles.toolbar}>
             <div className={styles.toolbarContainer}>
                 <div className={styles.navRow}>
-                    <div
+                    <button
                         className={`${styles.backButtonContainer} ${!canGoBack ? styles.disabled : ''}`}
-                        onClick={canGoBack ? goBack : undefined}
+                        onClick={goBack}
+                        disabled={!canGoBack}
                         title="Back"
                     >
-                        <div className={styles.xpBackButton}>
-                            ←
-                        </div>
+                        <span className={styles.xpBackButton}>←</span>
                         <span className={styles.xpBackText}>戻る</span>
-                    </div>
+                    </button>
 
                     <button
                         className={styles.upButton}

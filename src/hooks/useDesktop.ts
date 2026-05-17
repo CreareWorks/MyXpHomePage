@@ -25,48 +25,37 @@ export const useDesktop = () => {
     // URLパラメータがない場合、aboutを表示させる
     useEffect(() => {
         if (isInitialized.current) return;
-        const timer = setTimeout(() => {
-            isInitialized.current = true; // 実行済みにマーク
+        isInitialized.current = true;
 
-            if (activeWindowId) {
-                // URL指定がある場合
-                setOpenWindowIds([activeWindowId]);
-                setMaximizedWindowIds([activeWindowId]);
-            } else {
-                // URL指定がない場合: デフォルトで About を開く
-                setAppId(DESKTOP_ICON_IDS.ABOUT);
-                setOpenWindowIds([DESKTOP_ICON_IDS.ABOUT]);
-                setMaximizedWindowIds([DESKTOP_ICON_IDS.ABOUT]);
-            }
-        }, 0);
-
-        return () => clearTimeout(timer);
+        if (activeWindowId) {
+            setOpenWindowIds([activeWindowId]);
+            setMaximizedWindowIds([activeWindowId]);
+        } else {
+            // history:'replace' で履歴スタックを汚染しない
+            setAppId(DESKTOP_ICON_IDS.ABOUT, { history: 'replace' });
+            setOpenWindowIds([DESKTOP_ICON_IDS.ABOUT]);
+            setMaximizedWindowIds([DESKTOP_ICON_IDS.ABOUT]);
+        }
     }, [activeWindowId, setAppId]);
 
     // ブラウザの「戻る・進む」でURLが変わった時にウィンドウリストを同期
     useEffect(() => {
         if (!activeWindowId) return;
 
-        const timer = setTimeout(() => {
-            // ウィンドウを開く
-            setOpenWindowIds((prev) => {
-                if (prev.includes(activeWindowId)) return prev;
-                return [...prev, activeWindowId];
-            });
+        setOpenWindowIds((prev) => {
+            if (prev.includes(activeWindowId)) return prev;
+            return [...prev, activeWindowId];
+        });
 
-            // 最小化解除
-            setMinimizedWindowIds((prev) => {
-                if (!prev.includes(activeWindowId)) return prev;
-                return prev.filter((id) => id !== activeWindowId);
-            });
+        setMinimizedWindowIds((prev) => {
+            if (!prev.includes(activeWindowId)) return prev;
+            return prev.filter((id) => id !== activeWindowId);
+        });
 
-            // 最大化（URLからの遷移時はデフォルトで最大化）
-            setMaximizedWindowIds((prev) => {
-                if (prev.includes(activeWindowId)) return prev;
-                return [...prev, activeWindowId];
-            });
-        }, 0);
-        return () => clearTimeout(timer);
+        setMaximizedWindowIds((prev) => {
+            if (prev.includes(activeWindowId)) return prev;
+            return [...prev, activeWindowId];
+        });
     }, [activeWindowId]);
 
     const selectIcon = useCallback((id: DesktopIconId | null) => {

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './Pinball.module.css';
 
 export default function Pinball() {
@@ -18,10 +18,10 @@ export default function Pinball() {
                     src="https://alula.github.io/SpaceCadetPinball/"
                     className={styles.iframe}
                     title="3D Pinball for Windows - Space Cadet"
-                    frameBorder="0"
                     allow="autoplay; fullscreen; pointer-lock"
                     loading="eager"
                     referrerPolicy="no-referrer"
+                    // allow-same-origin は WASM/アセット fetch のために必要
                     sandbox="allow-scripts allow-same-origin allow-pointer-lock allow-fullscreen"
                 />
             ) : (

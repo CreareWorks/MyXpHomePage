@@ -1,4 +1,3 @@
-import React from 'react';
 import Image from 'next/image';
 import { DESKTOP_APP_CONFIGS, ON_DESKTOP_ICON_IDS } from '@/config/desktopApps';
 import { useWindows } from '@/contexts/WindowsContext';

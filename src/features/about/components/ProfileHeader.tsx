@@ -1,6 +1,3 @@
-'use client';
-
-import React from 'react';
 import Image from 'next/image';
 import styles from '../About.module.css';
 import profileImage from '@/assets/userCover.png';

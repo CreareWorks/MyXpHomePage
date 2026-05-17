@@ -1,10 +1,9 @@
 'use client';
 
-import React from 'react';
 import styles from './FolderView.module.css';
 import { DesktopIcon } from '@/components/xp/DesktopIcon/DesktopIcon';
 import { useWindows } from '@/contexts/WindowsContext';
-import { DESKTOP_APP_CONFIGS, DesktopAppConfig } from '@/config/desktopApps';
+import { DESKTOP_APP_CONFIGS } from '@/config/desktopApps';
 import { DesktopIconId } from '@/constants/desktopIconConstants';
 
 interface FolderViewProps {
@@ -16,7 +15,7 @@ export function FolderView({ childrenIds }: FolderViewProps) {
 
     const childConfigs = childrenIds
         .map(id => DESKTOP_APP_CONFIGS.find(config => config.id === id))
-        .filter((config): config is Omit<DesktopAppConfig, 'component'> => !!config);
+        .filter((config) => !!config);
 
     return (
         <div className={styles.container}>

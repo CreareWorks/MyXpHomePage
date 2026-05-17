@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import styles from './Skillsheet.module.css';
 import { ExplorerAppLayout } from '@/components/xp/WindowAppLayout/ExplorerAppLayout';
 import { AddressBar } from '@/components/xp/AddressBar/AddressBar';

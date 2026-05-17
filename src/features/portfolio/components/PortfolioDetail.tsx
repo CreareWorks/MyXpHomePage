@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import Image from 'next/image';
 import styles from './PortfolioApp.module.css';
 import { Project } from '../types';

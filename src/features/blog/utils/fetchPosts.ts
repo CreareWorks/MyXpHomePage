@@ -4,98 +4,79 @@ import { cache } from 'react';
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
+import { z } from 'zod';
 import { PostMetadata, BlogPost } from '../types';
 import { BLOG_CATEGORIES, BlogCategory } from '@/constants/blogConstants';
 
 const postsDirectory = path.join(process.cwd(), 'src/features/blog/content');
 
-/**
- * カテゴリのバリデーションとフォールバック処理
- */
-const validateCategory = (category: any): BlogCategory => {
-    // 定数の値リストを取得
-    const validCategories = Object.values(BLOG_CATEGORIES) as string[];
+const PostFrontmatterSchema = z.object({
+    title: z.string(),
+    date: z.string(),
+    category: z.string().optional(),
+    description: z.string().optional(),
+});
 
-    if (validCategories.includes(category)) {
+const validateCategory = (category: unknown): BlogCategory => {
+    const validCategories = Object.values(BLOG_CATEGORIES) as string[];
+    if (typeof category === 'string' && validCategories.includes(category)) {
         return category as BlogCategory;
     }
-
     return BLOG_CATEGORIES.OTHER;
 };
 
-/**
- * 指定したディレクトリ以下の全てのファイルを再帰的に取得するヘルパー関数
- */
 const getFilesRecursively = (dir: string): string[] => {
     let results: string[] = [];
-
     if (!fs.existsSync(dir)) return [];
-
     const list = fs.readdirSync(dir);
-
     list.forEach((file) => {
         const filePath = path.join(dir, file);
         const stat = fs.statSync(filePath);
-
         if (stat && stat.isDirectory()) {
-            // ディレクトリなら再帰的に探索して結合
             results = results.concat(getFilesRecursively(filePath));
         } else {
-            // ファイルならリストに追加
             results.push(filePath);
         }
     });
-
     return results;
 };
 
-/**
- * 全ての記事のメタデータを取得する (一覧表示用)
- */
+// リクエスト内でファイルスキャンを1回に集約
+const getAllPostFiles = cache((): string[] => {
+    return getFilesRecursively(postsDirectory).filter((f) => f.endsWith('.mdx'));
+});
+
 export const getAllPosts = cache((): PostMetadata[] => {
-    // 再帰的に全MDXファイルのパスを取得
-    const allFiles = getFilesRecursively(postsDirectory);
+    const allPosts = getAllPostFiles().map((filePath) => {
+        const fileContents = fs.readFileSync(filePath, 'utf8');
+        const { data } = matter(fileContents);
 
-    const allPosts = allFiles
-        .filter((filePath) => filePath.endsWith('.mdx'))
-        .map((filePath) => {
-            // ファイル読み込み
-            const fileContents = fs.readFileSync(filePath, 'utf8');
+        const parsed = PostFrontmatterSchema.safeParse(data);
+        if (!parsed.success) {
+            console.warn(`Invalid frontmatter in ${filePath}:`, parsed.error.issues);
+            return null;
+        }
 
-            // gray-matterでメタデータ解析
-            const { data } = matter(fileContents);
+        const slug = path.basename(filePath).replace(/\.mdx$/, '');
+        return {
+            slug,
+            title: parsed.data.title,
+            date: parsed.data.date,
+            category: validateCategory(parsed.data.category),
+            description: parsed.data.description ?? '',
+        } satisfies PostMetadata;
+    }).filter((p): p is PostMetadata => p !== null);
 
-            // ファイル名をスラッグとして使用 (拡張子除去しておく)
-            const fileName = path.basename(filePath);
-            const slug = fileName.replace(/\.mdx$/, '');
-
-            return {
-                slug,
-                title: data.title,
-                date: data.date,
-                category: validateCategory(data.category),
-                description: data.description || '',
-            } as PostMetadata;
-        });
-
-    // 日付の新しい順にソート (降順)
     return allPosts.sort((a, b) => (a.date < b.date ? 1 : -1));
 });
 
-/**
- * 特定の記事を取得する (詳細表示用)
- */
 const VALID_SLUG_PATTERN = /^[a-zA-Z0-9_-]+$/;
 
 export const getPostBySlug = cache((slug: string): BlogPost | null => {
     if (!VALID_SLUG_PATTERN.test(slug)) return null;
 
-    // ファイルパスを特定するために全探索 (年月フォルダ構造のため)
-    const allFiles = getFilesRecursively(postsDirectory);
-
-    // ファイル名が {slug}.mdx と一致するものを探す
-    const targetFile = allFiles.find((filePath) =>
-        path.basename(filePath) === `${slug}.mdx`
+    const targetFile = getAllPostFiles().find(
+        (filePath) => path.basename(filePath) === `${slug}.mdx`
     );
 
     if (!targetFile) return null;
@@ -104,30 +85,23 @@ export const getPostBySlug = cache((slug: string): BlogPost | null => {
         const fileContents = fs.readFileSync(targetFile, 'utf8');
         const { data, content } = matter(fileContents);
 
-        // メタデータの構築
+        const parsed = PostFrontmatterSchema.safeParse(data);
+        if (!parsed.success) {
+            console.warn(`Invalid frontmatter in ${targetFile}:`, parsed.error.issues);
+            return null;
+        }
+
         const metadata: PostMetadata = {
             slug,
-            title: data.title,
-            date: data.date,
-            category: validateCategory(data.category),
-            description: data.description || '',
+            title: parsed.data.title,
+            date: parsed.data.date,
+            category: validateCategory(parsed.data.category),
+            description: parsed.data.description ?? '',
         };
 
-        return {
-            metadata,
-            content,
-        };
+        return { metadata, content };
     } catch (error) {
         console.error(`Error reading post ${slug}:`, error);
         return null;
     }
-});
-
-/**
- * 全カテゴリ一覧を取得する (重複なし)
- */
-export const getAllCategories = cache((): string[] => {
-    const posts = getAllPosts();
-    const categories = new Set(posts.map((post) => post.category));
-    return Array.from(categories).sort();
 });

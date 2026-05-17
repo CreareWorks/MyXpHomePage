@@ -14,14 +14,9 @@ export function useMobileSidebar() {
         setIsSidebarOpen(false);
     }, []);
 
-    const openSidebar = useCallback(() => {
-        setIsSidebarOpen(true);
-    }, []);
-
     return {
         isSidebarOpen,
         toggleSidebar,
         closeSidebar,
-        openSidebar,
     };
 }

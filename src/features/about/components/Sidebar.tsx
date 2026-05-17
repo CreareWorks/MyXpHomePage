@@ -1,4 +1,3 @@
-import React from 'react';
 import { DESKTOP_ICON_IDS } from '@/constants/desktopIconConstants';
 import { SidebarAppLinks } from '@/components/xp/ExplorerSidebar/SidebarAppLinks';
 

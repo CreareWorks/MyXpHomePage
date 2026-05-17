@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { useQueryState } from 'nuqs';
 import styles from './PortfolioApp.module.css';
 import { PROJECTS } from '../data/projects';

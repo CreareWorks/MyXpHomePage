@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './LinkCard.module.css';
 
 interface LinkCardProps {
@@ -22,18 +22,20 @@ export function LinkCard({ url }: LinkCardProps) {
     const [error, setError] = useState(false);
 
     useEffect(() => {
+        setError(false);
+        setLoading(true);
         let isMounted = true;
+
         const fetchOg = async () => {
             try {
-                setLoading(true);
                 const res = await fetch(`/api/og?url=${encodeURIComponent(url)}`);
-                if (!res.ok) throw new Error();
-                const json = await res.json();
+                if (!res.ok) throw new Error(res.statusText);
+                const json = await res.json() as OgData;
                 if (isMounted) {
                     setData(json);
                     setLoading(false);
                 }
-            } catch (err) {
+            } catch {
                 if (isMounted) {
                     setError(true);
                     setLoading(false);

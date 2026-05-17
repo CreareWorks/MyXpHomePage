@@ -1,10 +1,10 @@
 import { StaticImageData } from 'next/image';
 
-import githubLogo from '@/assets/sosial/github.png';
-import qiitaLogo from '@/assets/sosial/qiita.png';
-import zennLogo from '@/assets/sosial/zenn.png';
-import findyLogo from '@/assets/sosial/findy.png';
-import xLogo from '@/assets/sosial/x.png';
+import githubLogo from '@/assets/social/github.png';
+import qiitaLogo from '@/assets/social/qiita.png';
+import zennLogo from '@/assets/social/zenn.png';
+import findyLogo from '@/assets/social/findy.png';
+import xLogo from '@/assets/social/x.png';
 
 export interface SocialLink {
     id: string;

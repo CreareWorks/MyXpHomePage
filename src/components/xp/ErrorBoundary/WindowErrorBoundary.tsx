@@ -1,4 +1,5 @@
-import React, { Component, ReactNode } from 'react';
+import { Component } from 'react';
+import type { ReactNode } from 'react';
 import styles from '@/components/xp/ErrorBoundary/WindowErrorBoundary.module.css';
 
 interface Props {

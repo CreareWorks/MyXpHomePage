@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './BlogApp.module.css';
 import { BlogPost, PostMetadata } from '@/features/blog/types/index';
+import { WindowErrorBoundary } from '@/components/xp/ErrorBoundary/WindowErrorBoundary';
 
 interface BlogMainContentProps {
     currentPost?: BlogPost | undefined;
@@ -56,7 +57,9 @@ export const BlogMainContent = ({
                         )}
                     </div>
                     <div className={`markdown-body ${styles.detailBody}`}>
-                        {postContent || <pre>{currentPost.content}</pre>}
+                        <WindowErrorBoundary>
+                            {postContent || <pre>{currentPost.content}</pre>}
+                        </WindowErrorBoundary>
                     </div>
                 </div>
             ) : (

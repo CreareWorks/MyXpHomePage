@@ -1,4 +1,3 @@
-import React from 'react';
 import { Project } from '../types';
 import { PORTFOLIO_CATEGORIES } from '../constants/portfolioConstants';
 import { SITE_BASE_URL } from '@/constants/siteConstants';
@@ -30,7 +29,7 @@ export const PROJECTS: Project[] = [
                     <li><strong>レーダーチャートによる可視化</strong>: スキルバランスを視覚的に把握。</li>
                 </ul>
                 <h3>使用技術</h3>
-                <p>Next.js', 'React', 'Gemini AI', 'Google Sheets API', 'TypeScript</p>
+                <p>Next.js / React / Gemini AI / Google Sheets API / TypeScript</p>
             </div>
         )
     },
