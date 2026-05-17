@@ -14,6 +14,7 @@ export type BlogFilterType = typeof BLOG_FILTER_TYPES[keyof typeof BLOG_FILTER_T
 export const BLOG_CATEGORIES = {
     TECH: 'Tech',
     LIFE: 'Life',
+    MANAGEMENT: 'Management',
     OTHER: 'Other',
 } as const;
 
