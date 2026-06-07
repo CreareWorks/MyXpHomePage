@@ -28,11 +28,12 @@ export function GalleryDetail({
 }: GalleryDetailProps) {
     const [zoom, setZoom] = useState(1);
     const [rotate, setRotate] = useState(0);
+    const [isLoading, setIsLoading] = useState(true);
 
-    // 写真が切り替わったらズームと回転をリセット
     useEffect(() => {
         setZoom(1);
         setRotate(0);
+        setIsLoading(true);
     }, [photo.id]);
 
     const handleZoomIn = () => {
@@ -66,9 +67,16 @@ export function GalleryDetail({
                         className={styles.mainImage}
                         style={{
                             transform: `scale(${zoom}) rotate(${rotate}deg)`,
+                            opacity: isLoading ? 0 : 1,
                         }}
                         priority
+                        onLoad={() => setIsLoading(false)}
                     />
+                    {isLoading && (
+                        <div className={styles.loadingOverlay}>
+                            <div className={styles.spinner} />
+                        </div>
+                    )}
                 </div>
 
                 <div className={styles.photoInfoPanel}>

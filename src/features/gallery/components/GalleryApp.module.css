@@ -162,11 +162,59 @@
     cursor: not-allowed;
 }
 
+.backButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    height: 30px;
+    padding: 0 10px;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    background: transparent;
+    cursor: pointer;
+    color: #404040;
+    font-size: 11px;
+    transition: all 0.1s ease;
+}
+
+.backButton:hover {
+    border-color: #316ac5;
+    background-color: #c1d2ee;
+    color: #000000;
+}
+
+.backButton:active {
+    background-color: #98b5e2;
+    border-color: #316ac5;
+}
+
 .divider {
     width: 1px;
     height: 20px;
     background-color: #aca899;
     margin: 0 4px;
+}
+
+.loadingOverlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.spinner {
+    width: 32px;
+    height: 32px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #ffffff;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
 }
 
 .photoInfoPanel {
