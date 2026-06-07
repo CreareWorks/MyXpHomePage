@@ -9,6 +9,17 @@ const commonHeaders = [
 
 const nextConfig: NextConfig = {
     reactCompiler: true,
+    async redirects() {
+        return [
+            { source: '/about', destination: '/?app=about', permanent: false },
+            { source: '/blog', destination: '/?app=blog', permanent: false },
+            { source: '/portfolio', destination: '/?app=portfolio', permanent: false },
+            { source: '/gallery', destination: '/?app=gallery', permanent: false },
+            { source: '/skills', destination: '/?app=skills', permanent: false },
+            { source: '/minesweeper', destination: '/?app=minesweeper', permanent: false },
+            { source: '/games', destination: '/?app=games', permanent: false },
+        ];
+    },
     async headers() {
         return [
             {
