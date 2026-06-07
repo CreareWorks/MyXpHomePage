@@ -4,14 +4,15 @@ import { DESKTOP_APP_CONFIGS } from '@/config/desktopApps';
 import { Content as AboutContent } from '@/features/about/Content';
 import { ServerBlogContent } from '@/features/blog/ServerBlogContent';
 import { Content as PortfolioContent } from '@/features/portfolio/Content';
+import { Content as GalleryContent } from '@/features/gallery/Content';
 import { Content as SkillsheetContent } from '@/features/skillsheet/Content';
 import Minesweeper from '@/features/minesweeper/Minesweeper';
-import Pinball from '@/features/pinball/Pinball';
 import { FolderView } from '@/components/xp/FolderView/FolderView';
 import { DESKTOP_ICON_IDS } from '@/constants/desktopIconConstants';
 import { Metadata } from 'next';
 import { getPostBySlug } from '@/features/blog/utils/fetchPosts';
 import { PROJECTS } from '@/features/portfolio/data/projects';
+import { PHOTOS } from '@/features/gallery/data/photos';
 import { SITE_BASE_URL, SITE_NAME } from '@/constants/siteConstants';
 
 interface PageProps {
@@ -69,6 +70,13 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
       imageWidth = 1200;
       imageHeight = 630;
       imageType = 'image/png';
+    }
+  } else if (app === DESKTOP_ICON_IDS.GALLERY && slug) {
+    const photo = PHOTOS.find(p => p.id === slug);
+    if (photo) {
+      title = `${photo.title} | ギャラリー | ${SITE_NAME}`;
+      description = photo.description || description;
+      canonicalUrl = `${baseUrl}/gallery/${slug}`;
     }
   } else if (app) {
     const config = DESKTOP_APP_CONFIGS.find(c => c.id === app);
@@ -136,10 +144,10 @@ export default async function DesktopPage({ searchParams }: PageProps) {
           about: <AboutContent />,
           blog: <ServerBlogContent slug={slug} />,
           portfolio: <PortfolioContent />,
+          gallery: <GalleryContent />,
           skills: <SkillsheetContent />,
           minesweeper: <Minesweeper />,
-          pinball: <Pinball />,
-          games: <FolderView childrenIds={[DESKTOP_ICON_IDS.MINESWEEPER, DESKTOP_ICON_IDS.PINBALL]} />,
+          games: <FolderView childrenIds={[DESKTOP_ICON_IDS.MINESWEEPER]} />,
         }}
       </DesktopContent>
     </Suspense>

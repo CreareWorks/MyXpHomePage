@@ -4,10 +4,10 @@ import { DESKTOP_ICON_IDS, type DesktopIconId } from '@/constants/desktopIconCon
 import aboutIcon from '@/assets/icon/about.png';
 import blogIcon from '@/assets/icon/blog.png';
 import portfolioIcon from '@/assets/icon/portfolio.png';
+import galleryIcon from '@/assets/icon/gallery.png';
 import skillsheetIcon from '@/assets/icon/skillsheet.png';
 import minesweeperIcon from '@/assets/icon/minesweeper.png';
 import folderIcon from '@/assets/icon/folder.png';
-import pinballIcon from '@/assets/icon/pinball.png';
 
 export interface DesktopAppConfig {
     id: DesktopIconId;
@@ -35,6 +35,11 @@ export const DESKTOP_APP_CONFIGS: DesktopAppConfig[] = [
         icon: portfolioIcon,
     },
     {
+        id: DESKTOP_ICON_IDS.GALLERY,
+        title: 'ギャラリー',
+        icon: galleryIcon,
+    },
+    {
         id: DESKTOP_ICON_IDS.SKILLSHEET,
         title: 'スキルシート',
         icon: skillsheetIcon,
@@ -47,17 +52,10 @@ export const DESKTOP_APP_CONFIGS: DesktopAppConfig[] = [
         defaultSize: { width: 300, height: 400 },
     },
     {
-        id: DESKTOP_ICON_IDS.PINBALL,
-        title: 'ピンボール',
-        icon: pinballIcon,
-        defaultSize: { width: 600, height: 800 },
-        frameContentClassName: 'pinball-frame-override',
-    },
-    {
         id: DESKTOP_ICON_IDS.GAMES_FOLDER,
         title: 'ゲーム',
         icon: folderIcon,
-        childrenIds: [DESKTOP_ICON_IDS.MINESWEEPER, DESKTOP_ICON_IDS.PINBALL],
+        childrenIds: [DESKTOP_ICON_IDS.MINESWEEPER],
         defaultSize: { width: 600, height: 400 },
     },
 ];
@@ -66,6 +64,7 @@ export const ON_DESKTOP_ICON_IDS: DesktopIconId[] = [
     DESKTOP_ICON_IDS.ABOUT,
     DESKTOP_ICON_IDS.BLOG,
     DESKTOP_ICON_IDS.PORTFOLIO,
+    DESKTOP_ICON_IDS.GALLERY,
     DESKTOP_ICON_IDS.SKILLSHEET,
     DESKTOP_ICON_IDS.GAMES_FOLDER,
 ];

@@ -5,7 +5,7 @@ export const DESKTOP_ICON_IDS = {
     SKILLSHEET: 'skills',
     MINESWEEPER: 'minesweeper',
     GAMES_FOLDER: 'games',
-    PINBALL: 'pinball',
+    GALLERY: 'gallery',
 } as const;
 
 export type DesktopIconId = (typeof DESKTOP_ICON_IDS)[keyof typeof DESKTOP_ICON_IDS];
