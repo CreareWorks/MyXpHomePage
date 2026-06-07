@@ -79,7 +79,7 @@ export function GalleryApp() {
             isSidebarOpen={isSidebarOpen}
             onToggleSidebar={toggleSidebar}
             onCloseSidebar={closeSidebar}
-            mainClassName={styles.contentArea}
+            mainClassName={currentPhoto ? styles.contentAreaDetail : styles.contentArea}
             toolbar={
                 <div className={styles.toolbar}>
                     <div style={{ fontSize: '11px', color: '#666', marginRight: '8px' }}>アドレス</div>
