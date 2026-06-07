@@ -48,18 +48,20 @@ function DesktopContentInner({ configs, children }: DesktopContentProps) {
             onClick={() => selectIcon(null)}
         >
             {/* デスクトップアイコン */}
-            {configs
-                .filter(config => ON_DESKTOP_ICON_IDS.includes(config.id))
-                .map((config) => (
-                    <DesktopIcon
-                        key={config.id}
-                        label={config.title}
-                        icon={config.icon}
-                        isSelected={selectedIconId === config.id}
-                        onClick={() => selectIcon(config.id)}
-                        onDoubleClick={() => openWindow(config.id)}
-                    />
-                ))}
+            <div className={styles.desktopIconsContainer}>
+                {configs
+                    .filter(config => ON_DESKTOP_ICON_IDS.includes(config.id))
+                    .map((config) => (
+                        <DesktopIcon
+                            key={config.id}
+                            label={config.title}
+                            icon={config.icon}
+                            isSelected={selectedIconId === config.id}
+                            onClick={() => selectIcon(config.id)}
+                            onDoubleClick={() => openWindow(config.id)}
+                        />
+                    ))}
+            </div>
 
             {/* ウィンドウ描画 */}
             {configs.map((config) => {
