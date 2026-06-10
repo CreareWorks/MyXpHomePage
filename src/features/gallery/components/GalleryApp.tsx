@@ -9,13 +9,7 @@ import { GalleryDetail } from './GalleryDetail';
 import { useMobileSidebar } from '@/hooks/useMobileSidebar';
 import { AddressBar } from '@/components/xp/AddressBar/AddressBar';
 import { ExplorerAppLayout } from '@/components/xp/WindowAppLayout/ExplorerAppLayout';
-import {
-    ExplorerSidebar,
-    SidebarSection,
-    SidebarHeader,
-    SidebarContent,
-    SidebarLink
-} from '@/components/xp/ExplorerSidebar/ExplorerSidebar';
+import { ExplorerSidebar } from '@/components/xp/ExplorerSidebar/ExplorerSidebar';
 import { SidebarAppLinks } from '@/components/xp/ExplorerSidebar/SidebarAppLinks';
 import { DESKTOP_ICON_IDS } from '@/constants/desktopIconConstants';
 
@@ -64,16 +58,6 @@ export function GalleryApp() {
         setPhotoId(null);
     };
 
-    const handleWallpaperSet = () => {
-        if (currentPhoto) {
-            alert(`「${currentPhoto.title}」をデスクトップの壁紙に設定しました！（モック機能）`);
-        }
-    };
-
-    const handleSlideshow = () => {
-        alert("スライドショー機能を開始します！（モック機能）");
-    };
-
     return (
         <ExplorerAppLayout
             isSidebarOpen={isSidebarOpen}
@@ -92,23 +76,6 @@ export function GalleryApp() {
                 <ExplorerSidebar isOpen={isSidebarOpen}>
                     <SidebarAppLinks currentAppId={DESKTOP_ICON_IDS.GALLERY} />
                     
-                    <SidebarSection>
-                        <SidebarHeader title="ピクチャのタスク" />
-                        <SidebarContent>
-                            <SidebarLink
-                                label="スライドショーを表示する"
-                                onClick={handleSlideshow}
-                                icon={<span style={{ marginRight: '6px' }}>▶️</span>}
-                            />
-                            {currentPhoto && (
-                                <SidebarLink
-                                    label="デスクトップの背景に設定する"
-                                    onClick={handleWallpaperSet}
-                                    icon={<span style={{ marginRight: '6px' }}>🖥️</span>}
-                                />
-                            )}
-                        </SidebarContent>
-                    </SidebarSection>
                 </ExplorerSidebar>
             }
         >
