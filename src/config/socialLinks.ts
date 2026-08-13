@@ -5,6 +5,7 @@ import qiitaLogo from '@/assets/social/qiita.png';
 import zennLogo from '@/assets/social/zenn.png';
 import findyLogo from '@/assets/social/findy.png';
 import xLogo from '@/assets/social/x.png';
+import credlyLogo from '@/assets/social/credly.png';
 
 export interface SocialLink {
     id: string;
@@ -49,5 +50,12 @@ export const SOCIAL_LINKS: SocialLink[] = [
         url: 'https://x.com/creareworks',
         icon: xLogo,
         description: '最新情報やつぶやき',
+    },
+    {
+        id: 'credly',
+        title: 'Credly',
+        url: 'https://www.credly.com/users/youta',
+        icon: credlyLogo,
+        description: '取得資格・デジタルバッジ',
     },
 ];
